@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About — blng studio</title>
+<title>Contact — blng studio</title>
 <style>
   :root {
     --charcoal:   #1C1C1A;
@@ -12,7 +12,7 @@
     --mustard:    #FFC850;
     --green:      #7A973F;
     --page-bg:    #F8F6F3;
-    --label:      rgba(28,28,26,0.45);
+    --label:      rgba(28,28,26,0.4);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
   html { scroll-behavior: smooth; }
@@ -32,80 +32,30 @@
   .nav-links a:hover { color: var(--terracotta); }
   .nav-links a.active { color: var(--green); }
 
-  /* ─── OPENING ─── */
-  .opening { padding: 200px 48px 80px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
-  .opening-tagline { font-size: clamp(2.6rem, 5vw, 4.8rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.01em; color: var(--charcoal); white-space: normal; margin-bottom: 48px; }
-  .opening-oneliner { font-size: 1.9rem; line-height: 1.85; color: var(--charcoal); max-width: 1020px; }
-  .opening-meta { font-size: 1.1rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); margin-top: 20px; }
+  /* ─── HERO ─── */
+  .hero { padding: 200px 48px 96px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
+  .hero-heading { font-size: clamp(2.6rem, 5vw, 4.8rem); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; color: var(--charcoal); max-width: 820px; }
+  .hero-heading em { font-style: italic; color: var(--terracotta); }
 
-  /* ─── MANIFESTO (yellow section) ─── */
-  .manifesto { background: #FFD67C; padding: 100px 48px 120px 80px; }
-  .manifesto-inner { max-width: 860px; }
-  .manifesto-statement { font-size: 1.9rem; font-weight: 300; line-height: 1.55; color: var(--terracotta); margin-bottom: 1.1em; }
-  .manifesto-statement em { font-style: italic; color: var(--terracotta); }
-  .manifesto-more { display: none; }
-  .manifesto-more.open { display: block; }
-
-  /* ─── MORE / FILTER BUTTON ─── */
-  .more-btn { display: inline-flex; align-items: center; gap: 12px; font-family: 'DM Sans', sans-serif; font-size: 1.1rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 28px; border-radius: 999px; border: 2px solid rgba(28,28,26,0.35); background: transparent; color: var(--charcoal); transition: border-color 0.2s, color 0.2s; margin-top: 48px; cursor: pointer; }
-  .more-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
-  .more-btn .btn-arrow { transition: transform 0.2s; font-style: normal; }
-  .more-btn.open .btn-arrow { transform: rotate(180deg); }
-
-  /* ─── PILLARS ─── */
-  .pillars { padding: 80px 48px 0 80px; border-top: 2px solid rgba(28,28,26,0.08); border-bottom: 2px solid rgba(28,28,26,0.08); }
-  .pillars-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
-  .pillar { padding: 40px 48px 40px 0; border-right: 2px solid rgba(28,28,26,0.1); }
-  .pillar:nth-child(2) { padding-left: 48px; }
-  .pillar:nth-child(3) { padding-left: 48px; border-right: none; }
-  .pillar-term { font-size: 2.0rem; font-style: italic; color: var(--terracotta); margin-bottom: 22px; display: block; font-weight: 700; }
-  .pillar-text { font-size: 1.75rem; line-height: 1.9; color: var(--charcoal); }
-
-  /* ─── PRINCIPALS ─── */
-  .principals { padding: 96px 48px 96px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
-  .section-label { font-size: 1.0rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--label); display: block; margin-bottom: 40px; }
-  .principals-photo-wrap { margin-bottom: 72px; }
-  .principals-photo { width: 100%; max-width: 760px; aspect-ratio: 4 / 3; background: linear-gradient(145deg, #c8bfb2 0%, #a89880 60%, #8a7a68 100%); display: flex; align-items: flex-end; padding: 20px 24px; }
-  .principals-photo-caption { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--porcelain); }
-  .principals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
-  .principal-name { font-size: 2.8rem; letter-spacing: 0.01em; color: var(--charcoal); font-weight: 700; margin-bottom: 6px; }
-  .principal-role { font-size: 1.0rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); margin-bottom: 32px; display: block; }
-  .principal-bio p { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 16px; }
-  .principal-section { margin-top: 36px; padding-top: 28px; border-top: 2px solid rgba(28,28,26,0.08); }
-  .principal-section-label { font-size: 1.0rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); margin-bottom: 14px; display: block; }
-  .principal-section p { font-size: 1.6rem; line-height: 1.75; color: var(--charcoal); }
-  .placeholder-note { font-style: italic; color: var(--terracotta); font-size: 1.6rem; }
-
-  /* ─── ROOTS ─── */
-  .roots { padding: 96px 48px 96px 80px; }
-  .roots-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-bottom: 0; }
-  .roots-headline { font-size: clamp(3.0rem, 5vw, 4.4rem); font-weight: 300; line-height: 1.25; color: var(--charcoal); margin-bottom: 0; }
-  .roots-intro-body p { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 16px; }
-  .roots-more-content { display: none; margin-top: 72px; }
-  .roots-more-content.open { display: block; }
-  .roots-profiles { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
-  .profile-name { font-size: 1.8rem; letter-spacing: 0.02em; color: var(--charcoal); font-weight: 400; margin-bottom: 4px; }
-  .profile-gen { font-size: 1.0rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--label); margin-bottom: 28px; display: block; }
-  .profile-text { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); }
-  .profile-text p { margin-bottom: 14px; }
-
-  /* ─── SLIDESHOW ─── */
-  .slideshow { margin-bottom: 28px; }
-  .slideshow-track { position: relative; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; }
-  .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; display: flex; align-items: flex-end; padding: 16px 18px; }
-  .slide.active { opacity: 1; }
-  .slideshow-controls { display: flex; align-items: center; gap: 24px; margin-top: 14px; }
-  .ss-btn { font-family: 'DM Sans', sans-serif; font-size: 2.2rem; background: none; border: none; color: var(--charcoal); padding: 0 12px; transition: color 0.2s; line-height: 1; }
-  .ss-btn:hover { color: var(--terracotta); }
-  .ss-dots { display: flex; gap: 6px; flex: 1; }
-  .ss-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--charcoal); opacity: 0.2; transition: opacity 0.2s; }
-  .ss-dot.active { opacity: 1; background: var(--terracotta); }
+  /* ─── CONTACT GRID ─── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 0 48px 0 80px; }
+  .contact-col { padding: 72px 48px 72px 0; border-right: 2px solid rgba(28,28,26,0.08); }
+  .contact-col:nth-child(2) { padding-left: 48px; }
+  .contact-col:nth-child(3) { padding-left: 48px; border-right: none; }
+  .contact-col-title { font-size: 1.9rem; font-weight: 300; line-height: 1.3; color: var(--charcoal); margin-bottom: 28px; }
+  .contact-col p { font-size: 1.6rem; line-height: 1.85; color: var(--charcoal); margin-bottom: 8px; }
+  .contact-col a { color: var(--charcoal); text-decoration: none; border-bottom: 2px solid rgba(28,28,26,0.2); transition: color 0.2s, border-color 0.2s; }
+  .contact-col a:hover { color: var(--terracotta); border-color: var(--terracotta); }
+  .contact-divider { height: 2px; background: rgba(28,28,26,0.08); }
+  .contact-col .note { font-size: 1.3rem; line-height: 1.7; color: var(--charcoal); opacity: 0.6; margin-top: 20px; }
+  .social-row { display: flex; gap: 32px; margin-top: 12px; }
+  .social-row a { font-size: 1.3rem; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 2px solid rgba(28,28,26,0.2); }
 
   /* ─── FOOTER ─── */
-  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 45px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; margin-top: auto; }
-  .footer-address { font-size: 1.25rem; line-height: 1.9; color: var(--charcoal); letter-spacing: 0.04em; }
-  .footer-middle  { text-align: center; font-size: 1.25rem; line-height: 2; letter-spacing: 0.04em; color: var(--charcoal); }
-  .footer-right   { text-align: right; font-size: 1.25rem; line-height: 1.9; letter-spacing: 0.04em; color: var(--charcoal); }
+  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; margin-top: auto; }
+  .footer-address { font-size: 1.2rem; line-height: 1.9; color: var(--charcoal); letter-spacing: 0.04em; }
+  .footer-middle  { text-align: center; font-size: 1.2rem; line-height: 2; letter-spacing: 0.04em; color: var(--charcoal); }
+  .footer-right   { text-align: right; font-size: 1.2rem; line-height: 1.9; letter-spacing: 0.04em; color: var(--charcoal); }
   footer a { color: var(--charcoal); text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; }
   footer a:hover { color: var(--terracotta); }
 
@@ -123,7 +73,7 @@
 
 <!-- ─── NAV ─── -->
 <nav>
-  <a href="index.html" id="nav-logo" aria-label="blng studio home"><svg version="1.1" viewBox="0 0 1683.6 2383.92" xmlns="http://www.w3.org/2000/svg">
+  <a href="../index.html" id="nav-logo" aria-label="blng studio home"><svg version="1.1" viewBox="0 0 1683.6 2383.92" xmlns="http://www.w3.org/2000/svg">
   <defs id="defs1" />
   <g id="letter-l">
     <path d="m 351.6127,1257.772 h 28.34647 V 1025.331 H 351.6127 Z" stroke="#1c1c1a" stroke-width="0.24" stroke-linecap="round" stroke-linejoin="round" fill="none" />
@@ -173,211 +123,45 @@
 </svg></a>
   <ul class="nav-links">
     <li><a href="work.html">Work</a></li>
-    <li><a href="about.html" class="active">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
   </ul>
 </nav>
 
-<!-- ─── OPENING ─── -->
-<section class="opening">
-  <h1 class="opening-tagline">We are advocates of design as a necessary tool for progress.</h1>
-  <p class="opening-oneliner">We are London-based and internationally minded. Rooted in a family practice founded in 1955, we carry forward a tradition of craftsmanship, mastery, and care — not as nostalgia, but as a foundation for progress. Architecture, interiors, environments, objects — shaped by craft and research.</p>
-  <p class="opening-meta">London-based &nbsp;·&nbsp; Internationally minded &nbsp;·&nbsp; 1955</p>
+<!-- ─── HERO ─── -->
+<section class="hero reveal">
+  <h1 class="hero-heading">Every project<br>begins with<br>a <em>conversation.</em></h1>
 </section>
 
-<!-- ─── MANIFESTO ─── -->
-<section class="manifesto">
-  <div class="manifesto-inner">
-    <p class="manifesto-statement">We are advocates of design.<br>
-    We believe design is not optional.<br>
-    It is a necessary tool for progress — a mindset.</p>
+<!-- ─── CONTACT GRID ─── -->
+<div class="contact-grid">
 
-    <p class="manifesto-statement">We are progressive because the world demands it.<br>
-    Progress is not a style — it is a responsibility.<br>
-    A way of asking better questions — and uncovering ingenuity.</p>
-
-    <div class="manifesto-more" id="manifesto-more">
-      <p class="manifesto-statement">We are London-based and internationally minded.<br>
-      Rooted in a family practice founded in 1955,<br>
-      we carry forward a tradition of craftsmanship, mastery, and care<br>
-      not as nostalgia, but as a foundation for progress.</p>
-
-      <p class="manifesto-statement">Our work is shaped through <em>mestizaje</em>:<br>
-      where history, craft, research, and innovation converge.<br>
-      Ideas are not inherited as a whole,<br>
-      they are tested, transformed, and reassembled with function and delight.</p>
-
-      <p class="manifesto-statement">We see design opportunity everywhere:<br>
-      in architecture, environments, and objects;<br>
-      in what already exists — and what urgently needs to change.</p>
-
-      <p class="manifesto-statement">We pursue uncompromising design.<br>
-      Not louder. Not trend driven.<br>
-      We design with respect for people and nature.<br>
-      Not as a slogan, but as a practice.</p>
-
-      <p class="manifesto-statement">We value creative curiosity over fixed answers.<br>
-      We learn through making.<br>
-      We refine through iteration.<br>
-      We move forward — always.</p>
-
-      <p class="manifesto-statement">We are driven by <em>Vorwärtsdrang</em> —<br>
-      the urge to advance.<br>
-      To push beyond the expected.<br>
-      To shape what comes next.</p>
-
-      <p class="manifesto-statement">We design places people remember.<br>
-      Places to belong.<br>
-      Places to return to.</p>
-
-      <p class="manifesto-statement">This is not architecture as a service.<br>
-      It is fundamental / integral.<br>
-      A way of crafting our future.</p>
-    </div>
-
-    <button class="more-btn" id="manifesto-btn" aria-expanded="false">
-      <span class="btn-label">More</span> <span class="btn-arrow">↓</span>
-    </button>
+  <div class="contact-col reveal">
+    <p class="contact-col-title">London</p>
+    <p>3 Dericote Street<br>Hackney<br>London E8 4PG<br>United Kingdom</p>
+    <p style="margin-top:20px;"><a href="https://maps.google.com/?q=3+Dericote+Street+London+E8+4PG" target="_blank">Open in Google Maps ↗</a></p>
   </div>
-</section>
 
-<!-- ─── PILLARS ─── -->
-<section class="pillars">
-  <div class="pillars-grid">
-    <div class="pillar">
-      <span class="pillar-term">Mestizaje</span>
-      <p class="pillar-text">Ideas are not inherited whole. They are tested, transformed, and reassembled. History, craft, research, and innovation converge — producing work that is neither purely rooted nor purely new, but alive with both.</p>
-    </div>
-    <div class="pillar">
-      <span class="pillar-term">Making as Thinking</span>
-      <p class="pillar-text">We learn through making. We refine through iteration. Creative curiosity over fixed answers. The act of building is itself a way of knowing — not just executing ideas, but discovering them.</p>
-    </div>
-    <div class="pillar">
-      <span class="pillar-term">Vorwärtsdrang</span>
-      <p class="pillar-text">The urge to advance. Progress is not a style — it is a responsibility. A way of asking better questions, pushing beyond the expected, and shaping what comes next. Always forward.</p>
-    </div>
+  <div class="contact-col reveal">
+    <p class="contact-col-title">New enquiries</p>
+    <p><a href="mailto:info@blng.studio">info@blng.studio</a></p>
+    <p><a href="tel:+442045589744">+44 20 4558 9744</a></p>
+    <p class="note">For press enquiries:<br><a href="mailto:press@blng.studio">press@blng.studio</a></p>
+    <p class="note">For studio opportunities:<br><a href="mailto:people@blng.studio">people@blng.studio</a></p>
+    <p class="note" style="margin-top:24px; font-size:0.82rem;">We always welcome meeting thoughtful, curious talent. Due to the volume of applications, we can only respond to shortlisted candidates.</p>
   </div>
-</section>
 
-<!-- ─── PRINCIPALS ─── -->
-<section class="principals">
-
-  <div class="principals-photo-wrap">
-    <div class="principals-photo">
-      <span class="principals-photo-caption">Ariadna Lopez Bieling &amp; Leo Bieling — [Photo placeholder]</span>
+  <div class="contact-col reveal">
+    <p class="contact-col-title">Newsletter &amp; social</p>
+    <p>Join our mailing list for occasional updates on new work, events, and studio news.</p>
+    <p style="margin-top: 20px;"><a href="#">Subscribe to newsletter ↗</a></p>
+    <div class="social-row" style="margin-top:36px;">
+      <a href="https://www.linkedin.com/company/blng-studio" target="_blank">LinkedIn</a>
+      <a href="https://www.instagram.com/blng_studio/" target="_blank">Instagram</a>
     </div>
   </div>
 
-  <div class="principals-grid">
-
-    <div class="principal reveal">
-      <h2 class="principal-name">Ariadna Lopez Bieling</h2>
-      <div class="principal-bio">
-        <p>Ariadna leads creative direction and design strategy across architecture, interiors, and environmental design. Her work is rooted in materiality, tactility, and atmosphere — crafting environments that balance clarity and emotion.</p>
-        <p>Before co-founding the London studio, she worked with Heatherwick Studio and Architecture at Large in New York, contributing to cultural and commercial projects that bridged architecture, art, and design.</p>
-        <p>Beyond the studio, she draws from art, fashion, and performance. As a flamenco dancer, she brings the same precision and emotional honesty to her architecture: precise, human, quietly resonant.</p>
-      </div>
-      <div class="principal-section">
-        <span class="principal-section-label">Teaching &amp; Lectures</span>
-        <p class="placeholder-note">Content to follow.</p>
-      </div>
-    </div>
-
-    <div class="principal reveal">
-      <h2 class="principal-name">Leo Bieling</h2>
-      <div class="principal-bio">
-        <p>Leo leads design across architecture, environments, and objects. His practice combines structural ambition with material intelligence — precision at every scale, from building systems to surface detail.</p>
-        <p>Trained in computational design at Zaha Hadid Architects, Coop Himmelblau, and Plus Architecture, he brings digital fabrication and hands-on craft to complex built environments.</p>
-        <p>Outside the studio, Leo sails — a discipline that sharpens a hands-on understanding of structure, force, and material in the world as it actually is.</p>
-      </div>
-      <div class="principal-section">
-        <span class="principal-section-label">Teaching &amp; Lectures</span>
-        <p>ETH Zurich &nbsp;·&nbsp; Tsinghua University, Beijing &nbsp;·&nbsp; UCL Bartlett, London</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ─── ROOTS ─── -->
-<section class="roots">
-  <div class="roots-intro">
-    <div>
-      <h2 class="roots-headline">Three generations.<br>One continuing legacy.</h2>
-    </div>
-    <div>
-      <div class="roots-intro-body">
-        <p>blng studio builds on a family practice founded in 1955 in Kassel, Germany. Across three generations, the Bieling name has stood for rigour, craftsmanship, and precise delivery — values that continue to define the studio today.</p>
-        <p>This ongoing story is part of a 70-year dialogue on how design can endure, connect, and elevate daily life — each generation interpreting these principles through their own time, scale, and vision.</p>
-      </div>
-      <button class="more-btn" id="roots-btn" aria-expanded="false">
-        <span class="btn-label">More</span> <span class="btn-arrow">↓</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="roots-more-content" id="roots-more">
-    <div class="roots-profiles">
-
-      <div class="profile reveal">
-        <p class="profile-name">Prof. Thomas Bieling</p>
-        <span class="profile-gen">2nd Generation</span>
-        <div class="slideshow" id="ss-thomas">
-          <div class="slideshow-track">
-            <div class="slide active" style="background: linear-gradient(135deg, #c8c4b8 0%, #a09888 100%);">
-            </div>
-            <div class="slide" style="background: linear-gradient(135deg, #b8c0b0 0%, #889878 100%);">
-            </div>
-            <div class="slide" style="background: linear-gradient(135deg, #c0b8c8 0%, #9088a0 100%);">
-            </div>
-          </div>
-          <div class="slideshow-controls">
-            <button class="ss-btn ss-prev" aria-label="Previous">←</button>
-            <div class="ss-dots">
-              <span class="ss-dot active"></span>
-              <span class="ss-dot"></span>
-              <span class="ss-dot"></span>
-            </div>
-            <button class="ss-btn ss-next" aria-label="Next">→</button>
-          </div>
-        </div>
-        <div class="profile-text">
-          <p>Succeeding his father in 1988, Prof. Thomas Bieling led the practice through a period of prolific expansion — extending its reach across Germany and Central Europe. His work is marked by a refined, contextual, and expressive architectural sensibility that positioned the studio at the forefront of design dialogue in Germany.</p>
-          <p>As Professor of Design and Construction at the University of Kassel, Thomas championed the integration of creative inquiry and technical precision — shaping a generation of architects and bridging craft, discipline, and innovation in a body of work that continues to influence the practice today.</p>
-        </div>
-      </div>
-
-      <div class="profile reveal">
-        <p class="profile-name">Josef Bieling</p>
-        <span class="profile-gen">Founder</span>
-        <div class="slideshow" id="ss-josef">
-          <div class="slideshow-track">
-            <div class="slide active" style="background: linear-gradient(135deg, #706860 0%, #3a3028 100%);">
-            </div>
-            <div class="slide" style="background: linear-gradient(135deg, #605860 0%, #302830 100%);">
-            </div>
-            <div class="slide" style="background: linear-gradient(135deg, #686070 0%, #383040 100%);">
-            </div>
-          </div>
-          <div class="slideshow-controls">
-            <button class="ss-btn ss-prev" aria-label="Previous">←</button>
-            <div class="ss-dots">
-              <span class="ss-dot active"></span>
-              <span class="ss-dot"></span>
-              <span class="ss-dot"></span>
-            </div>
-            <button class="ss-btn ss-next" aria-label="Next">→</button>
-          </div>
-        </div>
-        <div class="profile-text">
-          <p>Founder Josef Bieling established a reputation for craft, faith, and clarity of construction — pioneering the aesthetic of post-war modernism in Germany. He designed more than 40 churches, community, and residential buildings distinguished by their material honesty and spatial calm.</p>
-          <p>In close intellectual exchange with Pritzker laureate Gottfried Böhm, his approach combined human dignity with architectural precision — laying the foundation for a practice rooted in care, purpose, and enduring craft.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
+</div>
 
 <!-- ─── FOOTER ─── -->
 <footer>
@@ -400,7 +184,7 @@
   'use strict';
 
   // Footer random color
-  var footerBgColors = ['#FFD67C', '#B8CE88', '#D98E6A'];
+  var footerBgColors = ['#FFD67C','#B8CE88','#D98E6A'];
   document.querySelector('footer').style.background = footerBgColors[Math.floor(Math.random() * footerBgColors.length)];
 
   // ─── CURSOR ───
@@ -451,47 +235,6 @@
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(function(el) { observer.observe(el); });
-
-  // ─── MORE TOGGLE ───
-  function initToggle(btnId, contentId) {
-    var btn     = document.getElementById(btnId);
-    var content = document.getElementById(contentId);
-    if (!btn || !content) return;
-    btn.addEventListener('click', function() {
-      var isOpen = content.classList.toggle('open');
-      btn.classList.toggle('open', isOpen);
-      btn.setAttribute('aria-expanded', isOpen);
-      btn.querySelector('.btn-label').textContent = isOpen ? 'Less' : 'More';
-      btn.querySelector('.btn-arrow').textContent  = isOpen ? '↑' : '↓';
-    });
-  }
-  initToggle('manifesto-btn', 'manifesto-more');
-  initToggle('roots-btn',     'roots-more');
-
-  // ─── SLIDESHOW ───
-  function initSlideshow(el) {
-    var slides = Array.from(el.querySelectorAll('.slide'));
-    var dots   = Array.from(el.querySelectorAll('.ss-dot'));
-    var prevBtn = el.querySelector('.ss-prev');
-    var nextBtn = el.querySelector('.ss-next');
-    var current = 0;
-
-    function goTo(n) {
-      slides[current].classList.remove('active');
-      dots[current].classList.remove('active');
-      current = (n + slides.length) % slides.length;
-      slides[current].classList.add('active');
-      dots[current].classList.add('active');
-    }
-
-    if (prevBtn) prevBtn.addEventListener('click', function() { goTo(current - 1); });
-    if (nextBtn) nextBtn.addEventListener('click', function() { goTo(current + 1); });
-    dots.forEach(function(dot, i) {
-      dot.addEventListener('click', function() { goTo(i); });
-    });
-  }
-
-  document.querySelectorAll('.slideshow').forEach(function(ss) { initSlideshow(ss); });
 
 })();
 </script>
