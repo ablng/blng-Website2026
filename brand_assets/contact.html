@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — blng studio</title>
+<style>
+  :root {
+    --charcoal:   #1C1C1A;
+    --porcelain:  #F8F6F3;
+    --terracotta: #D98E6A;
+    --mustard:    #FFC850;
+    --green:      #7A973F;
+    --page-bg:    #F8F6F3;
+    --label:      rgba(28,28,26,0.4);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--page-bg); color: var(--charcoal); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ─── CURSOR ─── */
+  #cursor      { position: fixed; width: 10px; height: 10px; background: var(--terracotta); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s ease; opacity: 0; }
+  #cursor-ring { position: fixed; width: 38px; height: 38px; border: 1px solid var(--charcoal); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); opacity: 0; transition: opacity 0.2s; }
+
+  /* ─── NAV ─── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 12px 48px 12px 14px; display: flex; justify-content: space-between; align-items: center; background: var(--page-bg); border-bottom: 2px solid rgba(28,28,26,0.07); }
+  #nav-logo { display: block; text-decoration: none; width: 573px; height: 122.5px; overflow: hidden; position: relative; opacity: 0.9; transition: opacity 0.25s; flex-shrink: 0; }
+  #nav-logo:hover { opacity: 1; }
+  #nav-logo svg { position: absolute; left: 0; top: -347px; width: 573px; height: 811.2px; }
+  .nav-links { display: flex; gap: 44px; list-style: none; }
+  .nav-links a { font-size: 1.4rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--charcoal); transition: color 0.25s; }
+  .nav-links a:hover { color: var(--terracotta); }
+  .nav-links a.active { color: var(--green); }
+
+  /* ─── HERO ─── */
+  .hero { padding: 200px 48px 96px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
+  .hero-heading { font-size: clamp(2.6rem, 5vw, 4.8rem); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; color: var(--charcoal); max-width: 820px; }
+  .hero-heading em { font-style: italic; color: var(--terracotta); }
+
+  /* ─── CONTACT GRID ─── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 0 48px 0 80px; }
+  .contact-col { padding: 72px 48px 72px 0; border-right: 2px solid rgba(28,28,26,0.08); }
+  .contact-col:nth-child(2) { padding-left: 48px; }
+  .contact-col:nth-child(3) { padding-left: 48px; border-right: none; }
+  .contact-col-title { font-size: 1.9rem; font-weight: 300; line-height: 1.3; color: var(--charcoal); margin-bottom: 28px; }
+  .contact-col p { font-size: 1.6rem; line-height: 1.85; color: var(--charcoal); margin-bottom: 8px; }
+  .contact-col a { color: var(--charcoal); text-decoration: none; border-bottom: 2px solid rgba(28,28,26,0.2); transition: color 0.2s, border-color 0.2s; }
+  .contact-col a:hover { color: var(--terracotta); border-color: var(--terracotta); }
+  .contact-divider { height: 2px; background: rgba(28,28,26,0.08); }
+  .contact-col .note { font-size: 1.3rem; line-height: 1.7; color: var(--charcoal); opacity: 0.6; margin-top: 20px; }
+  .social-row { display: flex; gap: 32px; margin-top: 12px; }
+  .social-row a { font-size: 1.3rem; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 2px solid rgba(28,28,26,0.2); }
+
+  /* ─── FOOTER ─── */
+  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; margin-top: auto; }
+  .footer-address { font-size: 1.2rem; line-height: 1.9; color: var(--charcoal); letter-spacing: 0.04em; }
+  .footer-middle  { text-align: center; font-size: 1.2rem; line-height: 2; letter-spacing: 0.04em; color: var(--charcoal); }
+  .footer-right   { text-align: right; font-size: 1.2rem; line-height: 1.9; letter-spacing: 0.04em; color: var(--charcoal); }
+  footer a { color: var(--charcoal); text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; }
+  footer a:hover { color: var(--terracotta); }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="index.html" id="nav-logo" aria-label="blng studio home"><svg version="1.1" viewBox="0 0 1683.6 2383.92" xmlns="http://www.w3.org/2000/svg">
+  <defs id="defs1" />
+  <g id="letter-l">
+    <path d="m 351.6127,1257.772 h 28.34647 V 1025.331 H 351.6127 Z" stroke="#1c1c1a" stroke-width="0.24" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    <path d="m 351.6127,1257.772 c 9.44885,0 18.89768,0 28.34647,0 0,-77.4804 0,-154.9606 0,-232.441 -9.44879,0 -18.89762,0 -28.34647,0 0,77.4804 0,154.9606 0,232.441 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-g">
+    <path d="M 656.68524,1286.2982 H 685.0317 V 1121.709 h -28.34646 z" stroke="#1c1c1a" stroke-width="0.24" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    <path d="m 615.4122,1146.0073 c 4.86325,0.017 10.0973,0.8877 15.1934,3.0837 5.09606,2.1959 10.05395,5.717 14.0511,9.9233 7.99424,8.4127 12.1451,19.5671 12.0285,30.9266 -0.11666,11.3594 -4.5009,22.9241 -12.0922,31.0692 -7.59135,8.1449 -18.3899,12.8703 -29.188,12.8712 -10.7981,10e-4 -21.5959,-4.7225 -29.18594,-12.8662 -7.59006,-8.1438 -11.97229,-19.7076 -12.0871,-31.0671 -0.11481,-11.3595 4.0379,-22.5145 12.03344,-30.9287 3.9978,-4.207 8.95637,-7.7289 14.05274,-9.9257 5.09646,-2.1967 10.33076,-3.0686 15.19406,-3.0863 z" stroke="#1c1c1a" stroke-width="0.24" fill="none" />
+    <path d="m 656.6852,1286.2982 c 0.37724,10.2195 -4.3598,22.6411 -12.0923,31.0722 -7.7325,8.4309 -18.46045,12.8711 -29.18793,12.8722 -10.72693,9e-4 -21.45337,-4.4368 -29.18437,-12.8649 -7.7311,-8.4281 -12.46675,-20.8466 -12.08864,-31.0648 H 545.7853 c 0.0239,8.5207 1.4149,17.6736 4.88816,26.6061 3.47324,8.9324 9.02894,17.6445 15.70539,24.6307 13.35295,13.9722 31.18935,21.0403 49.02612,21.0392 17.83743,-9e-4 35.67517,-7.0714 49.02966,-21.0467 6.67717,-6.9875 12.23357,-15.701 15.70752,-24.6349 3.47385,-8.9338 4.8653,-18.0876 4.88975,-26.6091 z" stroke="#1c1c1a" stroke-width="0.24" fill="none" />
+    <path d="m 615.4122,1117.6609 c 8.1874,-0.014 17.0631,1.5456 25.6276,5.0738 8.56463,3.5283 16.81805,9.0245 23.6024,16.095 6.7843,7.0707 12.09944,15.7157 15.50264,24.5042 3.40319,8.7885 4.89446,17.7203 4.88706,26.607 -0.007,8.8866 -1.51335,17.7281 -4.8732,26.5477 -1.67994,4.4098 -3.8234,8.8141 -6.47773,13.007 -2.65427,4.1929 -5.81957,8.1744 -9.23607,11.7048 -13.6663,14.1216 -31.3533,21.0265 -49.0399,21.0275 -17.6866,9e-4 -35.373,-6.9022 -49.0378,-21.0225 -3.4162,-3.5301 -6.58107,-7.5112 -9.235,-11.7038 -2.6539,-4.1926 -4.7969,-8.5968 -6.4764,-13.0064 -3.3589,-8.8193 -4.86405,-17.6606 -4.8705,-26.5472 -0.007,-8.8867 1.4856,-17.8187 4.8896,-26.6074 3.4041,-8.7888 8.72006,-17.4345 15.5051,-24.5058 6.78497,-7.0714 15.039,-12.5684 23.6039,-16.0975 8.5649,-3.5289 17.4407,-5.0898 25.6283,-5.0764 z" stroke="#1c1c1a" stroke-width="0.24" fill="none" />
+    <path d="m 615.4122,1117.6609 c -8.1876,-0.013 -17.0634,1.5475 -25.6283,5.0764 -8.5649,3.5291 -16.81893,9.0261 -23.6039,16.0975 -6.78504,7.0713 -12.101,15.717 -15.5051,24.5058 -3.404,8.7887 -4.89615,17.7207 -4.8896,26.6074 0.006,8.8866 1.5116,17.7279 4.8705,26.5472 1.6795,4.4096 3.8225,8.8138 6.4764,13.0064 2.65393,4.1926 5.8188,8.1737 9.235,11.7038 13.6648,14.1203 31.3512,21.0234 49.0378,21.0225 17.6866,0 35.3736,-6.9059 49.0399,-21.0275 3.4165,-3.5304 6.5818,-7.5119 9.23607,-11.7048 2.65433,-4.1929 4.79779,-8.5972 6.47773,-13.007 3.35985,-8.8196 4.86584,-17.6611 4.8732,-26.5477 0.007,-8.8867 -1.48387,-17.8185 -4.88706,-26.607 -3.4032,-8.7885 -8.71834,-17.4335 -15.50264,-24.5042 -6.78435,-7.0705 -15.03777,-12.5667 -23.6024,-16.095 -8.5645,-3.5282 -17.4402,-5.0881 -25.6276,-5.0738 z m 0,28.3464 c 4.86325,0.017 10.0973,0.8877 15.1934,3.0837 5.09606,2.1959 10.05395,5.717 14.0511,9.9233 7.99424,8.4127 12.1451,19.5671 12.0285,30.9266 -0.11666,11.3594 -4.5009,22.9241 -12.0922,31.0692 -7.59135,8.1449 -18.3899,12.8703 -29.188,12.8712 -10.7981,10e-4 -21.5959,-4.7225 -29.18594,-12.8662 -7.59006,-8.1438 -11.97229,-19.7076 -12.0871,-31.0671 -0.11481,-11.3595 4.0379,-22.5145 12.03344,-30.9287 3.9978,-4.207 8.95637,-7.7289 14.05274,-9.9257 5.09646,-2.1967 10.33076,-3.0686 15.19406,-3.0863 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 656.68524,1286.2982 c 9.44879,0 18.89756,0 28.34646,0 0,-54.8632 0,-109.7262 0,-164.5892 -9.4489,0 -18.89767,0 -28.34646,0 0,54.863 0,109.726 0,164.5892 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 656.6852,1286.2982 c 0.37724,10.2195 -4.3598,22.6411 -12.0923,31.0722 -7.7325,8.4309 -18.46045,12.8711 -29.18793,12.8722 -10.72693,9e-4 -21.45337,-4.4368 -29.18437,-12.8649 -7.7311,-8.4281 -12.46675,-20.8466 -12.08864,-31.0648 -9.44892,0 -18.89783,0 -28.34666,0 0.0239,8.5207 1.4149,17.6736 4.88816,26.6061 3.47324,8.9324 9.02894,17.6445 15.70539,24.6307 13.35295,13.9722 31.18935,21.0403 49.02612,21.0392 17.83743,-9e-4 35.67517,-7.0714 49.02966,-21.0467 6.67717,-6.9875 12.23357,-15.701 15.70752,-24.6349 3.47385,-8.9338 4.8653,-18.0876 4.88975,-26.6091 -9.4489,0 -18.89787,0 -28.3467,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-i">
+    <path d="m 1336.239,1080.4867 c 0.1832,-4.6193 -2.0978,-10.2148 -5.8116,-14.0309 -3.714,-3.8159 -8.8611,-5.8523 -14.0309,-5.8116 -5.1698,0.041 -10.3626,2.1584 -14.0308,5.8116 -3.6682,3.6533 -5.8117,8.8421 -5.8117,14.0309 0,5.1887 2.1435,10.3774 5.8117,14.0308 3.6682,3.6533 8.861,5.771 14.0308,5.8116 5.1698,0.041 10.3169,-1.9957 14.0309,-5.8116 3.7138,-3.8161 5.9948,-9.4117 5.8116,-14.0308 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 1330.5697,1121.709 c -9.4489,0 -18.8976,0 -28.3464,0 0,45.3542 0,90.7086 0,136.063 9.4488,0 18.8975,0 28.3464,0 0,-45.3544 0,-90.7088 0,-136.063 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-o">
+    <path d="m 1415.78,1117.6609 c -8.1875,-0.014 -17.0632,1.5456 -25.6277,5.0738 -8.5645,3.5283 -16.8181,9.0245 -23.6024,16.095 -6.7842,7.0707 -12.0993,15.7157 -15.5025,24.5042 -3.4032,8.7885 -4.8944,17.7203 -4.8871,26.607 0.01,8.8866 1.5133,17.7281 4.8731,26.5477 1.68,4.4098 3.8234,8.8141 6.4777,13.007 2.6543,4.1929 5.8197,8.1744 9.2362,11.7048 13.6663,14.1216 31.3533,21.0265 49.0399,21.0275 17.6867,9e-4 35.373,-6.9022 49.0378,-21.0225 3.4161,-3.5301 6.581,-7.5112 9.2349,-11.7038 2.654,-4.1926 4.7969,-8.5968 6.4765,-13.0064 3.359,-8.8193 4.864,-17.6606 4.8705,-26.5472 0.01,-8.8867 -1.4856,-17.8187 -4.8897,-26.6074 -3.404,-8.7888 -8.72,-17.4345 -15.505,-24.5058 -6.785,-7.0714 -15.0389,-12.5684 -23.604,-16.0975 -8.5648,-3.5289 -17.4407,-5.0898 -25.6282,-5.0764 z m 0,28.3464 c 4.8633,0.018 10.0976,0.8896 15.194,3.0863 5.0963,2.1968 10.0549,5.7187 14.0527,9.9257 7.9956,8.4142 12.1483,19.5692 12.0336,30.9287 -0.1149,11.3595 -4.4972,22.9233 -12.0872,31.0671 -7.5901,8.1437 -18.3878,12.8672 -29.1859,12.8662 -10.7982,-9e-4 -21.5968,-4.7263 -29.1881,-12.8712 -7.5913,-8.1451 -11.9754,-19.7098 -12.0921,-31.0692 -0.1166,-11.3595 4.0343,-22.5139 12.0284,-30.9266 3.9972,-4.2063 8.9552,-7.7274 14.0511,-9.9233 5.0961,-2.196 10.3302,-3.0667 15.1935,-3.0837 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-d">
+    <path d="m 1209.9194,1117.6609 c -8.1875,-0.014 -17.0632,1.5456 -25.6277,5.0738 -8.5645,3.5283 -16.8181,9.0245 -23.6024,16.095 -6.7841,7.0707 -12.0993,15.7157 -15.5025,24.5042 -3.4032,8.7885 -4.8946,17.7203 -4.8871,26.607 0.01,8.8866 1.5133,17.7281 4.8732,26.5477 1.6799,4.4098 3.8233,8.8141 6.4776,13.007 2.6543,4.1929 5.8197,8.1744 9.2362,11.7048 13.6663,14.1216 31.3533,21.0265 49.0399,21.0275 17.6867,9e-4 35.373,-6.9022 49.0378,-21.0225 3.4161,-3.5301 6.581,-7.5112 9.2349,-11.7038 2.654,-4.1926 4.7969,-8.5968 6.4765,-13.0064 3.3589,-8.8193 4.864,-17.6606 4.8705,-26.5472 0.01,-8.8867 -1.4856,-17.8187 -4.8897,-26.6074 -3.404,-8.7888 -8.72,-17.4345 -15.505,-24.5058 -6.7849,-7.0714 -15.0391,-12.5684 -23.604,-16.0975 -8.5648,-3.5289 -17.4407,-5.0898 -25.6282,-5.0764 z m 0,28.3464 c 4.8633,0.018 10.0977,0.8896 15.194,3.0863 5.0963,2.1968 10.0549,5.7187 14.0527,9.9257 7.9956,8.4142 12.1484,19.5692 12.0335,30.9287 -0.1148,11.3595 -4.4971,22.9233 -12.0871,31.0671 -7.59,8.1437 -18.3878,12.8672 -29.1859,12.8662 -10.7982,-9e-4 -21.5968,-4.7263 -29.188,-12.8712 -7.5914,-8.1451 -11.9755,-19.7098 -12.0922,-31.0692 -0.1166,-11.3595 4.0343,-22.5139 12.0284,-30.9266 3.9972,-4.2063 8.9552,-7.7274 14.0512,-9.9233 5.096,-2.196 10.3302,-3.0667 15.1934,-3.0837 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 1251.1997,1257.772 c 9.4489,0 18.8976,0 28.3464,0 0,-77.4804 0,-154.9606 0,-232.441 -9.4488,0 -18.8975,0 -28.3464,0 0,77.4804 0,154.9606 0,232.441 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-s">
+    <path d="m 883.45685,1218.7955 c 0.1582,3.4715 -2.54245,7.6475 -7.47225,10.5232 -4.9298,2.8758 -12.0887,4.4511 -18.03953,4.3588 -5.95081,0.092 -13.1098,-1.483 -18.03957,-4.3588 -4.9298,-2.8757 -7.6304,-7.0517 -7.4722,-10.5232 -9.44886,0 -18.8977,0 -28.3465,0 -0.334,10.0834 5.36736,22.2139 15.7747,30.5672 10.40736,8.3533 25.52076,12.9294 38.08357,12.6612 12.56273,0.2682 27.67623,-4.3079 38.08349,-12.6612 10.40734,-8.3533 16.10871,-20.4838 15.77474,-30.5672 0.2586,-9.4787 -4.6571,-20.8496 -13.98805,-29.0686 -10.48688,-9.2372 -26.55078,-14.4931 -39.87018,-14.1596 -5.95081,0.092 -13.1098,-1.4831 -18.03957,-4.3588 -4.9298,-2.8757 -7.6304,-7.0518 -7.4722,-10.5232 -0.1582,-3.4713 2.5424,-7.6472 7.4722,-10.5231 4.92977,-2.8756 12.08876,-4.4509 18.03957,-4.3587 5.95083,-0.092 13.10973,1.4831 18.03953,4.3587 4.9298,2.8759 7.63045,7.0518 7.47225,10.5231 9.44885,0 18.8977,0 28.34645,0 0.33397,-10.0833 -5.3674,-22.2136 -15.77474,-30.567 -10.40726,-8.3533 -25.52076,-12.9293 -38.08349,-12.6613 -12.56281,-0.268 -27.67621,4.308 -38.08357,12.6613 -10.40734,8.3534 -16.1087,20.4837 -15.7747,30.567 -0.2586,9.4789 4.6571,20.8499 13.9881,29.0687 10.48687,9.2372 26.5507,14.4932 39.87017,14.1597 5.95083,-0.092 13.10973,1.4832 18.03953,4.3588 4.9298,2.8758 7.63045,7.0517 7.47225,10.523 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-t">
+    <path d="m 939.3117,1257.772 c 9.44886,0 18.8976,0 28.34644,0 0,-77.4804 0,-154.9606 0,-232.441 -9.44884,0 -18.89758,0 -28.34644,0 0,77.4804 0,154.9606 0,232.441 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 983.82794,1117.457 c 0,-9.4488 0,-18.8977 0,-28.3464 -20.22864,0 -40.4574,0 -60.68604,0 0,9.4487 0,18.8976 0,28.3464 20.22864,0 40.4574,0 60.68604,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-n">
+    <path d="m 426.73083,1257.772 c 0,-25.0395 0,-50.0788 0,-75.1181 -9.44883,0 -18.89761,0 -28.34643,0 0,25.0393 0,50.0786 0,75.1181 9.44882,0 18.8976,0 28.34643,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 426.73013,1182.6539 c -0.33758,-8.5703 3.89054,-18.9872 10.79325,-26.0572 6.90265,-7.0701 16.47989,-10.7932 26.05712,-10.7932 9.57728,0 19.15452,3.7231 26.05716,10.7932 6.90271,7.07 11.13084,17.4869 10.79328,26.0572 9.44876,0 18.89761,0 28.3464,0 -0.0224,-7.6855 -1.32494,-15.9414 -4.57757,-23.9986 -3.25257,-8.0573 -8.45532,-15.916 -14.70767,-22.218 -12.50476,-12.6038 -29.2082,-18.9803 -45.9116,-18.9803 -16.7034,0 -33.4068,6.3765 -45.91155,18.9803 -6.25239,6.302 -11.45508,14.1607 -14.70768,22.218 -3.25265,8.0572 -4.55511,16.3131 -4.5776,23.9986 9.44883,0 18.89763,0 28.34646,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 500.43094,1257.772 c 9.44876,0 18.89761,0 28.3464,0 0,-25.0395 0,-50.0788 0,-75.1181 -9.44879,0 -18.89764,0 -28.3464,0 0,25.0393 0,50.0786 0,75.1181 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-u">
+    <path d="m 1029.1824,1121.709 c -9.4489,0 -18.8977,0 -28.3465,0 0,25.9844 0,51.9687 0,77.9531 9.4488,0 18.8976,0 28.3465,0 0,-25.9844 0,-51.9687 0,-77.9531 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 1097.2131,1199.6621 c 0.3116,7.9109 -3.5913,17.5264 -9.963,24.0525 -6.3716,6.5261 -15.2119,9.9629 -24.0525,9.9629 -8.8403,0 -17.6809,-3.4368 -24.0525,-9.9629 -6.3715,-6.5261 -10.2745,-16.1416 -9.9627,-24.0525 -9.4489,0 -18.8977,0 -28.3465,0 0.021,7.3513 1.2674,15.2482 4.3785,22.9551 3.1112,7.7069 8.0876,15.224 14.0681,21.2518 11.961,12.0558 27.9381,18.1549 43.9151,18.1549 15.9772,0 31.9543,-6.0991 43.9152,-18.1549 5.9806,-6.0278 10.957,-13.5449 14.0682,-21.2518 3.1112,-7.7069 4.357,-15.6038 4.3786,-22.9551 -9.4489,0 -18.8977,0 -28.3465,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 1097.2131,1121.709 c 0,25.9844 0,51.9687 0,77.9531 9.4488,0 18.8976,0 28.3465,0 0,-25.9844 0,-51.9687 0,-77.9531 -9.4489,0 -18.8977,0 -28.3465,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-b">
+    <path d="m 267.81995,1117.6609 c -8.1875,-0.013 -17.06331,1.5475 -25.62822,5.0764 -8.56493,3.5291 -16.81894,9.0261 -23.60393,16.0975 -6.78502,7.0713 -12.101,15.717 -15.50504,24.5058 -3.40406,8.7887 -4.89618,17.7207 -4.88969,26.6074 0.006,8.8866 1.5116,17.7279 4.87059,26.5472 1.67949,4.4096 3.82246,8.8138 6.47638,13.0064 2.65391,4.1926 5.81879,8.1737 9.23498,11.7038 13.66485,14.1203 31.35115,21.0234 49.03782,21.0225 17.68664,0 35.37362,-6.9059 49.03986,-21.0275 3.41656,-3.5304 6.5818,-7.5119 9.23614,-11.7048 2.65436,-4.1929 4.79776,-8.5972 6.47769,-13.007 3.35987,-8.8196 4.86581,-17.6611 4.87317,-26.5477 0.007,-8.8867 -1.48386,-17.8185 -4.88703,-26.607 -3.40323,-8.7885 -8.71835,-17.4335 -15.50265,-24.5042 -6.78427,-7.0705 -15.03775,-12.5667 -23.60236,-16.095 -8.56454,-3.5282 -17.44021,-5.0881 -25.62771,-5.0738 z m 0,28.3464 c 4.86328,0.017 10.09741,0.8877 15.19345,3.0837 5.09607,2.1959 10.05398,5.717 14.0511,9.9233 7.99425,8.4127 12.14516,19.5671 12.02852,30.9266 -0.11667,11.3594 -4.50082,22.9241 -12.09217,31.0692 -7.59133,8.1449 -18.38989,12.8703 -29.18801,12.8712 -10.79816,10e-4 -21.59592,-4.7225 -29.18595,-12.8662 -7.59002,-8.1438 -11.97232,-19.7076 -12.08713,-31.0671 -0.11477,-11.3595 4.03792,-22.5145 12.03351,-30.9287 3.99781,-4.207 8.95632,-7.7289 14.05272,-9.9257 5.09641,-2.1967 10.33068,-3.0686 15.19396,-3.0863 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 226.53973,1257.772 c 0,-77.4804 0,-154.9606 0,-232.441 -9.4488,0 -18.89763,0 -28.34645,0 0,77.4804 0,154.9606 0,232.441 9.44882,0 18.89765,0 28.34645,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+</svg></a>
+  <ul class="nav-links">
+    <li><a href="work.html">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero reveal">
+  <h1 class="hero-heading">Every project<br>begins with<br>a <em>conversation.</em></h1>
+</section>
+
+<!-- ─── CONTACT GRID ─── -->
+<div class="contact-grid">
+
+  <div class="contact-col reveal">
+    <p class="contact-col-title">London</p>
+    <p>3 Dericote Street<br>Hackney<br>London E8 4PG<br>United Kingdom</p>
+    <p style="margin-top:20px;"><a href="https://maps.google.com/?q=3+Dericote+Street+London+E8+4PG" target="_blank">Open in Google Maps ↗</a></p>
+  </div>
+
+  <div class="contact-col reveal">
+    <p class="contact-col-title">New enquiries</p>
+    <p><a href="mailto:info@blng.studio">info@blng.studio</a></p>
+    <p><a href="tel:+442045589744">+44 20 4558 9744</a></p>
+    <p class="note">For press enquiries:<br><a href="mailto:press@blng.studio">press@blng.studio</a></p>
+    <p class="note">For studio opportunities:<br><a href="mailto:people@blng.studio">people@blng.studio</a></p>
+    <p class="note" style="margin-top:24px; font-size:0.82rem;">We always welcome meeting thoughtful, curious talent. Due to the volume of applications, we can only respond to shortlisted candidates.</p>
+  </div>
+
+  <div class="contact-col reveal">
+    <p class="contact-col-title">Newsletter &amp; social</p>
+    <p>Join our mailing list for occasional updates on new work, events, and studio news.</p>
+    <p style="margin-top: 20px;"><a href="#">Subscribe to newsletter ↗</a></p>
+    <div class="social-row" style="margin-top:36px;">
+      <a href="https://www.linkedin.com/company/blng-studio" target="_blank">LinkedIn</a>
+      <a href="https://www.instagram.com/blng_studio/" target="_blank">Instagram</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-address">3 Dericote Street,<br>London E8 4PG,<br>United Kingdom</div>
+  <div class="footer-middle">
+    <a href="tel:+442045589744">+44 20 4558 9744</a><br>
+    <a href="mailto:info@blng.studio">info@blng.studio</a><br>
+    <a href="#">Newsletter</a><br>
+    <a href="https://www.linkedin.com/company/blng-studio" target="_blank">LinkedIn</a> &nbsp;—&nbsp;
+    <a href="https://www.instagram.com/blng_studio/" target="_blank">Instagram</a>
+  </div>
+  <div class="footer-right">
+    <a href="legal.html">Legal &amp; Privacy Notice</a><br>
+    &copy; 2026 blng studio
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // Footer random color
+  var footerBgColors = ['#FFD67C','#B8CE88','#D98E6A'];
+  document.querySelector('footer').style.background = footerBgColors[Math.floor(Math.random() * footerBgColors.length)];
+
+  // ─── CURSOR ───
+  var cursor = document.getElementById('cursor');
+  var ring   = document.getElementById('cursor-ring');
+  var mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', function(e) {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left    = mx + 'px';
+    cursor.style.top     = my + 'px';
+    cursor.style.opacity = '1';
+    ring.style.opacity   = '0.4';
+  });
+  document.addEventListener('mouseleave', function() {
+    cursor.style.opacity = '0';
+    ring.style.opacity   = '0';
+  });
+  (function lerp() {
+    rx += (mx - rx) * 0.10;
+    ry += (my - ry) * 0.10;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(lerp);
+  })();
+
+  document.querySelectorAll('a, button').forEach(function(el) {
+    el.addEventListener('mouseenter', function() {
+      cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
+      ring.style.transform   = 'translate(-50%,-50%) scale(1.3)';
+      ring.style.opacity     = '0.75';
+    });
+    el.addEventListener('mouseleave', function() {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.transform   = 'translate(-50%,-50%) scale(1)';
+      ring.style.opacity     = '0.4';
+    });
+  });
+
+  // ─── SCROLL REVEAL ───
+  var reveals = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(function(el) { observer.observe(el); });
+
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — blng studio</title>
+<style>
+  :root {
+    --charcoal:   #1C1C1A;
+    --porcelain:  #F8F6F3;
+    --terracotta: #D98E6A;
+    --mustard:    #FFC850;
+    --green:      #7A973F;
+    --page-bg:    #F8F6F3;
+    --label:      rgba(28,28,26,0.45);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--page-bg); color: var(--charcoal); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ─── CURSOR ─── */
+  #cursor      { position: fixed; width: 10px; height: 10px; background: var(--terracotta); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s ease; opacity: 0; }
+  #cursor-ring { position: fixed; width: 38px; height: 38px; border: 1px solid var(--charcoal); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); opacity: 0; transition: opacity 0.2s; }
+
+  /* ─── NAV ─── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 12px 48px 12px 14px; display: flex; justify-content: space-between; align-items: center; background: var(--page-bg); border-bottom: 2px solid rgba(28,28,26,0.07); }
+  #nav-logo { display: block; text-decoration: none; width: 573px; height: 122.5px; overflow: hidden; position: relative; opacity: 0.9; transition: opacity 0.25s; flex-shrink: 0; }
+  #nav-logo:hover { opacity: 1; }
+  #nav-logo svg { position: absolute; left: 0; top: -347px; width: 573px; height: 811.2px; }
+  .nav-links { display: flex; gap: 44px; list-style: none; }
+  .nav-links a { font-size: 1.4rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--charcoal); transition: color 0.25s; }
+  .nav-links a:hover { color: var(--terracotta); }
+  .nav-links a.active { color: var(--green); }
+
+  /* ─── OPENING ─── */
+  .opening { padding: 200px 48px 80px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
+  .opening-tagline { font-size: clamp(2.6rem, 5vw, 4.8rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.01em; color: var(--charcoal); white-space: normal; margin-bottom: 48px; }
+  .opening-oneliner { font-size: 1.9rem; line-height: 1.85; color: var(--charcoal); max-width: 1020px; }
+  .opening-meta { font-size: 1.1rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); margin-top: 20px; }
+
+  /* ─── MANIFESTO (yellow section) ─── */
+  .manifesto { background: #FFD67C; padding: 100px 48px 120px 80px; }
+  .manifesto-inner { max-width: 860px; }
+  .manifesto-statement { font-size: 1.9rem; font-weight: 300; line-height: 1.55; color: var(--terracotta); margin-bottom: 1.1em; }
+  .manifesto-statement em { font-style: italic; color: var(--terracotta); }
+  .manifesto-more { display: none; }
+  .manifesto-more.open { display: block; }
+
+  /* ─── MORE / FILTER BUTTON ─── */
+  .more-btn { display: inline-flex; align-items: center; gap: 12px; font-family: 'DM Sans', sans-serif; font-size: 1.1rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 28px; border-radius: 999px; border: 2px solid rgba(28,28,26,0.35); background: transparent; color: var(--charcoal); transition: border-color 0.2s, color 0.2s; margin-top: 48px; cursor: pointer; }
+  .more-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
+  .more-btn .btn-arrow { transition: transform 0.2s; font-style: normal; }
+  .more-btn.open .btn-arrow { transform: rotate(180deg); }
+
+  /* ─── PILLARS ─── */
+  .pillars { padding: 80px 48px 0 80px; border-top: 2px solid rgba(28,28,26,0.08); border-bottom: 2px solid rgba(28,28,26,0.08); }
+  .pillars-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+  .pillar { padding: 40px 48px 40px 0; border-right: 2px solid rgba(28,28,26,0.1); }
+  .pillar:nth-child(2) { padding-left: 48px; }
+  .pillar:nth-child(3) { padding-left: 48px; border-right: none; }
+  .pillar-term { font-size: 2.0rem; font-style: italic; color: var(--terracotta); margin-bottom: 22px; display: block; font-weight: 700; }
+  .pillar-text { font-size: 1.75rem; line-height: 1.9; color: var(--charcoal); }
+
+  /* ─── PRINCIPALS ─── */
+  .principals { padding: 96px 48px 96px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
+  .section-label { font-size: 1.0rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--label); display: block; margin-bottom: 40px; }
+  .principals-photo-wrap { margin-bottom: 72px; }
+  .principals-photo { width: 100%; max-width: 760px; aspect-ratio: 4 / 3; background: linear-gradient(145deg, #c8bfb2 0%, #a89880 60%, #8a7a68 100%); display: flex; align-items: flex-end; padding: 20px 24px; }
+  .principals-photo-caption { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--porcelain); }
+  .principals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .principal-name { font-size: 2.8rem; letter-spacing: 0.01em; color: var(--charcoal); font-weight: 700; margin-bottom: 6px; }
+  .principal-role { font-size: 1.0rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); margin-bottom: 32px; display: block; }
+  .principal-bio p { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 16px; }
+  .principal-section { margin-top: 36px; padding-top: 28px; border-top: 2px solid rgba(28,28,26,0.08); }
+  .principal-section-label { font-size: 1.0rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); margin-bottom: 14px; display: block; }
+  .principal-section p { font-size: 1.6rem; line-height: 1.75; color: var(--charcoal); }
+  .placeholder-note { font-style: italic; color: var(--terracotta); font-size: 1.6rem; }
+
+  /* ─── ROOTS ─── */
+  .roots { padding: 96px 48px 96px 80px; }
+  .roots-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-bottom: 0; }
+  .roots-headline { font-size: clamp(3.0rem, 5vw, 4.4rem); font-weight: 300; line-height: 1.25; color: var(--charcoal); margin-bottom: 0; }
+  .roots-intro-body p { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 16px; }
+  .roots-more-content { display: none; margin-top: 72px; }
+  .roots-more-content.open { display: block; }
+  .roots-profiles { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .profile-name { font-size: 1.8rem; letter-spacing: 0.02em; color: var(--charcoal); font-weight: 400; margin-bottom: 4px; }
+  .profile-gen { font-size: 1.0rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--label); margin-bottom: 28px; display: block; }
+  .profile-text { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); }
+  .profile-text p { margin-bottom: 14px; }
+
+  /* ─── SLIDESHOW ─── */
+  .slideshow { margin-bottom: 28px; }
+  .slideshow-track { position: relative; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; }
+  .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; display: flex; align-items: flex-end; padding: 16px 18px; }
+  .slide.active { opacity: 1; }
+  .slideshow-controls { display: flex; align-items: center; gap: 24px; margin-top: 14px; }
+  .ss-btn { font-family: 'DM Sans', sans-serif; font-size: 2.2rem; background: none; border: none; color: var(--charcoal); padding: 0 12px; transition: color 0.2s; line-height: 1; }
+  .ss-btn:hover { color: var(--terracotta); }
+  .ss-dots { display: flex; gap: 6px; flex: 1; }
+  .ss-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--charcoal); opacity: 0.2; transition: opacity 0.2s; }
+  .ss-dot.active { opacity: 1; background: var(--terracotta); }
+
+  /* ─── FOOTER ─── */
+  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 45px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; margin-top: auto; }
+  .footer-address { font-size: 1.25rem; line-height: 1.9; color: var(--charcoal); letter-spacing: 0.04em; }
+  .footer-middle  { text-align: center; font-size: 1.25rem; line-height: 2; letter-spacing: 0.04em; color: var(--charcoal); }
+  .footer-right   { text-align: right; font-size: 1.25rem; line-height: 1.9; letter-spacing: 0.04em; color: var(--charcoal); }
+  footer a { color: var(--charcoal); text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; }
+  footer a:hover { color: var(--terracotta); }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="index.html" id="nav-logo" aria-label="blng studio home"><svg version="1.1" viewBox="0 0 1683.6 2383.92" xmlns="http://www.w3.org/2000/svg">
+  <defs id="defs1" />
+  <g id="letter-l">
+    <path d="m 351.6127,1257.772 h 28.34647 V 1025.331 H 351.6127 Z" stroke="#1c1c1a" stroke-width="0.24" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    <path d="m 351.6127,1257.772 c 9.44885,0 18.89768,0 28.34647,0 0,-77.4804 0,-154.9606 0,-232.441 -9.44879,0 -18.89762,0 -28.34647,0 0,77.4804 0,154.9606 0,232.441 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-g">
+    <path d="M 656.68524,1286.2982 H 685.0317 V 1121.709 h -28.34646 z" stroke="#1c1c1a" stroke-width="0.24" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    <path d="m 615.4122,1146.0073 c 4.86325,0.017 10.0973,0.8877 15.1934,3.0837 5.09606,2.1959 10.05395,5.717 14.0511,9.9233 7.99424,8.4127 12.1451,19.5671 12.0285,30.9266 -0.11666,11.3594 -4.5009,22.9241 -12.0922,31.0692 -7.59135,8.1449 -18.3899,12.8703 -29.188,12.8712 -10.7981,10e-4 -21.5959,-4.7225 -29.18594,-12.8662 -7.59006,-8.1438 -11.97229,-19.7076 -12.0871,-31.0671 -0.11481,-11.3595 4.0379,-22.5145 12.03344,-30.9287 3.9978,-4.207 8.95637,-7.7289 14.05274,-9.9257 5.09646,-2.1967 10.33076,-3.0686 15.19406,-3.0863 z" stroke="#1c1c1a" stroke-width="0.24" fill="none" />
+    <path d="m 656.6852,1286.2982 c 0.37724,10.2195 -4.3598,22.6411 -12.0923,31.0722 -7.7325,8.4309 -18.46045,12.8711 -29.18793,12.8722 -10.72693,9e-4 -21.45337,-4.4368 -29.18437,-12.8649 -7.7311,-8.4281 -12.46675,-20.8466 -12.08864,-31.0648 H 545.7853 c 0.0239,8.5207 1.4149,17.6736 4.88816,26.6061 3.47324,8.9324 9.02894,17.6445 15.70539,24.6307 13.35295,13.9722 31.18935,21.0403 49.02612,21.0392 17.83743,-9e-4 35.67517,-7.0714 49.02966,-21.0467 6.67717,-6.9875 12.23357,-15.701 15.70752,-24.6349 3.47385,-8.9338 4.8653,-18.0876 4.88975,-26.6091 z" stroke="#1c1c1a" stroke-width="0.24" fill="none" />
+    <path d="m 615.4122,1117.6609 c 8.1874,-0.014 17.0631,1.5456 25.6276,5.0738 8.56463,3.5283 16.81805,9.0245 23.6024,16.095 6.7843,7.0707 12.09944,15.7157 15.50264,24.5042 3.40319,8.7885 4.89446,17.7203 4.88706,26.607 -0.007,8.8866 -1.51335,17.7281 -4.8732,26.5477 -1.67994,4.4098 -3.8234,8.8141 -6.47773,13.007 -2.65427,4.1929 -5.81957,8.1744 -9.23607,11.7048 -13.6663,14.1216 -31.3533,21.0265 -49.0399,21.0275 -17.6866,9e-4 -35.373,-6.9022 -49.0378,-21.0225 -3.4162,-3.5301 -6.58107,-7.5112 -9.235,-11.7038 -2.6539,-4.1926 -4.7969,-8.5968 -6.4764,-13.0064 -3.3589,-8.8193 -4.86405,-17.6606 -4.8705,-26.5472 -0.007,-8.8867 1.4856,-17.8187 4.8896,-26.6074 3.4041,-8.7888 8.72006,-17.4345 15.5051,-24.5058 6.78497,-7.0714 15.039,-12.5684 23.6039,-16.0975 8.5649,-3.5289 17.4407,-5.0898 25.6283,-5.0764 z" stroke="#1c1c1a" stroke-width="0.24" fill="none" />
+    <path d="m 615.4122,1117.6609 c -8.1876,-0.013 -17.0634,1.5475 -25.6283,5.0764 -8.5649,3.5291 -16.81893,9.0261 -23.6039,16.0975 -6.78504,7.0713 -12.101,15.717 -15.5051,24.5058 -3.404,8.7887 -4.89615,17.7207 -4.8896,26.6074 0.006,8.8866 1.5116,17.7279 4.8705,26.5472 1.6795,4.4096 3.8225,8.8138 6.4764,13.0064 2.65393,4.1926 5.8188,8.1737 9.235,11.7038 13.6648,14.1203 31.3512,21.0234 49.0378,21.0225 17.6866,0 35.3736,-6.9059 49.0399,-21.0275 3.4165,-3.5304 6.5818,-7.5119 9.23607,-11.7048 2.65433,-4.1929 4.79779,-8.5972 6.47773,-13.007 3.35985,-8.8196 4.86584,-17.6611 4.8732,-26.5477 0.007,-8.8867 -1.48387,-17.8185 -4.88706,-26.607 -3.4032,-8.7885 -8.71834,-17.4335 -15.50264,-24.5042 -6.78435,-7.0705 -15.03777,-12.5667 -23.6024,-16.095 -8.5645,-3.5282 -17.4402,-5.0881 -25.6276,-5.0738 z m 0,28.3464 c 4.86325,0.017 10.0973,0.8877 15.1934,3.0837 5.09606,2.1959 10.05395,5.717 14.0511,9.9233 7.99424,8.4127 12.1451,19.5671 12.0285,30.9266 -0.11666,11.3594 -4.5009,22.9241 -12.0922,31.0692 -7.59135,8.1449 -18.3899,12.8703 -29.188,12.8712 -10.7981,10e-4 -21.5959,-4.7225 -29.18594,-12.8662 -7.59006,-8.1438 -11.97229,-19.7076 -12.0871,-31.0671 -0.11481,-11.3595 4.0379,-22.5145 12.03344,-30.9287 3.9978,-4.207 8.95637,-7.7289 14.05274,-9.9257 5.09646,-2.1967 10.33076,-3.0686 15.19406,-3.0863 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 656.68524,1286.2982 c 9.44879,0 18.89756,0 28.34646,0 0,-54.8632 0,-109.7262 0,-164.5892 -9.4489,0 -18.89767,0 -28.34646,0 0,54.863 0,109.726 0,164.5892 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 656.6852,1286.2982 c 0.37724,10.2195 -4.3598,22.6411 -12.0923,31.0722 -7.7325,8.4309 -18.46045,12.8711 -29.18793,12.8722 -10.72693,9e-4 -21.45337,-4.4368 -29.18437,-12.8649 -7.7311,-8.4281 -12.46675,-20.8466 -12.08864,-31.0648 -9.44892,0 -18.89783,0 -28.34666,0 0.0239,8.5207 1.4149,17.6736 4.88816,26.6061 3.47324,8.9324 9.02894,17.6445 15.70539,24.6307 13.35295,13.9722 31.18935,21.0403 49.02612,21.0392 17.83743,-9e-4 35.67517,-7.0714 49.02966,-21.0467 6.67717,-6.9875 12.23357,-15.701 15.70752,-24.6349 3.47385,-8.9338 4.8653,-18.0876 4.88975,-26.6091 -9.4489,0 -18.89787,0 -28.3467,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-i">
+    <path d="m 1336.239,1080.4867 c 0.1832,-4.6193 -2.0978,-10.2148 -5.8116,-14.0309 -3.714,-3.8159 -8.8611,-5.8523 -14.0309,-5.8116 -5.1698,0.041 -10.3626,2.1584 -14.0308,5.8116 -3.6682,3.6533 -5.8117,8.8421 -5.8117,14.0309 0,5.1887 2.1435,10.3774 5.8117,14.0308 3.6682,3.6533 8.861,5.771 14.0308,5.8116 5.1698,0.041 10.3169,-1.9957 14.0309,-5.8116 3.7138,-3.8161 5.9948,-9.4117 5.8116,-14.0308 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 1330.5697,1121.709 c -9.4489,0 -18.8976,0 -28.3464,0 0,45.3542 0,90.7086 0,136.063 9.4488,0 18.8975,0 28.3464,0 0,-45.3544 0,-90.7088 0,-136.063 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-o">
+    <path d="m 1415.78,1117.6609 c -8.1875,-0.014 -17.0632,1.5456 -25.6277,5.0738 -8.5645,3.5283 -16.8181,9.0245 -23.6024,16.095 -6.7842,7.0707 -12.0993,15.7157 -15.5025,24.5042 -3.4032,8.7885 -4.8944,17.7203 -4.8871,26.607 0.01,8.8866 1.5133,17.7281 4.8731,26.5477 1.68,4.4098 3.8234,8.8141 6.4777,13.007 2.6543,4.1929 5.8197,8.1744 9.2362,11.7048 13.6663,14.1216 31.3533,21.0265 49.0399,21.0275 17.6867,9e-4 35.373,-6.9022 49.0378,-21.0225 3.4161,-3.5301 6.581,-7.5112 9.2349,-11.7038 2.654,-4.1926 4.7969,-8.5968 6.4765,-13.0064 3.359,-8.8193 4.864,-17.6606 4.8705,-26.5472 0.01,-8.8867 -1.4856,-17.8187 -4.8897,-26.6074 -3.404,-8.7888 -8.72,-17.4345 -15.505,-24.5058 -6.785,-7.0714 -15.0389,-12.5684 -23.604,-16.0975 -8.5648,-3.5289 -17.4407,-5.0898 -25.6282,-5.0764 z m 0,28.3464 c 4.8633,0.018 10.0976,0.8896 15.194,3.0863 5.0963,2.1968 10.0549,5.7187 14.0527,9.9257 7.9956,8.4142 12.1483,19.5692 12.0336,30.9287 -0.1149,11.3595 -4.4972,22.9233 -12.0872,31.0671 -7.5901,8.1437 -18.3878,12.8672 -29.1859,12.8662 -10.7982,-9e-4 -21.5968,-4.7263 -29.1881,-12.8712 -7.5913,-8.1451 -11.9754,-19.7098 -12.0921,-31.0692 -0.1166,-11.3595 4.0343,-22.5139 12.0284,-30.9266 3.9972,-4.2063 8.9552,-7.7274 14.0511,-9.9233 5.0961,-2.196 10.3302,-3.0667 15.1935,-3.0837 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-d">
+    <path d="m 1209.9194,1117.6609 c -8.1875,-0.014 -17.0632,1.5456 -25.6277,5.0738 -8.5645,3.5283 -16.8181,9.0245 -23.6024,16.095 -6.7841,7.0707 -12.0993,15.7157 -15.5025,24.5042 -3.4032,8.7885 -4.8946,17.7203 -4.8871,26.607 0.01,8.8866 1.5133,17.7281 4.8732,26.5477 1.6799,4.4098 3.8233,8.8141 6.4776,13.007 2.6543,4.1929 5.8197,8.1744 9.2362,11.7048 13.6663,14.1216 31.3533,21.0265 49.0399,21.0275 17.6867,9e-4 35.373,-6.9022 49.0378,-21.0225 3.4161,-3.5301 6.581,-7.5112 9.2349,-11.7038 2.654,-4.1926 4.7969,-8.5968 6.4765,-13.0064 3.3589,-8.8193 4.864,-17.6606 4.8705,-26.5472 0.01,-8.8867 -1.4856,-17.8187 -4.8897,-26.6074 -3.404,-8.7888 -8.72,-17.4345 -15.505,-24.5058 -6.7849,-7.0714 -15.0391,-12.5684 -23.604,-16.0975 -8.5648,-3.5289 -17.4407,-5.0898 -25.6282,-5.0764 z m 0,28.3464 c 4.8633,0.018 10.0977,0.8896 15.194,3.0863 5.0963,2.1968 10.0549,5.7187 14.0527,9.9257 7.9956,8.4142 12.1484,19.5692 12.0335,30.9287 -0.1148,11.3595 -4.4971,22.9233 -12.0871,31.0671 -7.59,8.1437 -18.3878,12.8672 -29.1859,12.8662 -10.7982,-9e-4 -21.5968,-4.7263 -29.188,-12.8712 -7.5914,-8.1451 -11.9755,-19.7098 -12.0922,-31.0692 -0.1166,-11.3595 4.0343,-22.5139 12.0284,-30.9266 3.9972,-4.2063 8.9552,-7.7274 14.0512,-9.9233 5.096,-2.196 10.3302,-3.0667 15.1934,-3.0837 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 1251.1997,1257.772 c 9.4489,0 18.8976,0 28.3464,0 0,-77.4804 0,-154.9606 0,-232.441 -9.4488,0 -18.8975,0 -28.3464,0 0,77.4804 0,154.9606 0,232.441 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-s">
+    <path d="m 883.45685,1218.7955 c 0.1582,3.4715 -2.54245,7.6475 -7.47225,10.5232 -4.9298,2.8758 -12.0887,4.4511 -18.03953,4.3588 -5.95081,0.092 -13.1098,-1.483 -18.03957,-4.3588 -4.9298,-2.8757 -7.6304,-7.0517 -7.4722,-10.5232 -9.44886,0 -18.8977,0 -28.3465,0 -0.334,10.0834 5.36736,22.2139 15.7747,30.5672 10.40736,8.3533 25.52076,12.9294 38.08357,12.6612 12.56273,0.2682 27.67623,-4.3079 38.08349,-12.6612 10.40734,-8.3533 16.10871,-20.4838 15.77474,-30.5672 0.2586,-9.4787 -4.6571,-20.8496 -13.98805,-29.0686 -10.48688,-9.2372 -26.55078,-14.4931 -39.87018,-14.1596 -5.95081,0.092 -13.1098,-1.4831 -18.03957,-4.3588 -4.9298,-2.8757 -7.6304,-7.0518 -7.4722,-10.5232 -0.1582,-3.4713 2.5424,-7.6472 7.4722,-10.5231 4.92977,-2.8756 12.08876,-4.4509 18.03957,-4.3587 5.95083,-0.092 13.10973,1.4831 18.03953,4.3587 4.9298,2.8759 7.63045,7.0518 7.47225,10.5231 9.44885,0 18.8977,0 28.34645,0 0.33397,-10.0833 -5.3674,-22.2136 -15.77474,-30.567 -10.40726,-8.3533 -25.52076,-12.9293 -38.08349,-12.6613 -12.56281,-0.268 -27.67621,4.308 -38.08357,12.6613 -10.40734,8.3534 -16.1087,20.4837 -15.7747,30.567 -0.2586,9.4789 4.6571,20.8499 13.9881,29.0687 10.48687,9.2372 26.5507,14.4932 39.87017,14.1597 5.95083,-0.092 13.10973,1.4832 18.03953,4.3588 4.9298,2.8758 7.63045,7.0517 7.47225,10.523 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-t">
+    <path d="m 939.3117,1257.772 c 9.44886,0 18.8976,0 28.34644,0 0,-77.4804 0,-154.9606 0,-232.441 -9.44884,0 -18.89758,0 -28.34644,0 0,77.4804 0,154.9606 0,232.441 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 983.82794,1117.457 c 0,-9.4488 0,-18.8977 0,-28.3464 -20.22864,0 -40.4574,0 -60.68604,0 0,9.4487 0,18.8976 0,28.3464 20.22864,0 40.4574,0 60.68604,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-n">
+    <path d="m 426.73083,1257.772 c 0,-25.0395 0,-50.0788 0,-75.1181 -9.44883,0 -18.89761,0 -28.34643,0 0,25.0393 0,50.0786 0,75.1181 9.44882,0 18.8976,0 28.34643,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 426.73013,1182.6539 c -0.33758,-8.5703 3.89054,-18.9872 10.79325,-26.0572 6.90265,-7.0701 16.47989,-10.7932 26.05712,-10.7932 9.57728,0 19.15452,3.7231 26.05716,10.7932 6.90271,7.07 11.13084,17.4869 10.79328,26.0572 9.44876,0 18.89761,0 28.3464,0 -0.0224,-7.6855 -1.32494,-15.9414 -4.57757,-23.9986 -3.25257,-8.0573 -8.45532,-15.916 -14.70767,-22.218 -12.50476,-12.6038 -29.2082,-18.9803 -45.9116,-18.9803 -16.7034,0 -33.4068,6.3765 -45.91155,18.9803 -6.25239,6.302 -11.45508,14.1607 -14.70768,22.218 -3.25265,8.0572 -4.55511,16.3131 -4.5776,23.9986 9.44883,0 18.89763,0 28.34646,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 500.43094,1257.772 c 9.44876,0 18.89761,0 28.3464,0 0,-25.0395 0,-50.0788 0,-75.1181 -9.44879,0 -18.89764,0 -28.3464,0 0,25.0393 0,50.0786 0,75.1181 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-u">
+    <path d="m 1029.1824,1121.709 c -9.4489,0 -18.8977,0 -28.3465,0 0,25.9844 0,51.9687 0,77.9531 9.4488,0 18.8976,0 28.3465,0 0,-25.9844 0,-51.9687 0,-77.9531 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 1097.2131,1199.6621 c 0.3116,7.9109 -3.5913,17.5264 -9.963,24.0525 -6.3716,6.5261 -15.2119,9.9629 -24.0525,9.9629 -8.8403,0 -17.6809,-3.4368 -24.0525,-9.9629 -6.3715,-6.5261 -10.2745,-16.1416 -9.9627,-24.0525 -9.4489,0 -18.8977,0 -28.3465,0 0.021,7.3513 1.2674,15.2482 4.3785,22.9551 3.1112,7.7069 8.0876,15.224 14.0681,21.2518 11.961,12.0558 27.9381,18.1549 43.9151,18.1549 15.9772,0 31.9543,-6.0991 43.9152,-18.1549 5.9806,-6.0278 10.957,-13.5449 14.0682,-21.2518 3.1112,-7.7069 4.357,-15.6038 4.3786,-22.9551 -9.4489,0 -18.8977,0 -28.3465,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 1097.2131,1121.709 c 0,25.9844 0,51.9687 0,77.9531 9.4488,0 18.8976,0 28.3465,0 0,-25.9844 0,-51.9687 0,-77.9531 -9.4489,0 -18.8977,0 -28.3465,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+  <g id="letter-b">
+    <path d="m 267.81995,1117.6609 c -8.1875,-0.013 -17.06331,1.5475 -25.62822,5.0764 -8.56493,3.5291 -16.81894,9.0261 -23.60393,16.0975 -6.78502,7.0713 -12.101,15.717 -15.50504,24.5058 -3.40406,8.7887 -4.89618,17.7207 -4.88969,26.6074 0.006,8.8866 1.5116,17.7279 4.87059,26.5472 1.67949,4.4096 3.82246,8.8138 6.47638,13.0064 2.65391,4.1926 5.81879,8.1737 9.23498,11.7038 13.66485,14.1203 31.35115,21.0234 49.03782,21.0225 17.68664,0 35.37362,-6.9059 49.03986,-21.0275 3.41656,-3.5304 6.5818,-7.5119 9.23614,-11.7048 2.65436,-4.1929 4.79776,-8.5972 6.47769,-13.007 3.35987,-8.8196 4.86581,-17.6611 4.87317,-26.5477 0.007,-8.8867 -1.48386,-17.8185 -4.88703,-26.607 -3.40323,-8.7885 -8.71835,-17.4335 -15.50265,-24.5042 -6.78427,-7.0705 -15.03775,-12.5667 -23.60236,-16.095 -8.56454,-3.5282 -17.44021,-5.0881 -25.62771,-5.0738 z m 0,28.3464 c 4.86328,0.017 10.09741,0.8877 15.19345,3.0837 5.09607,2.1959 10.05398,5.717 14.0511,9.9233 7.99425,8.4127 12.14516,19.5671 12.02852,30.9266 -0.11667,11.3594 -4.50082,22.9241 -12.09217,31.0692 -7.59133,8.1449 -18.38989,12.8703 -29.18801,12.8712 -10.79816,10e-4 -21.59592,-4.7225 -29.18595,-12.8662 -7.59002,-8.1438 -11.97232,-19.7076 -12.08713,-31.0671 -0.11477,-11.3595 4.03792,-22.5145 12.03351,-30.9287 3.99781,-4.207 8.95632,-7.7289 14.05272,-9.9257 5.09641,-2.1967 10.33068,-3.0686 15.19396,-3.0863 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+    <path d="m 226.53973,1257.772 c 0,-77.4804 0,-154.9606 0,-232.441 -9.4488,0 -18.89763,0 -28.34645,0 0,77.4804 0,154.9606 0,232.441 9.44882,0 18.89765,0 28.34645,0 z" stroke="#000000" stroke-width="0" fill="#1c1c1a" fill-opacity="1" />
+  </g>
+</svg></a>
+  <ul class="nav-links">
+    <li><a href="work.html">Work</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ─── OPENING ─── -->
+<section class="opening">
+  <h1 class="opening-tagline">We are advocates of design as a necessary tool for progress.</h1>
+  <p class="opening-oneliner">We are London-based and internationally minded. Rooted in a family practice founded in 1955, we carry forward a tradition of craftsmanship, mastery, and care — not as nostalgia, but as a foundation for progress. Architecture, interiors, environments, objects — shaped by craft and research.</p>
+  <p class="opening-meta">London-based &nbsp;·&nbsp; Internationally minded &nbsp;·&nbsp; 1955</p>
+</section>
+
+<!-- ─── MANIFESTO ─── -->
+<section class="manifesto">
+  <div class="manifesto-inner">
+    <p class="manifesto-statement">We are advocates of design.<br>
+    We believe design is not optional.<br>
+    It is a necessary tool for progress — a mindset.</p>
+
+    <p class="manifesto-statement">We are progressive because the world demands it.<br>
+    Progress is not a style — it is a responsibility.<br>
+    A way of asking better questions — and uncovering ingenuity.</p>
+
+    <div class="manifesto-more" id="manifesto-more">
+      <p class="manifesto-statement">We are London-based and internationally minded.<br>
+      Rooted in a family practice founded in 1955,<br>
+      we carry forward a tradition of craftsmanship, mastery, and care<br>
+      not as nostalgia, but as a foundation for progress.</p>
+
+      <p class="manifesto-statement">Our work is shaped through <em>mestizaje</em>:<br>
+      where history, craft, research, and innovation converge.<br>
+      Ideas are not inherited as a whole,<br>
+      they are tested, transformed, and reassembled with function and delight.</p>
+
+      <p class="manifesto-statement">We see design opportunity everywhere:<br>
+      in architecture, environments, and objects;<br>
+      in what already exists — and what urgently needs to change.</p>
+
+      <p class="manifesto-statement">We pursue uncompromising design.<br>
+      Not louder. Not trend driven.<br>
+      We design with respect for people and nature.<br>
+      Not as a slogan, but as a practice.</p>
+
+      <p class="manifesto-statement">We value creative curiosity over fixed answers.<br>
+      We learn through making.<br>
+      We refine through iteration.<br>
+      We move forward — always.</p>
+
+      <p class="manifesto-statement">We are driven by <em>Vorwärtsdrang</em> —<br>
+      the urge to advance.<br>
+      To push beyond the expected.<br>
+      To shape what comes next.</p>
+
+      <p class="manifesto-statement">We design places people remember.<br>
+      Places to belong.<br>
+      Places to return to.</p>
+
+      <p class="manifesto-statement">This is not architecture as a service.<br>
+      It is fundamental / integral.<br>
+      A way of crafting our future.</p>
+    </div>
+
+    <button class="more-btn" id="manifesto-btn" aria-expanded="false">
+      <span class="btn-label">More</span> <span class="btn-arrow">↓</span>
+    </button>
+  </div>
+</section>
+
+<!-- ─── PILLARS ─── -->
+<section class="pillars">
+  <div class="pillars-grid">
+    <div class="pillar">
+      <span class="pillar-term">Mestizaje</span>
+      <p class="pillar-text">Ideas are not inherited whole. They are tested, transformed, and reassembled. History, craft, research, and innovation converge — producing work that is neither purely rooted nor purely new, but alive with both.</p>
+    </div>
+    <div class="pillar">
+      <span class="pillar-term">Making as Thinking</span>
+      <p class="pillar-text">We learn through making. We refine through iteration. Creative curiosity over fixed answers. The act of building is itself a way of knowing — not just executing ideas, but discovering them.</p>
+    </div>
+    <div class="pillar">
+      <span class="pillar-term">Vorwärtsdrang</span>
+      <p class="pillar-text">The urge to advance. Progress is not a style — it is a responsibility. A way of asking better questions, pushing beyond the expected, and shaping what comes next. Always forward.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRINCIPALS ─── -->
+<section class="principals">
+
+  <div class="principals-photo-wrap">
+    <div class="principals-photo">
+      <span class="principals-photo-caption">Ariadna Lopez Bieling &amp; Leo Bieling — [Photo placeholder]</span>
+    </div>
+  </div>
+
+  <div class="principals-grid">
+
+    <div class="principal reveal">
+      <h2 class="principal-name">Ariadna Lopez Bieling</h2>
+      <div class="principal-bio">
+        <p>Ariadna leads creative direction and design strategy across architecture, interiors, and environmental design. Her work is rooted in materiality, tactility, and atmosphere — crafting environments that balance clarity and emotion.</p>
+        <p>Before co-founding the London studio, she worked with Heatherwick Studio and Architecture at Large in New York, contributing to cultural and commercial projects that bridged architecture, art, and design.</p>
+        <p>Beyond the studio, she draws from art, fashion, and performance. As a flamenco dancer, she brings the same precision and emotional honesty to her architecture: precise, human, quietly resonant.</p>
+      </div>
+      <div class="principal-section">
+        <span class="principal-section-label">Teaching &amp; Lectures</span>
+        <p class="placeholder-note">Content to follow.</p>
+      </div>
+    </div>
+
+    <div class="principal reveal">
+      <h2 class="principal-name">Leo Bieling</h2>
+      <div class="principal-bio">
+        <p>Leo leads design across architecture, environments, and objects. His practice combines structural ambition with material intelligence — precision at every scale, from building systems to surface detail.</p>
+        <p>Trained in computational design at Zaha Hadid Architects, Coop Himmelblau, and Plus Architecture, he brings digital fabrication and hands-on craft to complex built environments.</p>
+        <p>Outside the studio, Leo sails — a discipline that sharpens a hands-on understanding of structure, force, and material in the world as it actually is.</p>
+      </div>
+      <div class="principal-section">
+        <span class="principal-section-label">Teaching &amp; Lectures</span>
+        <p>ETH Zurich &nbsp;·&nbsp; Tsinghua University, Beijing &nbsp;·&nbsp; UCL Bartlett, London</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── ROOTS ─── -->
+<section class="roots">
+  <div class="roots-intro">
+    <div>
+      <h2 class="roots-headline">Three generations.<br>One continuing legacy.</h2>
+    </div>
+    <div>
+      <div class="roots-intro-body">
+        <p>blng studio builds on a family practice founded in 1955 in Kassel, Germany. Across three generations, the Bieling name has stood for rigour, craftsmanship, and precise delivery — values that continue to define the studio today.</p>
+        <p>This ongoing story is part of a 70-year dialogue on how design can endure, connect, and elevate daily life — each generation interpreting these principles through their own time, scale, and vision.</p>
+      </div>
+      <button class="more-btn" id="roots-btn" aria-expanded="false">
+        <span class="btn-label">More</span> <span class="btn-arrow">↓</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="roots-more-content" id="roots-more">
+    <div class="roots-profiles">
+
+      <div class="profile reveal">
+        <p class="profile-name">Prof. Thomas Bieling</p>
+        <span class="profile-gen">2nd Generation</span>
+        <div class="slideshow" id="ss-thomas">
+          <div class="slideshow-track">
+            <div class="slide active" style="background: linear-gradient(135deg, #c8c4b8 0%, #a09888 100%);">
+            </div>
+            <div class="slide" style="background: linear-gradient(135deg, #b8c0b0 0%, #889878 100%);">
+            </div>
+            <div class="slide" style="background: linear-gradient(135deg, #c0b8c8 0%, #9088a0 100%);">
+            </div>
+          </div>
+          <div class="slideshow-controls">
+            <button class="ss-btn ss-prev" aria-label="Previous">←</button>
+            <div class="ss-dots">
+              <span class="ss-dot active"></span>
+              <span class="ss-dot"></span>
+              <span class="ss-dot"></span>
+            </div>
+            <button class="ss-btn ss-next" aria-label="Next">→</button>
+          </div>
+        </div>
+        <div class="profile-text">
+          <p>Succeeding his father in 1988, Prof. Thomas Bieling led the practice through a period of prolific expansion — extending its reach across Germany and Central Europe. His work is marked by a refined, contextual, and expressive architectural sensibility that positioned the studio at the forefront of design dialogue in Germany.</p>
+          <p>As Professor of Design and Construction at the University of Kassel, Thomas championed the integration of creative inquiry and technical precision — shaping a generation of architects and bridging craft, discipline, and innovation in a body of work that continues to influence the practice today.</p>
+        </div>
+      </div>
+
+      <div class="profile reveal">
+        <p class="profile-name">Josef Bieling</p>
+        <span class="profile-gen">Founder</span>
+        <div class="slideshow" id="ss-josef">
+          <div class="slideshow-track">
+            <div class="slide active" style="background: linear-gradient(135deg, #706860 0%, #3a3028 100%);">
+            </div>
+            <div class="slide" style="background: linear-gradient(135deg, #605860 0%, #302830 100%);">
+            </div>
+            <div class="slide" style="background: linear-gradient(135deg, #686070 0%, #383040 100%);">
+            </div>
+          </div>
+          <div class="slideshow-controls">
+            <button class="ss-btn ss-prev" aria-label="Previous">←</button>
+            <div class="ss-dots">
+              <span class="ss-dot active"></span>
+              <span class="ss-dot"></span>
+              <span class="ss-dot"></span>
+            </div>
+            <button class="ss-btn ss-next" aria-label="Next">→</button>
+          </div>
+        </div>
+        <div class="profile-text">
+          <p>Founder Josef Bieling established a reputation for craft, faith, and clarity of construction — pioneering the aesthetic of post-war modernism in Germany. He designed more than 40 churches, community, and residential buildings distinguished by their material honesty and spatial calm.</p>
+          <p>In close intellectual exchange with Pritzker laureate Gottfried Böhm, his approach combined human dignity with architectural precision — laying the foundation for a practice rooted in care, purpose, and enduring craft.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-address">3 Dericote Street,<br>London E8 4PG,<br>United Kingdom</div>
+  <div class="footer-middle">
+    <a href="tel:+442045589744">+44 20 4558 9744</a><br>
+    <a href="mailto:info@blng.studio">info@blng.studio</a><br>
+    <a href="#">Newsletter</a><br>
+    <a href="https://www.linkedin.com/company/blng-studio" target="_blank">LinkedIn</a> &nbsp;—&nbsp;
+    <a href="https://www.instagram.com/blng_studio/" target="_blank">Instagram</a>
+  </div>
+  <div class="footer-right">
+    <a href="legal.html">Legal &amp; Privacy Notice</a><br>
+    &copy; 2026 blng studio
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // Footer random color
+  var footerBgColors = ['#FFD67C', '#B8CE88', '#D98E6A'];
+  document.querySelector('footer').style.background = footerBgColors[Math.floor(Math.random() * footerBgColors.length)];
+
+  // ─── CURSOR ───
+  var cursor = document.getElementById('cursor');
+  var ring   = document.getElementById('cursor-ring');
+  var mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', function(e) {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left    = mx + 'px';
+    cursor.style.top     = my + 'px';
+    cursor.style.opacity = '1';
+    ring.style.opacity   = '0.4';
+  });
+  document.addEventListener('mouseleave', function() {
+    cursor.style.opacity = '0';
+    ring.style.opacity   = '0';
+  });
+  (function lerp() {
+    rx += (mx - rx) * 0.10;
+    ry += (my - ry) * 0.10;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(lerp);
+  })();
+
+  document.querySelectorAll('a, button').forEach(function(el) {
+    el.addEventListener('mouseenter', function() {
+      cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
+      ring.style.transform   = 'translate(-50%,-50%) scale(1.3)';
+      ring.style.opacity     = '0.75';
+    });
+    el.addEventListener('mouseleave', function() {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.transform   = 'translate(-50%,-50%) scale(1)';
+      ring.style.opacity     = '0.4';
+    });
+  });
+
+  // ─── SCROLL REVEAL ───
+  var reveals = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(function(el) { observer.observe(el); });
+
+  // ─── MORE TOGGLE ───
+  function initToggle(btnId, contentId) {
+    var btn     = document.getElementById(btnId);
+    var content = document.getElementById(contentId);
+    if (!btn || !content) return;
+    btn.addEventListener('click', function() {
+      var isOpen = content.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', isOpen);
+      btn.querySelector('.btn-label').textContent = isOpen ? 'Less' : 'More';
+      btn.querySelector('.btn-arrow').textContent  = isOpen ? '↑' : '↓';
+    });
+  }
+  initToggle('manifesto-btn', 'manifesto-more');
+  initToggle('roots-btn',     'roots-more');
+
+  // ─── SLIDESHOW ───
+  function initSlideshow(el) {
+    var slides = Array.from(el.querySelectorAll('.slide'));
+    var dots   = Array.from(el.querySelectorAll('.ss-dot'));
+    var prevBtn = el.querySelector('.ss-prev');
+    var nextBtn = el.querySelector('.ss-next');
+    var current = 0;
+
+    function goTo(n) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (n + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function() { goTo(current - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { goTo(current + 1); });
+    dots.forEach(function(dot, i) {
+      dot.addEventListener('click', function() { goTo(i); });
+    });
+  }
+
+  document.querySelectorAll('.slideshow').forEach(function(ss) { initSlideshow(ss); });
+
+})();
+</script>
+
+</body>
+</html>
