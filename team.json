@@ -1,0 +1,41 @@
+{
+  "manifesto": "manifesto.md",
+  "directors": [
+    {
+      "name": "Ariadna Lopez Bieling",
+      "bio": "bio-ariadna.md",
+      "photo": "team/ariadna-lopez-bieling.jpg",
+      "section_label": "Talks & Conversations",
+      "section_items": [
+        "Architectural Association, London — Design Research Lab, MArch"
+      ]
+    },
+    {
+      "name": "Leo Bieling",
+      "bio": "bio-leo.md",
+      "photo": "team/leo-bieling.jpg",
+      "section_label": "Teaching & Lectures",
+      "section_items": [
+        "ETH Zurich",
+        "Tsinghua University, Beijing",
+        "UCL Bartlett, London",
+        "CAADRIA 2018",
+        "Design Modelling Symposium, Berlin 2019"
+      ]
+    }
+  ],
+  "legacy": [
+    {
+      "name": "Prof. Thomas Bieling",
+      "generation": "2nd Generation",
+      "bio": "bio-thomas.md",
+      "slideshow_folder": "team/thomas-bieling"
+    },
+    {
+      "name": "Josef Bieling",
+      "generation": "Founder",
+      "bio": "bio-josef.md",
+      "slideshow_folder": "team/josef-bieling"
+    }
+  ]
+}
