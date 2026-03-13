@@ -112,6 +112,61 @@
   /* ─── SCROLL REVEAL ─── */
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.65s ease, transform 0.65s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    #nav-logo { width: 401px; height: 86px; }
+    #nav-logo svg { width: 401px; height: 568px; top: -243px; }
+    .principals-grid { gap: 48px; }
+    .roots-intro { gap: 48px; }
+    .roots-profiles { gap: 48px; }
+  }
+  @media (max-width: 768px) {
+    #nav-logo { width: 298px; height: 64px; }
+    #nav-logo svg { width: 298px; height: 422px; top: -181px; }
+    nav { padding: 10px 20px 10px 10px; }
+    .nav-links { gap: 24px; }
+    .nav-links a { font-size: 1.2rem; }
+    .opening { padding: 120px 24px 60px; }
+    .opening-oneliner { font-size: 1.6rem; }
+    .manifesto { padding: 64px 24px 80px; }
+    .manifesto-statement { font-size: 1.6rem; }
+    .pillars { padding: 60px 24px 0; }
+    .pillars-grid { grid-template-columns: 1fr; }
+    .pillar { padding: 32px 0; border-right: none; border-bottom: 2px solid rgba(28,28,26,0.1); }
+    .pillar:nth-child(2) { padding-left: 0; }
+    .pillar:nth-child(3) { padding-left: 0; border-bottom: none; }
+    .pillar-text { font-size: 1.5rem; }
+    .principals { padding: 64px 24px; }
+    .principals-grid { grid-template-columns: 1fr; gap: 48px; }
+    .principal-bio p { font-size: 1.5rem; }
+    .principal-section p { font-size: 1.4rem; }
+    .roots { padding: 64px 24px; }
+    .roots-intro { grid-template-columns: 1fr; gap: 32px; }
+    .roots-intro-body p { font-size: 1.5rem; }
+    .roots-profiles { grid-template-columns: 1fr; gap: 48px; }
+    .profile-text { font-size: 1.5rem; }
+    footer { grid-template-columns: 1fr; gap: 20px; padding: 40px 24px; }
+    .footer-middle { text-align: left; }
+    .footer-right { text-align: left; }
+  }
+  @media (max-width: 480px) {
+    #nav-logo { width: 220px; height: 47px; }
+    #nav-logo svg { width: 220px; height: 311px; top: -133px; }
+    nav { padding: 8px 14px 8px 8px; }
+    .nav-links { gap: 14px; }
+    .nav-links a { font-size: 1.0rem; }
+    .opening { padding: 96px 16px 48px; }
+    .opening-tagline { font-size: clamp(2.0rem, 6vw, 2.8rem); }
+    .opening-oneliner { font-size: 1.4rem; }
+    .manifesto { padding: 48px 16px 64px; }
+    .manifesto-statement { font-size: 1.4rem; }
+    .pillars { padding: 48px 16px 0; }
+    .pillar-text { font-size: 1.4rem; }
+    .principals { padding: 48px 16px; }
+    .roots { padding: 48px 16px; }
+    footer { padding: 28px 16px; }
+  }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">

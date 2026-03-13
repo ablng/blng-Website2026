@@ -58,7 +58,7 @@
 
   /* ─── GALLERY ─── */
   .project-gallery { padding: 0 48px; }
-  .g-row { display: grid; gap: 3px; margin-bottom: 3px; }
+  .g-row { display: grid; gap: 9px; margin-bottom: 9px; }
   .g-row.full  { grid-template-columns: 1fr; }
   .g-row.two   { grid-template-columns: 1fr 1fr; }
   .g-row.three { grid-template-columns: 1fr 1fr 1fr; }
@@ -92,6 +92,44 @@
   /* ─── SCROLL REVEAL ─── */
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.65s ease, transform 0.65s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    #nav-logo { width: 401px; height: 86px; }
+    #nav-logo svg { width: 401px; height: 568px; top: -243px; }
+  }
+  @media (max-width: 768px) {
+    #nav-logo { width: 298px; height: 64px; }
+    #nav-logo svg { width: 298px; height: 422px; top: -181px; }
+    nav { padding: 10px 20px 10px 10px; }
+    .nav-links { gap: 24px; }
+    .nav-links a { font-size: 1.2rem; }
+    .project-intro { padding: 120px 24px 40px; }
+    .project-intro-grid { grid-template-columns: 1fr; gap: 28px; }
+    .project-hero { padding: 0 24px; }
+    .project-gallery { padding: 0 24px; }
+    .project-overview { grid-template-columns: 1fr; gap: 40px; padding: 48px 24px 56px; }
+    .project-description p { font-size: 1.5rem; }
+    .project-next-wrap { padding: 48px 24px; }
+    footer { grid-template-columns: 1fr; gap: 20px; padding: 40px 24px; }
+    .footer-middle { text-align: left; }
+    .footer-right { text-align: left; }
+  }
+  @media (max-width: 480px) {
+    #nav-logo { width: 220px; height: 47px; }
+    #nav-logo svg { width: 220px; height: 311px; top: -133px; }
+    nav { padding: 8px 14px 8px 8px; }
+    .nav-links { gap: 14px; }
+    .nav-links a { font-size: 1.0rem; }
+    .project-intro { padding: 96px 16px 32px; }
+    .project-hero { padding: 0 16px; }
+    .project-gallery { padding: 0 16px; }
+    .project-overview { padding: 40px 16px 48px; }
+    .project-next-wrap { padding: 40px 16px; }
+    footer { padding: 32px 16px; }
+    .g-row.three { grid-template-columns: 1fr 1fr; }
+    .spec-row { grid-template-columns: 90px 1fr; }
+  }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
@@ -313,7 +351,7 @@
         for(var k=0; k<count; k++){
           var imgEl = document.createElement('img');
           imgEl.src = imgs[ii+k].url;
-          imgEl.className = 'g-img '+imgClass;
+          imgEl.className = 'g-img';
           imgEl.alt = '';
           row.appendChild(imgEl);
         }

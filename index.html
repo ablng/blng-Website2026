@@ -41,6 +41,25 @@
   #tagline { position:fixed; bottom:44px; left:0; right:0; text-align:center; z-index:10; opacity:0; transform:translateY(10px); transition:opacity 0.9s ease, transform 0.9s ease; pointer-events:none; }
   #tagline.visible { opacity:1; transform:translateY(0); }
   #tagline p { font-size:1.1rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--charcoal); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    nav { padding:28px 32px; }
+    .nav-links { gap:32px; }
+  }
+  @media (max-width: 768px) {
+    nav { padding:22px 24px; }
+    .nav-links { gap:24px; }
+    .nav-links a { font-size:1.2rem; }
+    #tagline { bottom:28px; }
+    #tagline p { font-size:0.95rem; letter-spacing:0.15em; }
+  }
+  @media (max-width: 480px) {
+    nav { padding:18px 16px; }
+    .nav-links { gap:16px; }
+    .nav-links a { font-size:1.0rem; }
+    #tagline p { font-size:0.85rem; letter-spacing:0.1em; }
+  }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">

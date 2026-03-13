@@ -24,7 +24,7 @@
 
   #hover-panel { position:fixed; left:48px; top:50%; transform:translateY(-50%); z-index:50; pointer-events:none; opacity:0; transition:opacity 0.35s ease; }
   #hover-panel .ph { box-shadow:0 16px 60px rgba(28,28,26,0.15); transition:width 0.25s ease, height 0.25s ease, background 0.4s ease; display:block; }
-  #hover-panel img { display:block; max-width:400px; max-height:58vh; box-shadow:0 16px 60px rgba(28,28,26,0.15); }
+  #hover-panel img { display:block; max-width:600px; max-height:75vh; box-shadow:0 16px 60px rgba(28,28,26,0.15); }
 
   main { flex:1; padding:200px 48px 80px; }
   .filters { display:flex; gap:10px; margin-bottom:56px; flex-wrap:nowrap; justify-content:flex-end; }
@@ -50,6 +50,44 @@
   .footer-right   { text-align:right; font-size:1.2rem; line-height:1.9; letter-spacing:0.04em; color:var(--charcoal); }
   footer a { color:var(--charcoal); text-decoration:underline; text-underline-offset:3px; transition:color 0.2s; }
   footer a:hover { color:var(--terracotta); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    #nav-logo { width:401px; height:86px; }
+    #nav-logo svg { width:401px; height:568px; top:-243px; }
+  }
+  @media (max-width: 768px) {
+    #nav-logo { width:298px; height:64px; }
+    #nav-logo svg { width:298px; height:422px; top:-181px; }
+    nav { padding:10px 20px 10px 10px; }
+    .nav-links { gap:24px; }
+    .nav-links a { font-size:1.2rem; }
+    #hover-panel { display:none; }
+    main { padding:140px 24px 60px; }
+    .filters { justify-content:flex-start; gap:8px; margin-bottom:36px; }
+    .filter-btn { font-size:1.0rem; padding:8px 16px; }
+    .list-area { margin-left:0; }
+    .project-row { grid-template-columns:80px 1fr 44px; padding:20px 0; }
+    .row-title { font-size:1.6rem; padding:0 16px; }
+    .row-type { font-size:0.95rem; }
+    footer { grid-template-columns:1fr; gap:20px; padding:40px 24px; }
+    .footer-middle { text-align:left; }
+    .footer-right { text-align:left; }
+  }
+  @media (max-width: 480px) {
+    #nav-logo { width:220px; height:47px; }
+    #nav-logo svg { width:220px; height:311px; top:-133px; }
+    nav { padding:8px 14px 8px 8px; }
+    .nav-links { gap:14px; }
+    .nav-links a { font-size:1.0rem; }
+    main { padding:106px 16px 48px; }
+    .filters { gap:6px; margin-bottom:28px; }
+    .filter-btn { font-size:0.9rem; padding:6px 12px; }
+    .project-row { grid-template-columns:1fr 40px; padding:16px 0; }
+    .row-type { display:none; }
+    .row-title { font-size:1.3rem; padding:0; }
+    footer { padding:28px 16px; }
+  }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
@@ -558,8 +596,8 @@
     row.addEventListener('mouseenter', function() {
       clearTimeout(hideTimer);
       var folder = row.dataset.folder;
-      var maxH = Math.round(window.innerHeight * 0.58);
-      var maxW = 400;
+      var maxH = Math.round(window.innerHeight * 0.75);
+      var maxW = 600;
 
       if (folder) {
         // Load hero image from Cloudinary
