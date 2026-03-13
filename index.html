@@ -984,7 +984,7 @@ function spawnCard(colIdx, startY){
   const cardH = Math.round(proj.h * cardW / proj.w);
   // slight random jitter within the column zone for organic feel
   const jitter = Math.floor((Math.random() - 0.5) * vw * 0.04);
-  const cardX = Math.max(0, Math.floor(vw * col.xFrac) + jitter);
+  const cardX = Math.max(0, Math.min(Math.floor(vw * col.xFrac) + jitter, vw - cardW - 8));
 
   const card = document.createElement('div');
   card.className = 'drift-wrapper';
@@ -1073,6 +1073,18 @@ function startDrift(){
 }
 
 window.addEventListener('DOMContentLoaded', runAnimation);
+
+// Rebuild drift cards on resize so they fit the new viewport
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    const layer = document.getElementById('drift-layer');
+    if (!layer || !layer.classList.contains('visible')) return;
+    layer.querySelectorAll('.drift-wrapper').forEach(w => w.remove());
+    buildDrift();
+  }, 200);
+});
 </script>
 </body>
 </html>

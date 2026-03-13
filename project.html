@@ -51,25 +51,18 @@
   .project-description p { font-size: 1.75rem; line-height: 1.85; color: var(--charcoal); margin-bottom: 20px; }
   .project-description p:last-child { margin-bottom: 0; }
   .project-specs { padding-top: 4px; }
-  .spec-row { display: grid; grid-template-columns: 120px 1fr; gap: 16px; padding: 16px 0; border-bottom: 2px solid rgba(28,28,26,0.08); }
+  .spec-row { display: grid; grid-template-columns: 160px 1fr; gap: 16px; padding: 16px 0; border-bottom: 2px solid rgba(28,28,26,0.08); }
   .spec-row:first-child { border-top: 2px solid rgba(28,28,26,0.08); }
   .spec-label { font-size: 1.0rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--charcoal); opacity: 0.45; padding-top: 2px; }
   .spec-value { font-size: 1.5rem; line-height: 1.55; color: var(--charcoal); font-weight: 300; }
 
   /* ─── GALLERY ─── */
   .project-gallery { padding: 0 48px; }
-  .g-row { display: grid; gap: 9px; margin-bottom: 9px; }
-  .g-row.full  { grid-template-columns: 1fr; }
-  .g-row.two   { grid-template-columns: 1fr 1fr; }
-  .g-row.three { grid-template-columns: 1fr 1fr 1fr; }
-  .g-row.wide-narrow { grid-template-columns: 2fr 1fr; }
-  .g-row.narrow-wide { grid-template-columns: 1fr 2fr; }
+  .g-masonry { columns: 2; column-gap: 18px; }
+  .g-item { break-inside: avoid; margin-bottom: 18px; display: block; }
+  .g-item img { width: 100%; height: auto; display: block; }
   .g-img { display: block; width: 100%; }
   .g-img.r-cinema  { aspect-ratio: 21 / 9; }
-  .g-img.r-wide    { aspect-ratio: 16 / 9; }
-  .g-img.r-std     { aspect-ratio: 3 / 2; }
-  .g-img.r-tall    { aspect-ratio: 3 / 4; }
-  .g-img.r-square  { aspect-ratio: 1; }
   .g-caption { font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--charcoal); opacity: 0.38; padding: 9px 0 40px; }
 
   /* ─── NEXT PROJECT ─── */
@@ -127,8 +120,8 @@
     .project-overview { padding: 40px 16px 48px; }
     .project-next-wrap { padding: 40px 16px; }
     footer { padding: 32px 16px; }
-    .g-row.three { grid-template-columns: 1fr 1fr; }
-    .spec-row { grid-template-columns: 90px 1fr; }
+    .g-masonry { columns: 1; }
+    .spec-row { grid-template-columns: 130px 1fr; }
   }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -336,28 +329,19 @@
       var imgs = results.filter(Boolean).sort(function(a,b){ return a.n - b.n; });
       if(imgs.length === 0) return;
 
-      // Layout cycle: [2, 1, 2, 3]  (images per row)
-      var cycle = [2, 1, 2, 3];
-      var ci = 0, ii = 0;
-      while(ii < imgs.length){
-        var count = Math.min(cycle[ci % cycle.length], imgs.length - ii);
-        ci++;
-
-        var rowClass = (count===1) ? 'full' : (count===2) ? 'two' : 'three';
-        var imgClass = (count===1) ? 'r-cinema' : 'r-std';
-
-        var row = document.createElement('div');
-        row.className = 'g-row '+rowClass+' reveal';
-        for(var k=0; k<count; k++){
-          var imgEl = document.createElement('img');
-          imgEl.src = imgs[ii+k].url;
-          imgEl.className = 'g-img';
-          imgEl.alt = '';
-          row.appendChild(imgEl);
-        }
-        galleryEl.appendChild(row);
-        ii += count;
-      }
+      var masonry = document.createElement('div');
+      masonry.className = 'g-masonry';
+      imgs.forEach(function(imgData){
+        var item = document.createElement('div');
+        item.className = 'g-item reveal';
+        var imgEl = document.createElement('img');
+        imgEl.src = imgData.url;
+        imgEl.className = 'g-img';
+        imgEl.alt = '';
+        item.appendChild(imgEl);
+        masonry.appendChild(item);
+      });
+      galleryEl.appendChild(masonry);
       initReveal();
     });
   }
@@ -395,7 +379,7 @@
       heroImg.onload = function(){
         var imgEl = document.createElement('img');
         imgEl.src = heroUrl; imgEl.alt = p.title;
-        imgEl.className = 'g-img r-cinema';
+        imgEl.className = 'g-img';
         heroEl.replaceChild(imgEl, ph);
       };
       heroImg.src = heroUrl;

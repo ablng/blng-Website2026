@@ -24,10 +24,10 @@
 
   #hover-panel { position:fixed; left:48px; top:50%; transform:translateY(-50%); z-index:50; pointer-events:none; opacity:0; transition:opacity 0.35s ease; }
   #hover-panel .ph { box-shadow:0 16px 60px rgba(28,28,26,0.15); transition:width 0.25s ease, height 0.25s ease, background 0.4s ease; display:block; }
-  #hover-panel img { display:block; max-width:600px; max-height:75vh; box-shadow:0 16px 60px rgba(28,28,26,0.15); }
+  #hover-panel img { display:block; max-width:min(800px, calc(50vw - 72px)); max-height:85vh; box-shadow:0 16px 60px rgba(28,28,26,0.15); }
 
   main { flex:1; padding:200px 48px 80px; }
-  .filters { display:flex; gap:10px; margin-bottom:56px; flex-wrap:nowrap; justify-content:flex-end; }
+  .filters { display:flex; gap:10px; margin-bottom:56px; flex-wrap:nowrap; justify-content:flex-end; margin-left:50%; }
   .filter-btn { font-family:'DM Sans',sans-serif; font-size:1.1rem; letter-spacing:0.14em; text-transform:uppercase; padding:10px 24px; border:2px solid rgba(28,28,26,0.25); background:transparent; color:var(--charcoal); transition:all 0.2s; flex-shrink:0; border-radius:999px; }
   .filter-btn:hover { border-color:var(--terracotta); color:var(--terracotta); }
   .filter-btn.active { background:transparent; color:var(--green); border-color:var(--green); }
@@ -64,7 +64,7 @@
     .nav-links a { font-size:1.2rem; }
     #hover-panel { display:none; }
     main { padding:140px 24px 60px; }
-    .filters { justify-content:flex-start; gap:8px; margin-bottom:36px; }
+    .filters { justify-content:flex-start; gap:8px; margin-bottom:36px; margin-left:0; }
     .filter-btn { font-size:1.0rem; padding:8px 16px; }
     .list-area { margin-left:0; }
     .project-row { grid-template-columns:80px 1fr 44px; padding:20px 0; }
@@ -596,13 +596,13 @@
     row.addEventListener('mouseenter', function() {
       clearTimeout(hideTimer);
       var folder = row.dataset.folder;
-      var maxH = Math.round(window.innerHeight * 0.75);
-      var maxW = 600;
+      var maxH = Math.round(window.innerHeight * 0.85);
+      var maxW = Math.min(800, Math.round(window.innerWidth * 0.5) - 72);
 
       if (folder) {
         // Load hero image from Cloudinary
         var url = 'https://res.cloudinary.com/' + CLOUD +
-                  '/image/upload/f_auto,q_auto,w_400/' + folder + '-01';
+                  '/image/upload/f_auto,q_auto,w_800/' + folder + '-01';
         ph.style.display = 'none';
         if (!panelImg) {
           panelImg = document.createElement('img');
