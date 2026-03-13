@@ -14,7 +14,7 @@
   }
   *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   html, body { width:100%; overflow-x:hidden; background:var(--porcelain); font-family:'DM Sans',sans-serif; }
-  body { cursor:none; min-height:300vh; }
+  body { cursor:none; min-height:8000vh; }
 
   #cursor { position:fixed; width:10px; height:10px; background:var(--terracotta); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform 0.15s ease; }
   #cursor-ring { position:fixed; width:38px; height:38px; border:1px solid var(--charcoal); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); opacity:0.4; }
@@ -36,14 +36,7 @@
 
   /* LOGO */
   #logo-stage { position:fixed; inset:0; z-index:10; display:flex; align-items:center; justify-content:center; pointer-events:none; }
-  #logo-wrap { position:relative; overflow:hidden; }
-
-  /* Both SVGs sit inside logo-wrap, absolutely positioned */
-  #logo-wrap svg {
-    position:absolute;
-    top:0; left:0;
-    display:block;
-  }
+  #logo-wrap { position:relative; }
 
   #tagline { position:fixed; bottom:44px; left:0; right:0; text-align:center; z-index:10; opacity:0; transform:translateY(10px); transition:opacity 0.9s ease, transform 0.9s ease; pointer-events:none; }
   #tagline.visible { opacity:1; transform:translateY(0); }
@@ -775,35 +768,9 @@
 <script>
 'use strict';
 
-// ── CONTROLS ──────────────────────────────────────────────────
-const LOGO_HEIGHT     = 240;   // 2× bigger (was 120)
-const ANIM_SPEED      = 0.75;  // animation speed
+// ── DRIFT CONTROLS ────────────────────────────────────────────
 const DRIFT_SPEED_MIN = 40;    // px/s upward
 const DRIFT_SPEED_MAX = 80;    // px/s upward
-// ─────────────────────────────────────────────────────────────
-
-const VB_W = 1683.6, VB_H = 2383.92;
-const LETTER_Y_TOP = 1020, LETTER_Y_BOTTOM = 1380;
-const LETTER_BAND = LETTER_Y_BOTTOM - LETTER_Y_TOP;
-const SCALE     = LOGO_HEIGHT / LETTER_BAND;
-const DISPLAY_W = VB_W * SCALE;
-const DISPLAY_H = VB_H * SCALE;
-const CROP_TOP  = LETTER_Y_TOP * SCALE;
-
-// ── Deltas (SVG units) to slide l, n, g from bieling→blng positions ──
-// Derived from SVG path coordinates in both SVGs:
-//   bieling: l=823.5, n=919.9, g-right=1178.2
-//   blng:    l=351.6, n=398.4, g-right=656.7
-const DELTA_L = (351.6 - 823.5) * SCALE;  // ≈ -315 px
-const DELTA_N = (398.4 - 919.9) * SCALE;  // ≈ -348 px
-const DELTA_G = (656.7 - 1178.2) * SCALE; // ≈ -348 px
-// blng wordmark: b left=198.2, g-right=685 → display width after shift
-const BLNG_LEFT_SVG  = 198.2;
-const BLNG_RIGHT_SVG = 685.0;
-const BLNG_DISPLAY_W = (BLNG_RIGHT_SVG - BLNG_LEFT_SVG) * SCALE; // ≈ 324 px
-// full blng studio: b left=198.2, o right≈1465 (from svg-blng)
-const STUDIO_RIGHT_SVG = 1510;
-const FULL_DISPLAY_W = (STUDIO_RIGHT_SVG - BLNG_LEFT_SVG) * SCALE; // ≈ 845 px
 
 // CURSOR
 const cursor = document.getElementById('cursor');
@@ -816,198 +783,271 @@ document.querySelectorAll('a').forEach(a=>{
   a.addEventListener('mouseleave',()=>{ cursor.style.transform='translate(-50%,-50%) scale(1)'; ring.style.opacity='.4'; ring.style.transform='translate(-50%,-50%) scale(1)'; });
 });
 
-function T(s){ return Math.round(s * 1000 / ANIM_SPEED); }
 function wait(ms){ return new Promise(r=>setTimeout(r,ms)); }
-function getLetter(svgId, id){ return document.querySelector('#'+svgId+' #'+id); }
-function setOp(svgId, id, val, tr){
-  const el=getLetter(svgId,id); if(!el) return;
-  if(tr) el.style.transition=tr;
-  el.style.opacity=val;
+
+// Ease in-out quad
+function easeInOut(t){ return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+// Animate multiple SVG group transforms in SVG user units
+function animateSlide(moves, durationMs){
+  return new Promise(resolve => {
+    const start = performance.now();
+    (function tick(now){
+      const t = easeInOut(Math.min((now - start) / durationMs, 1));
+      moves.forEach(([el, dx]) => {
+        if(el) el.setAttribute('transform', `translate(${dx * t}, 0)`);
+      });
+      if(t < 1) requestAnimationFrame(tick);
+      else resolve();
+    })(performance.now());
+  });
 }
-function show(s,id,tr){ setOp(s,id,'1',tr); }
-function hide(s,id,tr){ setOp(s,id,'0',tr); }
 
 async function runAnimation(){
-  const wrap        = document.getElementById('logo-wrap');
-  const svgBieling  = document.getElementById('svg-bieling');
-  const svgBlng     = document.getElementById('svg-blng');
+  await loadFeaturedPool();
+  const svg   = document.getElementById('svg-bieling');
+  const svgB  = document.getElementById('svg-blng');
+  const wrap  = document.getElementById('logo-wrap');
 
-  // ── Size wrap and both SVGs ──────────────────────────────────
-  wrap.style.cssText += `width:${DISPLAY_W}px;height:${LOGO_HEIGHT}px;position:relative;overflow:hidden;`;
-  [svgBieling, svgBlng].forEach(svg=>{
-    svg.style.width   = DISPLAY_W+'px';
-    svg.style.height  = DISPLAY_H+'px';
-    svg.style.position= 'absolute';
-    svg.style.left    = '0';
-    svg.style.top     = (-CROP_TOP)+'px';
-    svg.style.opacity = '0';
+  // Hide the blng SVG — not used in this animation
+  svgB.style.display = 'none';
+
+  // ── Crop SVG to the letter band ───────────────────────────────
+  // bieling letters span x: 477–1207, y: 1025–1370 (incl. g descender)
+  // ViewBox frames bieling with small margins
+  const VB = { x: 430, y: 1020, w: 820, h: 355 };
+  svg.setAttribute('viewBox', `${VB.x} ${VB.y} ${VB.w} ${VB.h}`);
+
+  const logoW = Math.min(window.innerWidth * 0.82, 680);
+  const logoH = Math.round(logoW * VB.h / VB.w);
+
+  wrap.style.cssText = `width:${logoW}px; height:${logoH}px; position:relative; overflow:visible; flex-shrink:0;`;
+  svg.style.cssText  = `width:${logoW}px; height:${logoH}px; display:block; opacity:0;`;
+
+  // Grab letter groups (defined in the inline bieling.svg)
+  const g = id => svg.querySelector(`g[id="${id}"]`);
+  const lB = g('letter-b'), lI = g('letter-i'), lE = g('letter-e'),
+        lL = g('letter-l'), lI2= g('letter-i2'),lN = g('letter-n'), lG = g('letter-g');
+
+  // Hide all letters before fade-in
+  [lB,lI,lE,lL,lI2,lN,lG].forEach(el => { if(el) el.style.opacity = '0'; });
+
+  // ── STEP 1: "bieling" fades in ────────────────────────────────
+  await wait(300);
+  svg.style.transition = 'opacity 0.7s ease';
+  svg.style.opacity = '1';
+  [lB,lI,lE,lL,lI2,lN,lG].forEach(el => {
+    if(el){ el.style.transition = 'opacity 0.5s ease'; el.style.opacity = '1'; }
+  });
+  await wait(1400); // hold so viewer can read
+
+  // ── STEP 2: i, e, i fade out — gaps appear ────────────────────
+  [lI, lE, lI2].forEach(el => {
+    if(el){ el.style.transition = 'opacity 0.55s ease'; el.style.opacity = '0'; }
+  });
+  await wait(750);
+
+  // ── STEP 3: b, l, n, g close the gaps ────────────────────────
+  // All deltas in SVG user units (bieling.svg coordinate space).
+  // b stays fixed. l, n, g slide left to sit right after b with ~18u gaps.
+  //   b right edge ≈ 615  →  l target left = 633  (was 823.55)  Δ = –190.55
+  //   l new right  ≈ 661  →  n target left = 679  (was 919.93)  Δ = –240.93
+  //   n new right  ≈ 809  →  g target left = 827  (was 1069)    Δ = –242
+  await animateSlide([
+    [lL, -190.55],
+    [lN, -240.93],
+    [lG, -242],
+  ], 750);
+
+  await wait(300);
+
+  // ── STEP 4: Expand to "blng studio" ──────────────────────────
+  // ViewBox width 1369 covers full "blng studio" in blng.svg (x: 151→1520).
+  // bieling vb_x stays at 430; blng vb_x = 430 − 278.84 = 151 so b aligns.
+  // Both SVGs use the same vbW → same scale → letter height unchanged.
+  const VBW2 = 1369;
+  const logoW2 = Math.min(Math.round(window.innerWidth * 0.82), 1140);
+
+  // Widen bieling SVG viewBox (letters stay put, space opens to the right)
+  svg.setAttribute('viewBox', `430 1020 ${VBW2} 355`);
+  svg.style.width = logoW2 + 'px';
+
+  // Prepare svg-blng: aligned viewBox, blng letters shown, studio letters hidden
+  svgB.setAttribute('viewBox', `151 1020 ${VBW2} 355`);
+  svgB.style.cssText = `width:${logoW2}px; height:${logoH}px; display:block; position:absolute; top:0; left:0; opacity:0;`;
+
+  const sG = id => svgB.querySelector(`g[id="${id}"]`);
+  ['letter-b','letter-l','letter-n','letter-g'].forEach(id => {
+    const el = sG(id); if(el) el.style.opacity = '1';
+  });
+  ['letter-s','letter-t','letter-u','letter-d','letter-i','letter-o'].forEach(id => {
+    const el = sG(id); if(el) el.style.opacity = '0';
   });
 
-  // ── Hide all letters ─────────────────────────────────────────
-  ['letter-b','letter-i','letter-e','letter-l','letter-i2','letter-n','letter-g']
-    .forEach(id=>hide('svg-bieling',id));
-  ['letter-b','letter-l','letter-n','letter-g','letter-s','letter-t','letter-u','letter-d','letter-i','letter-o']
-    .forEach(id=>hide('svg-blng',id));
+  // Expand wrap width, cross-fade bieling → blng
+  wrap.style.transition = 'width 0.5s ease';
+  wrap.style.width = logoW2 + 'px';
+  svgB.style.transition = 'opacity 0.35s ease';
+  svgB.style.opacity = '1';
+  svg.style.transition  = 'opacity 0.35s ease';
+  svg.style.opacity = '0';
+  await wait(600);
 
-  svgBieling.style.opacity = '1';
-  await wait(500);
-
-  // ── STEP 1: Type in "bieling" letter by letter ───────────────
-  for(const id of ['letter-b','letter-i','letter-e','letter-l','letter-i2','letter-n','letter-g']){
-    show('svg-bieling', id, `opacity ${T(0.28)}ms ease`);
-    await wait(T(0.13));
-  }
-  await wait(T(1.4)); // hold — admire full "bieling"
-
-  // ── STEP 2: Fade out i, e, i2 ───────────────────────────────
-  const fadeT = `opacity ${T(0.55)}ms ease`;
-  hide('svg-bieling','letter-i',   fadeT);
-  hide('svg-bieling','letter-e',   fadeT);
-  hide('svg-bieling','letter-i2',  fadeT);
-  await wait(T(0.75));
-
-  // ── STEP 3: Slide l, n, g left — b stays as anchor ──────────
-  const slideMs = T(1.0);
-  const slideTr = `transform ${slideMs}ms cubic-bezier(0.25,0.46,0.45,0.94)`;
-  const lEl = getLetter('svg-bieling','letter-l');
-  const nEl = getLetter('svg-bieling','letter-n');
-  const gEl = getLetter('svg-bieling','letter-g');
-  if(lEl){ lEl.style.transition=slideTr; lEl.style.transform=`translateX(${DELTA_L}px)`; }
-  if(nEl){ nEl.style.transition=slideTr; nEl.style.transform=`translateX(${DELTA_N}px)`; }
-  if(gEl){ gEl.style.transition=slideTr; gEl.style.transform=`translateX(${DELTA_G}px)`; }
-
-  // Simultaneously shrink wrap to just the blng width & shift SVG so b=left edge
-  const leftShift = BLNG_LEFT_SVG * SCALE; // px to shift SVG left so b aligns at x=0
-  wrap.style.transition      = `width ${slideMs}ms cubic-bezier(0.25,0.46,0.45,0.94)`;
-  svgBieling.style.transition= `left ${slideMs}ms cubic-bezier(0.25,0.46,0.45,0.94)`;
-  wrap.style.width           = BLNG_DISPLAY_W+'px';
-  svgBieling.style.left      = `-${leftShift}px`;
-
-  await wait(slideMs + 300);
-
-  // ── STEP 4: Cross-fade to svg-blng (blng letters visible) ────
-  // Align svg-blng to same crop position
-  svgBlng.style.left = `-${leftShift}px`;
-  // Pre-show blng letters in svg-blng
-  ['letter-b','letter-l','letter-n','letter-g'].forEach(id=>{
-    const el=getLetter('svg-blng',id); if(el) el.style.opacity='1';
-  });
-  const xfMs = T(0.4);
-  svgBieling.style.transition = `opacity ${xfMs}ms ease`;
-  svgBieling.style.opacity    = '0';
-  svgBlng.style.transition    = `opacity ${xfMs}ms ease`;
-  svgBlng.style.opacity       = '1';
-  await wait(xfMs + 200);
-
-  // ── STEP 5: Expand wrap to full blng studio width ────────────
-  // Expand wrap so studio letters have room
-  wrap.style.transition = `width ${T(0.2)}ms ease`;
-  wrap.style.width      = FULL_DISPLAY_W+'px';
-  await wait(T(0.2) + 100);
-
-  // ── STEP 6: Type out "studio" ────────────────────────────────
+  // ── STEP 5: "studio" types out letter by letter ───────────────
   for(const id of ['letter-s','letter-t','letter-u','letter-d','letter-i','letter-o']){
-    show('svg-blng', id, `opacity ${T(0.12)}ms ease`);
-    await wait(T(0.10));
+    const el = sG(id);
+    if(el){ el.style.transition = 'opacity 0.12s ease'; el.style.opacity = '1'; }
+    await wait(110);
   }
-  await wait(T(1.0));
+  await wait(400);
 
-  // ── STEP 7: Show UI ──────────────────────────────────────────
+  // ── Show UI + start drift ─────────────────────────────────────
   buildDrift();
-  await wait(200);
+  await wait(400);
   document.getElementById('drift-layer').classList.add('visible');
   document.getElementById('nav').classList.add('visible');
   document.getElementById('tagline').classList.add('visible');
+  await wait(400);
   startDrift();
-  window.addEventListener('scroll', onScrollReveal, {passive:true});
 }
 
-// PROJECT IMAGE POOL
-const POOL = [
-  { name:'District Administration — Hybrid Timber', img:null, colour:'linear-gradient(135deg,#c4b8a8,#9a8878)', w:480, h:620 },
-  { name:'Seminary Chapel',                         img:null, colour:'linear-gradient(135deg,#b8c8b0,#889870)', w:420, h:560 },
-  { name:'Sophienschule Campus',                    img:null, colour:'linear-gradient(135deg,#c8c0a8,#a09060)', w:520, h:380 },
-  { name:'Europacity Neighbourhood',                img:null, colour:'linear-gradient(135deg,#b0b8c8,#808898)', w:440, h:580 },
-  { name:'Fuhle 101 Mixed-Use',                     img:null, colour:'linear-gradient(135deg,#c8c4b8,#9a9480)', w:400, h:520 },
-  { name:'WIKUS Headquarters',                      img:null, colour:'linear-gradient(135deg,#c0b8c8,#9088a0)', w:500, h:360 },
-  { name:'Bellevue Apartments',                     img:null, colour:'linear-gradient(135deg,#b8c4b8,#889888)', w:460, h:600 },
+// ── PROJECT IMAGE POOL ────────────────────────────────────────
+// Loaded dynamically from projects.json (featured:true entries).
+// Falls back to placeholder gradients if JSON unavailable or no featured projects.
+const CLOUD = 'dgelbnw1g';
+const POOL_FALLBACK = [
+  { name:'District Administration — Hybrid Timber', img:null, colour:'linear-gradient(160deg,#c9c0b2,#a09080)', w:1600, h:2100 },
+  { name:'Seminary Chapel',                         img:null, colour:'linear-gradient(160deg,#b8c8b2,#8a9a72)', w:1600, h:1067 },
+  { name:'Sophienschule Campus',                    img:null, colour:'linear-gradient(160deg,#cec8b8,#a89862)', w:1600, h:2000 },
+  { name:'Fuhle 101 Mixed-Use',                     img:null, colour:'linear-gradient(160deg,#cac6ba,#9c9682)', w:1600, h:2133 },
+  { name:'WIKUS Headquarters',                      img:null, colour:'linear-gradient(160deg,#c2baca,#928aa2)', w:1600, h:900  },
+  { name:'Bellevue Apartments',                     img:null, colour:'linear-gradient(160deg,#bacabe,#8a9a8e)', w:1600, h:2000 },
 ];
-let poolIdx = 3; // first 3 placed by buildDrift; scroll reveals the rest
+let POOL = POOL_FALLBACK.slice();
 
-function makeDriftCard(proj){
-  const vw=window.innerWidth, vh=window.innerHeight;
-  const wrap=document.createElement('div');
-  wrap.className='drift-wrapper';
-  wrap.style.width =proj.w+'px';
-  wrap.style.height=proj.h+'px';
-  wrap.style.left  =(Math.random()*(vw-proj.w))+'px';
-  wrap.style.top   =(Math.random()*(vh-proj.h))+'px';
-  wrap.style.opacity='0';
-  wrap.style.transition='opacity 0.8s ease';
-  if(proj.img){
-    const img=document.createElement('img'); img.src=proj.img; img.alt=proj.name; wrap.appendChild(img);
-  } else {
-    const ph=document.createElement('div'); ph.className='placeholder'; ph.style.background=proj.colour; wrap.appendChild(ph);
-  }
-  const lbl=document.createElement('div'); lbl.className='drift-label'; lbl.textContent=proj.name; wrap.appendChild(lbl);
-  wrap.addEventListener('click',()=>{ window.location.href='work.html'; });
-  wrap._speed = DRIFT_SPEED_MIN + Math.random()*(DRIFT_SPEED_MAX-DRIFT_SPEED_MIN);
-  wrap._y     = parseFloat(wrap.style.top) || 0;
-  return wrap;
+async function loadFeaturedPool() {
+  try {
+    const resp = await fetch('projects.json');
+    if (!resp.ok) return;
+    const projects = await resp.json();
+    const featured = projects.filter(p => p.featured);
+    if (featured.length < 2) return; // need at least 2 for 2-column layout
+    POOL = featured.map(p => ({
+      name:   p.title,
+      img:    `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_1400/${p.folder}-01`,
+      colour: null,
+      slug:   p.slug,
+      w: 1600,
+      h: 2000,  // default portrait ratio — image fills via object-fit:cover
+    }));
+  } catch(e) { /* keep fallback */ }
 }
+
+// ── TWO WIDE COLUMNS ──────────────────────────────────────────
+const COLS = [
+  { xFrac: 0.03, wFrac: 0.44 },  // left half
+  { xFrac: 0.53, wFrac: 0.44 },  // right half
+];
+const colPoolIdx = [0, 3];
+const MAX_CARDS = 8;
+
+function spawnCard(colIdx, startY){
+  const layer = document.getElementById('drift-layer');
+  if(layer.querySelectorAll('.drift-wrapper').length >= MAX_CARDS) return;
+  const vw    = window.innerWidth;
+  const col   = COLS[colIdx];
+  const proj  = POOL[colPoolIdx[colIdx] % POOL.length];
+  colPoolIdx[colIdx]++;
+
+  // Width: natural image width, capped at column width
+  const colW  = Math.floor(vw * col.wFrac);
+  const cardW = Math.min(proj.w, colW);
+  const cardH = Math.round(proj.h * cardW / proj.w);
+  // slight random jitter within the column zone for organic feel
+  const jitter = Math.floor((Math.random() - 0.5) * vw * 0.04);
+  const cardX = Math.max(0, Math.floor(vw * col.xFrac) + jitter);
+
+  const card = document.createElement('div');
+  card.className = 'drift-wrapper';
+  card.style.cssText = `width:${cardW}px;height:${cardH}px;left:${cardX}px;top:${startY}px;opacity:0;`;
+
+  if(proj.img){
+    const img = document.createElement('img'); img.src=proj.img; img.alt=proj.name; card.appendChild(img);
+  } else {
+    const ph = document.createElement('div'); ph.className='placeholder'; ph.style.background=proj.colour; card.appendChild(ph);
+  }
+  const lbl = document.createElement('div'); lbl.className='drift-label'; lbl.textContent=proj.name; card.appendChild(lbl);
+  card.addEventListener('click', ()=>{
+    window.location.href = proj.slug ? `project.html?project=${proj.slug}` : 'work.html';
+  });
+
+  card._speed = DRIFT_SPEED_MIN + Math.random()*(DRIFT_SPEED_MAX-DRIFT_SPEED_MIN);
+  card._y     = startY;
+  card._col   = colIdx;
+  layer.appendChild(card);
+
+  // Fade in after brief delay
+  setTimeout(()=>{ card.style.transition='opacity 1.4s ease'; card.style.opacity='1'; }, 60);
+  return card;
+}
+
+function colLowestBottom(colIdx){
+  // Returns the y of the bottom edge of the lowest card in this column.
+  // If none, returns 0.
+  let lowest = 0;
+  document.querySelectorAll('.drift-wrapper').forEach(w => {
+    if(w._col === colIdx) lowest = Math.max(lowest, w._y + w.offsetHeight);
+  });
+  return lowest;
+}
+
+const CARD_GAP = 80; // px between stacked cards in same column
 
 function buildDrift(){
-  const layer=document.getElementById('drift-layer');
-  const vw=window.innerWidth, vh=window.innerHeight;
-  const initial=POOL.slice(0,3);
-  const positions=[
-    {x:vw*0.03,y:vh*0.06},
-    {x:vw*0.60,y:vh*0.05},
-    {x:vw*0.28,y:vh*0.52}
-  ];
-  initial.forEach((proj,idx)=>{
-    const w=makeDriftCard(proj);
-    w.style.left=positions[idx].x+'px';
-    w.style.top =positions[idx].y+'px';
-    layer.appendChild(w);
-    // fade in after a tiny delay
-    setTimeout(()=>{ w.style.opacity='1'; }, 50+idx*120);
-  });
+  const vh = window.innerHeight;
+  const vw = window.innerWidth;
+  // Estimate a portrait card height to pre-position the second card
+  const colW = Math.floor(vw * 0.44);
+  const p = POOL[0];
+  const estH = Math.round(p.h * Math.min(p.w, colW) / p.w);
+
+  // Card 1: on screen
+  spawnCard(0, Math.floor(vh * 0.05));
+  spawnCard(1, Math.floor(vh * 0.45));
+  // Card 2: queued just below the first card — no gap when it scrolls up
+  spawnCard(0, Math.floor(vh * 0.05) + estH + CARD_GAP);
+  spawnCard(1, Math.floor(vh * 0.45) + estH + CARD_GAP);
 }
 
-let scrollCooldown=false;
-let revealThreshold=300;
-function onScrollReveal(){
-  if(window.scrollY < revealThreshold) return;
-  if(scrollCooldown || poolIdx>=POOL.length) return;
-  scrollCooldown=true;
-  revealThreshold+=400;
-  setTimeout(()=>{ scrollCooldown=false; }, 600);
-  const proj=POOL[poolIdx % POOL.length];
-  poolIdx++;
-  const vw=window.innerWidth, vh=window.innerHeight;
-  const w=makeDriftCard(proj);
-  w.style.left=(Math.random()*(vw-proj.w))+'px';
-  w.style.top =(Math.random()*vh*0.7)+'px';
-  w._y=parseFloat(w.style.top);
-  document.getElementById('drift-layer').appendChild(w);
-  setTimeout(()=>{ w.style.opacity='1'; }, 50);
-}
+// ── SCROLL VELOCITY → DRIFT BOOST ────────────────────────────
+// Scrolling accelerates the drift temporarily; no new cards spawn.
+let scrollBoost = 0;
+let lastScrollY = window.scrollY;
+window.addEventListener('scroll', () => {
+  const delta = window.scrollY - lastScrollY; // positive = scrolling down only
+  if (delta > 0) scrollBoost = Math.min(scrollBoost + delta * 4, 500);
+  lastScrollY = window.scrollY;
+});
 
 function startDrift(){
-  let lastTime=performance.now();
+  let lastTime = performance.now();
   (function tick(now){
-    const dt=Math.min((now-lastTime)/1000, 0.1);
-    lastTime=now;
-    const vh=window.innerHeight;
+    const dt = Math.min((now-lastTime)/1000, 0.1);
+    lastTime = now;
+    const vh = window.innerHeight;
+    // Decay boost smoothly back to zero
+    scrollBoost *= 0.94;
     document.querySelectorAll('.drift-wrapper').forEach(w=>{
-      if(w._y===undefined) w._y=parseFloat(w.style.top)||0;
-      w._y-=w._speed*dt;
-      if(w._y+w.offsetHeight<0){
-        w._y=vh+10;
-        w.style.left=(Math.random()*(window.innerWidth-w.offsetWidth))+'px';
+      w._y -= (w._speed + scrollBoost) * dt;
+      if(w._y + w.offsetHeight < 0){
+        const col = w._col;
+        w.remove();
+        // Chain new card just below the lowest existing card in this column
+        const tail = colLowestBottom(col);
+        spawnCard(col, tail + CARD_GAP);
+      } else {
+        w.style.top = w._y+'px';
       }
-      w.style.top=w._y+'px';
     });
     requestAnimationFrame(tick);
   })(performance.now());

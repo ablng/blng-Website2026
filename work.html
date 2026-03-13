@@ -31,6 +31,7 @@
   .filter-btn { font-family:'DM Sans',sans-serif; font-size:1.1rem; letter-spacing:0.14em; text-transform:uppercase; padding:10px 24px; border:2px solid rgba(28,28,26,0.25); background:transparent; color:var(--charcoal); transition:all 0.2s; flex-shrink:0; border-radius:999px; }
   .filter-btn:hover { border-color:var(--terracotta); color:var(--terracotta); }
   .filter-btn.active { background:transparent; color:var(--green); border-color:var(--green); }
+  .filters { flex-wrap:wrap; }
 
   .list-area { margin-left:50%; }
   .project-list { border-top:2px solid rgba(28,28,26,0.1); }
@@ -482,47 +483,11 @@
 </div>
 
 <main>
-  <div class="filters">
+  <div class="filters" id="filter-bar">
     <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="architecture">Architecture</button>
-    <button class="filter-btn" data-filter="education">Education</button>
-    <button class="filter-btn" data-filter="civic">Civic</button>
-    <button class="filter-btn" data-filter="residential">Residential</button>
-    <button class="filter-btn" data-filter="commercial">Commercial</button>
-    <button class="filter-btn" data-filter="research">Research</button>
   </div>
   <div class="list-area">
-    <div class="project-list">
-      <a class="project-row" href="#" data-type="civic"        data-colour="linear-gradient(135deg,#c4b8a8,#9a8878)" data-w="380" data-h="500"><span class="row-type">Civic</span><span class="row-title">District Administration Extension — Hybrid Timber</span><span class="row-year">2025</span></a>
-      <a class="project-row" href="#" data-type="education"    data-colour="linear-gradient(135deg,#b8c8b0,#889870)" data-w="420" data-h="560"><span class="row-type">Education</span><span class="row-title">Sophienschule Campus</span><span class="row-year">2025</span></a>
-      <a class="project-row" href="#" data-type="architecture" data-colour="linear-gradient(135deg,#c8b8a8,#a08878)" data-w="360" data-h="480"><span class="row-type">Architecture</span><span class="row-title">Cathedral Museum &amp; Monastery Renewal</span><span class="row-year">2024</span></a>
-      <a class="project-row" href="#" data-type="architecture" data-colour="linear-gradient(135deg,#c0c8b8,#909870)" data-w="400" data-h="300"><span class="row-type">Architecture</span><span class="row-title">Facade Revitalization</span><span class="row-year">2022</span></a>
-      <a class="project-row" href="#" data-type="civic"        data-colour="linear-gradient(135deg,#b8c0c8,#889098)" data-w="380" data-h="520"><span class="row-type">Civic</span><span class="row-title">Office &amp; Kindergarten Pavilion</span><span class="row-year">2022</span></a>
-      <a class="project-row" href="#" data-type="residential"  data-colour="linear-gradient(135deg,#c8c0b8,#a09080)" data-w="440" data-h="580"><span class="row-type">Residential</span><span class="row-title">Sartorius Quartier</span><span class="row-year">2022</span></a>
-      <a class="project-row" href="#" data-type="residential"  data-colour="linear-gradient(135deg,#b8c8c0,#889880)" data-w="400" data-h="540"><span class="row-type">Residential</span><span class="row-title">Bergedorf District</span><span class="row-year">2022</span></a>
-      <a class="project-row" href="#" data-type="research"     data-colour="linear-gradient(135deg,#c0b8c8,#9088a0)" data-w="500" data-h="360"><span class="row-type">Research</span><span class="row-title">Geometries of Physics: Structural Networks Workshop</span><span class="row-year">2022</span></a>
-      <a class="project-row" href="#" data-type="education"    data-colour="linear-gradient(135deg,#c8c4a8,#a09870)" data-w="420" data-h="560"><span class="row-type">Education</span><span class="row-title">Primary School Community Hub</span><span class="row-year">2022</span></a>
-      <a class="project-row" href="#" data-type="residential"  data-colour="linear-gradient(135deg,#b8c0c8,#889098)" data-w="460" data-h="340"><span class="row-type">Residential</span><span class="row-title">Neue Mitte — Urban Renewal</span><span class="row-year">2021</span></a>
-      <a class="project-row" href="#" data-type="commercial"   data-colour="linear-gradient(135deg,#c8b8a8,#a08878)" data-w="380" data-h="500"><span class="row-type">Commercial</span><span class="row-title">Fuhle 101 Mixed-Use</span><span class="row-year">2020</span></a>
-      <a class="project-row" href="#" data-type="residential"  data-colour="linear-gradient(135deg,#b8c8b0,#889870)" data-w="420" data-h="560"><span class="row-type">Residential</span><span class="row-title">Bellevue Apartments</span><span class="row-year">2019</span></a>
-      <a class="project-row" href="#" data-type="residential"  data-colour="linear-gradient(135deg,#c0c8b8,#909880)" data-w="440" data-h="320"><span class="row-type">Residential</span><span class="row-title">Europacity Neighbourhood</span><span class="row-year">2019</span></a>
-      <a class="project-row" href="#" data-type="commercial"   data-colour="linear-gradient(135deg,#c0b8c8,#9088a0)" data-w="500" data-h="380"><span class="row-type">Commercial</span><span class="row-title">WIKUS Headquarters &amp; Conference Centre</span><span class="row-year">2018</span></a>
-      <a class="project-row" href="#" data-type="architecture" data-colour="linear-gradient(135deg,#c8c0a8,#a09060)" data-w="360" data-h="480"><span class="row-type">Architecture</span><span class="row-title">Seminary Chapel</span><span class="row-year">2018</span></a>
-      <a class="project-row" href="#" data-type="residential"  data-colour="linear-gradient(135deg,#b8c4b8,#889888)" data-w="420" data-h="300"><span class="row-type">Residential</span><span class="row-title">Papierm&uuml;hlengasse Urban Block</span><span class="row-year">2018</span></a>
-      <a class="project-row" href="#" data-type="civic"        data-colour="linear-gradient(135deg,#c4b8a8,#9a8878)" data-w="400" data-h="520"><span class="row-type">Civic</span><span class="row-title">Catholic University Auditorium &amp; Seminar Pavilion</span><span class="row-year">2017</span></a>
-      <a class="project-row" href="#" data-type="research"     data-colour="linear-gradient(135deg,#c8c4b8,#9a9480)" data-w="480" data-h="360"><span class="row-type">Research</span><span class="row-title">Robotic Fibre-Weaving Canopy</span><span class="row-year">2017</span></a>
-      <a class="project-row" href="#" data-type="research"     data-colour="linear-gradient(135deg,#b8c0c8,#889098)" data-w="460" data-h="340"><span class="row-type">Research</span><span class="row-title">Robotic Clay Printing: Form &amp; Code</span><span class="row-year">2016</span></a>
-      <a class="project-row" href="#" data-type="research"     data-colour="linear-gradient(135deg,#c8b8c0,#a08890)" data-w="440" data-h="320"><span class="row-type">Research</span><span class="row-title">Fabric to Form: Lycra Casting Research</span><span class="row-year">2016</span></a>
-      <a class="project-row" href="#" data-type="commercial"   data-colour="linear-gradient(135deg,#c0c8c0,#909890)" data-w="380" data-h="500"><span class="row-type">Commercial</span><span class="row-title">Schalles House — Mixed-Use</span><span class="row-year">2014</span></a>
-      <a class="project-row" href="#" data-type="commercial"   data-colour="linear-gradient(135deg,#c8c0b8,#a09080)" data-w="420" data-h="560"><span class="row-type">Commercial</span><span class="row-title">Motel One</span><span class="row-year">2014</span></a>
-      <a class="project-row" href="#" data-type="residential"  data-colour="linear-gradient(135deg,#b8c8b0,#889870)" data-w="400" data-h="300"><span class="row-type">Residential</span><span class="row-title">Hybrid House — Live/Work</span><span class="row-year">2013</span></a>
-      <a class="project-row" href="#" data-type="civic"        data-colour="linear-gradient(135deg,#c0b8c8,#9088a0)" data-w="480" data-h="360"><span class="row-type">Civic</span><span class="row-title">Kassel-Calden Airport Terminal</span><span class="row-year">2013</span></a>
-      <a class="project-row" href="#" data-type="education"    data-colour="linear-gradient(135deg,#c8c4a8,#a09870)" data-w="420" data-h="520"><span class="row-type">Education</span><span class="row-title">Albert-Schweitzer-School Student Research Center</span><span class="row-year">2012</span></a>
-      <a class="project-row" href="#" data-type="commercial"   data-colour="linear-gradient(135deg,#c8b8a8,#a08878)" data-w="360" data-h="480"><span class="row-type">Commercial</span><span class="row-title">F&uuml;rstenriedstra&szlig;e Commercial</span><span class="row-year">2012</span></a>
-      <a class="project-row" href="#" data-type="commercial"   data-colour="linear-gradient(135deg,#b8c0c8,#889098)" data-w="400" data-h="300"><span class="row-type">Commercial</span><span class="row-title">Packhofstra&szlig;e Corner Commercial</span><span class="row-year">2012</span></a>
-      <a class="project-row" href="#" data-type="commercial"   data-colour="linear-gradient(135deg,#c8c0b8,#a09080)" data-w="440" data-h="560"><span class="row-type">Commercial</span><span class="row-title">Gro&szlig;e Bockenheimer Stra&szlig;e — Mixed-Use</span><span class="row-year">2011</span></a>
-      <a class="project-row" href="#" data-type="commercial"   data-colour="linear-gradient(135deg,#c0c8b8,#909880)" data-w="380" data-h="500"><span class="row-type">Commercial</span><span class="row-title">105 Gro&szlig;e Bockenheimer Stra&szlig;e — Mixed-Use</span><span class="row-year">2010</span></a>
-    </div>
+    <div class="project-list" id="project-list"></div>
   </div>
 </main>
 
@@ -545,35 +510,31 @@
 (function() {
   'use strict';
 
-  // Footer random color
-  var footerBgColors = ['#FFD67C','#B8CE88','#D98E6A'];
-  document.querySelector('footer').style.background = footerBgColors[Math.floor(Math.random() * footerBgColors.length)];
+  var CLOUD = 'dgelbnw1g';
 
-  // CURSOR
+  // Footer random color
+  document.querySelector('footer').style.background =
+    ['#FFD67C','#B8CE88','#D98E6A'][Math.floor(Math.random() * 3)];
+
+  // ── CURSOR ───────────────────────────────────────────────────
   var cursor = document.getElementById('cursor');
   var ring   = document.getElementById('cursor-ring');
   var mx=0, my=0, rx=0, ry=0;
-
   document.addEventListener('mousemove', function(e) {
     mx = e.clientX; my = e.clientY;
-    cursor.style.left    = mx + 'px';
-    cursor.style.top     = my + 'px';
-    cursor.style.opacity = '1';
-    ring.style.opacity   = '0.4';
+    cursor.style.left = mx+'px'; cursor.style.top = my+'px';
+    cursor.style.opacity = '1'; ring.style.opacity = '0.4';
   });
   document.addEventListener('mouseleave', function() {
-    cursor.style.opacity = '0';
-    ring.style.opacity   = '0';
+    cursor.style.opacity = '0'; ring.style.opacity = '0';
   });
   (function lerp() {
-    rx += (mx - rx) * 0.10;
-    ry += (my - ry) * 0.10;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
+    rx += (mx-rx)*0.10; ry += (my-ry)*0.10;
+    ring.style.left = rx+'px'; ring.style.top = ry+'px';
     requestAnimationFrame(lerp);
   })();
 
-  document.querySelectorAll('a, button').forEach(function(el) {
+  function setCursorScale(el) {
     el.addEventListener('mouseenter', function() {
       cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
       ring.style.transform   = 'translate(-50%,-50%) scale(1.3)';
@@ -584,56 +545,131 @@
       ring.style.transform   = 'translate(-50%,-50%) scale(1)';
       ring.style.opacity     = '0.4';
     });
-  });
+  }
+  document.querySelectorAll('a, button').forEach(setCursorScale);
 
-  // HOVER PANEL
-  var panel     = document.getElementById('hover-panel');
-  var ph        = document.getElementById('panel-ph');
-  var panelImg  = null;
+  // ── HOVER PANEL ──────────────────────────────────────────────
+  var panel    = document.getElementById('hover-panel');
+  var ph       = document.getElementById('panel-ph');
+  var panelImg = null;
   var hideTimer = null;
 
-  document.querySelectorAll('.project-row').forEach(function(row) {
+  function attachHover(row) {
     row.addEventListener('mouseenter', function() {
       clearTimeout(hideTimer);
-      var colour = row.dataset.colour || 'linear-gradient(135deg,#c4b8a8,#9a8878)';
-      var w      = parseInt(row.dataset.w) || 380;
-      var h      = parseInt(row.dataset.h) || 500;
-      var imgSrc = row.dataset.img || '';
-      var maxH   = Math.round(window.innerHeight * 0.55);
-      var maxW   = 400;
-      var scale  = Math.min(1, maxH / h, maxW / w);
+      var folder = row.dataset.folder;
+      var maxH = Math.round(window.innerHeight * 0.58);
+      var maxW = 400;
 
-      if (imgSrc) {
+      if (folder) {
+        // Load hero image from Cloudinary
+        var url = 'https://res.cloudinary.com/' + CLOUD +
+                  '/image/upload/f_auto,q_auto,w_400/' + folder + '-01';
         ph.style.display = 'none';
-        if (!panelImg) { panelImg = document.createElement('img'); panel.appendChild(panelImg); }
-        panelImg.src = imgSrc;
+        if (!panelImg) {
+          panelImg = document.createElement('img');
+          panelImg.style.cssText = 'display:block;max-width:'+maxW+'px;max-height:'+maxH+'px;box-shadow:0 16px 60px rgba(28,28,26,0.15);';
+          panel.appendChild(panelImg);
+        }
+        panelImg.src = url;
         panelImg.style.display = 'block';
       } else {
         if (panelImg) panelImg.style.display = 'none';
-        ph.style.display    = 'block';
-        ph.style.background = colour;
-        ph.style.width      = Math.round(w * scale) + 'px';
-        ph.style.height     = Math.round(h * scale) + 'px';
+        ph.style.display = 'block';
+        ph.style.width   = '300px';
+        ph.style.height  = '400px';
+        ph.style.background = 'linear-gradient(135deg,#c4b8a8,#9a8878)';
       }
       panel.style.opacity = '1';
     });
     row.addEventListener('mouseleave', function() {
       hideTimer = setTimeout(function() { panel.style.opacity = '0'; }, 120);
     });
-  });
+    setCursorScale(row);
+  }
 
-  // FILTERS
-  document.querySelectorAll('.filter-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      var filter = btn.dataset.filter;
-      document.querySelectorAll('.project-row').forEach(function(row) {
-        row.classList.toggle('hidden', filter !== 'all' && row.dataset.type !== filter);
-      });
-      panel.style.opacity = '0';
+  // ── LOAD & RENDER PROJECTS ───────────────────────────────────
+  var allProjects = [];
+  var activeFilter = 'all';
+
+  function renderRows() {
+    var list = document.getElementById('project-list');
+    list.innerHTML = '';
+    allProjects.forEach(function(p) {
+      var typeLabel = p.type[0] || '';
+      var typesLower = p.type.map(function(t){ return t.toLowerCase(); });
+      var row = document.createElement('a');
+      row.className = 'project-row';
+      row.href = 'project.html?project=' + encodeURIComponent(p.slug);
+      row.dataset.types  = p.type.join(',').toLowerCase();
+      row.dataset.folder = p.folder;
+      row.innerHTML =
+        '<span class="row-type">'  + escHtml(typeLabel)  + '</span>' +
+        '<span class="row-title">' + escHtml(p.title)    + '</span>' +
+        '<span class="row-year">'  + escHtml(p.year)     + '</span>';
+
+      // Apply current filter
+      if (activeFilter !== 'all' && typesLower.indexOf(activeFilter) === -1) {
+        row.classList.add('hidden');
+      }
+
+      list.appendChild(row);
+      attachHover(row);
     });
-  });
+  }
+
+  function buildFilters(projects) {
+    var typeSet = {};
+    projects.forEach(function(p) {
+      p.type.forEach(function(t) { typeSet[t] = true; });
+    });
+    var types = Object.keys(typeSet).sort();
+    var bar = document.getElementById('filter-bar');
+    bar.innerHTML = '';
+
+    var allBtn = document.createElement('button');
+    allBtn.className = 'filter-btn active';
+    allBtn.dataset.filter = 'all';
+    allBtn.textContent = 'All';
+    bar.appendChild(allBtn);
+
+    types.forEach(function(t) {
+      var btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.dataset.filter = t.toLowerCase();
+      btn.textContent = t;
+      bar.appendChild(btn);
+    });
+
+    bar.querySelectorAll('.filter-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        bar.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        panel.style.opacity = '0';
+        document.querySelectorAll('.project-row').forEach(function(row) {
+          var types = row.dataset.types ? row.dataset.types.split(',') : [];
+          row.classList.toggle('hidden', activeFilter !== 'all' && types.indexOf(activeFilter) === -1);
+        });
+      });
+      setCursorScale(btn);
+    });
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  fetch('projects.json')
+    .then(function(r){ return r.json(); })
+    .then(function(projects) {
+      allProjects = projects;
+      buildFilters(projects);
+      renderRows();
+    })
+    .catch(function(){ /* show nothing on error */ });
 
 })();
 </script>
