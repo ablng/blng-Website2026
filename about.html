@@ -135,6 +135,7 @@
     .pillar { padding: 32px 0; border-right: none; border-bottom: 2px solid rgba(28,28,26,0.1); }
     .pillar:nth-child(2) { padding-left: 0; }
     .pillar:nth-child(3) { padding-left: 0; border-bottom: none; }
+    .pillar-term { font-size: 1.6rem; }
     .pillar-text { font-size: 1.5rem; }
     .principals { padding: 64px 24px; }
     .principals-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -159,7 +160,10 @@
     .opening-oneliner { font-size: 1.4rem; }
     .manifesto { padding: 48px 16px 64px; }
     .manifesto-statement { font-size: 1.4rem; }
+    .nav-links { gap: 8px; }
+    .nav-links a { font-size: 0.7rem; letter-spacing: 0.04em; }
     .pillars { padding: 48px 16px 0; }
+    .pillar-term { font-size: 1.4rem; }
     .pillar-text { font-size: 1.4rem; }
     .principals { padding: 48px 16px; }
     .roots { padding: 48px 16px; }
@@ -413,31 +417,36 @@
   var footerBgColors = ['#FFD67C', '#B8CE88', '#D98E6A'];
   document.querySelector('footer').style.background = footerBgColors[Math.floor(Math.random() * footerBgColors.length)];
 
-  // ─── CURSOR ───
-  var cursor = document.getElementById('cursor');
-  var ring   = document.getElementById('cursor-ring');
-  var mx = 0, my = 0, rx = 0, ry = 0;
+  // ─── CURSOR (pointer devices only) ───
+  var isTouch = window.matchMedia('(hover: none)').matches;
+  var cursor, ring;
+  if (!isTouch) {
+    cursor = document.getElementById('cursor');
+    ring   = document.getElementById('cursor-ring');
+    var mx = 0, my = 0, rx = 0, ry = 0;
 
-  document.addEventListener('mousemove', function(e) {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left    = mx + 'px';
-    cursor.style.top     = my + 'px';
-    cursor.style.opacity = '1';
-    ring.style.opacity   = '0.4';
-  });
-  document.addEventListener('mouseleave', function() {
-    cursor.style.opacity = '0';
-    ring.style.opacity   = '0';
-  });
-  (function lerp() {
-    rx += (mx - rx) * 0.10;
-    ry += (my - ry) * 0.10;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    requestAnimationFrame(lerp);
-  })();
+    document.addEventListener('mousemove', function(e) {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left    = mx + 'px';
+      cursor.style.top     = my + 'px';
+      cursor.style.opacity = '1';
+      ring.style.opacity   = '0.4';
+    });
+    document.addEventListener('mouseleave', function() {
+      cursor.style.opacity = '0';
+      ring.style.opacity   = '0';
+    });
+    (function lerp() {
+      rx += (mx - rx) * 0.10;
+      ry += (my - ry) * 0.10;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(lerp);
+    })();
+  }
 
   function bindCursorHover(root) {
+    if (isTouch) return;
     (root || document).querySelectorAll('a, button').forEach(function(el) {
       el.addEventListener('mouseenter', function() {
         cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
@@ -469,6 +478,32 @@
     });
   }
   observeReveal();
+
+  // ─── MOBILE BIO TRUNCATION ───
+  function initBioToggles(root) {
+    if (window.innerWidth > 768) return;
+    (root || document).querySelectorAll('.principal-bio').forEach(function(bio) {
+      var paras = bio.querySelectorAll('p');
+      if (paras.length <= 1) return;
+      if (bio.querySelector('.bio-more-btn')) return; // already initialised
+      for (var i = 1; i < paras.length; i++) paras[i].style.display = 'none';
+      var btn = document.createElement('button');
+      btn.className = 'more-btn bio-more-btn';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.innerHTML = '<span class="btn-label">More</span> <span class="btn-arrow">↓</span>';
+      var open = false;
+      btn.addEventListener('click', function() {
+        open = !open;
+        for (var i = 1; i < paras.length; i++) paras[i].style.display = open ? '' : 'none';
+        btn.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', open);
+        btn.querySelector('.btn-label').textContent = open ? 'Less' : 'More';
+        btn.querySelector('.btn-arrow').textContent = open ? '↑' : '↓';
+      });
+      bio.appendChild(btn);
+    });
+  }
+  initBioToggles();
 
   // ─── MORE TOGGLE ───
   function initToggle(btnId, contentId) {
@@ -579,6 +614,7 @@
     grid.innerHTML = html;
     observeReveal(grid);
     bindCursorHover(grid);
+    initBioToggles(grid);
   }
 
   // ─── RENDER: LEGACY PROFILE (Cloudinary slideshow probe) ───

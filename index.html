@@ -791,16 +791,20 @@
 const DRIFT_SPEED_MIN = 40;    // px/s upward
 const DRIFT_SPEED_MAX = 80;    // px/s upward
 
-// CURSOR
-const cursor = document.getElementById('cursor');
-const ring   = document.getElementById('cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
-(function lr(){ rx+=(mx-rx)*.10; ry+=(my-ry)*.10; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(lr); })();
-document.querySelectorAll('a').forEach(a=>{
-  a.addEventListener('mouseenter',()=>{ cursor.style.transform='translate(-50%,-50%) scale(2.2)'; ring.style.opacity='.75'; ring.style.transform='translate(-50%,-50%) scale(1.3)'; });
-  a.addEventListener('mouseleave',()=>{ cursor.style.transform='translate(-50%,-50%) scale(1)'; ring.style.opacity='.4'; ring.style.transform='translate(-50%,-50%) scale(1)'; });
-});
+// CURSOR (pointer devices only)
+const isTouch = window.matchMedia('(hover: none)').matches;
+let cursor, ring;
+if (!isTouch) {
+  cursor = document.getElementById('cursor');
+  ring   = document.getElementById('cursor-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+  (function lr(){ rx+=(mx-rx)*.10; ry+=(my-ry)*.10; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(lr); })();
+  document.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('mouseenter',()=>{ cursor.style.transform='translate(-50%,-50%) scale(2.2)'; ring.style.opacity='.75'; ring.style.transform='translate(-50%,-50%) scale(1.3)'; });
+    a.addEventListener('mouseleave',()=>{ cursor.style.transform='translate(-50%,-50%) scale(1)'; ring.style.opacity='.4'; ring.style.transform='translate(-50%,-50%) scale(1)'; });
+  });
+}
 
 function wait(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
@@ -886,14 +890,15 @@ async function runAnimation(){
   // Both SVGs use the same vbW → same scale → letter height unchanged.
   const VBW2 = 1369;
   const logoW2 = Math.min(Math.round(window.innerWidth * 0.82), 1140);
+  // Recompute height for new viewBox ratio so letters don't shrink on mobile
+  const logoH2 = Math.round(logoW2 * VB.h / VBW2);
 
   // Widen bieling SVG viewBox (letters stay put, space opens to the right)
   svg.setAttribute('viewBox', `430 1020 ${VBW2} 355`);
-  svg.style.width = logoW2 + 'px';
 
   // Prepare svg-blng: aligned viewBox, blng letters shown, studio letters hidden
   svgB.setAttribute('viewBox', `151 1020 ${VBW2} 355`);
-  svgB.style.cssText = `width:${logoW2}px; height:${logoH}px; display:block; position:absolute; top:0; left:0; opacity:0;`;
+  svgB.style.cssText = `width:${logoW2}px; height:${logoH2}px; display:block; position:absolute; top:0; left:0; opacity:0;`;
 
   const sG = id => svgB.querySelector(`g[id="${id}"]`);
   ['letter-b','letter-l','letter-n','letter-g'].forEach(id => {
@@ -903,13 +908,17 @@ async function runAnimation(){
     const el = sG(id); if(el) el.style.opacity = '0';
   });
 
-  // Expand wrap width, cross-fade bieling → blng
-  wrap.style.transition = 'width 0.5s ease';
-  wrap.style.width = logoW2 + 'px';
+  // Expand wrap — transition both dimensions so size change is gradual
+  wrap.style.transition = 'width 0.5s ease, height 0.5s ease';
+  wrap.style.width  = logoW2 + 'px';
+  wrap.style.height = logoH2 + 'px';
+  // Transition svg size and cross-fade simultaneously
+  svg.style.transition = 'width 0.5s ease, height 0.5s ease, opacity 0.35s ease';
+  svg.style.width  = logoW2 + 'px';
+  svg.style.height = logoH2 + 'px';
+  svg.style.opacity = '0';
   svgB.style.transition = 'opacity 0.35s ease';
   svgB.style.opacity = '1';
-  svg.style.transition  = 'opacity 0.35s ease';
-  svg.style.opacity = '0';
   await wait(600);
 
   // ── STEP 5: "studio" types out letter by letter ───────────────

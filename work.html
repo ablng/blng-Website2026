@@ -75,8 +75,8 @@
   @media (max-width: 480px) {
     #nav-logo img { width:220px; }
     nav { padding:8px 14px 8px 8px; }
-    .nav-links { gap:14px; }
-    .nav-links a { font-size:1.0rem; }
+    .nav-links { gap:8px; }
+    .nav-links a { font-size:0.7rem; letter-spacing:0.04em; }
     main { padding:106px 16px 48px; }
     .filters { gap:6px; margin-bottom:28px; }
     .filter-btn { font-size:0.9rem; padding:6px 12px; }
@@ -140,25 +140,30 @@
   document.querySelector('footer').style.background =
     ['#FFD67C','#B8CE88','#D98E6A'][Math.floor(Math.random() * 3)];
 
-  // ── CURSOR ───────────────────────────────────────────────────
-  var cursor = document.getElementById('cursor');
-  var ring   = document.getElementById('cursor-ring');
-  var mx=0, my=0, rx=0, ry=0;
-  document.addEventListener('mousemove', function(e) {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx+'px'; cursor.style.top = my+'px';
-    cursor.style.opacity = '1'; ring.style.opacity = '0.4';
-  });
-  document.addEventListener('mouseleave', function() {
-    cursor.style.opacity = '0'; ring.style.opacity = '0';
-  });
-  (function lerp() {
-    rx += (mx-rx)*0.10; ry += (my-ry)*0.10;
-    ring.style.left = rx+'px'; ring.style.top = ry+'px';
-    requestAnimationFrame(lerp);
-  })();
+  // ── CURSOR (pointer devices only) ────────────────────────────
+  var isTouch = window.matchMedia('(hover: none)').matches;
+  var cursor, ring;
+  if (!isTouch) {
+    cursor = document.getElementById('cursor');
+    ring   = document.getElementById('cursor-ring');
+    var mx=0, my=0, rx=0, ry=0;
+    document.addEventListener('mousemove', function(e) {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx+'px'; cursor.style.top = my+'px';
+      cursor.style.opacity = '1'; ring.style.opacity = '0.4';
+    });
+    document.addEventListener('mouseleave', function() {
+      cursor.style.opacity = '0'; ring.style.opacity = '0';
+    });
+    (function lerp() {
+      rx += (mx-rx)*0.10; ry += (my-ry)*0.10;
+      ring.style.left = rx+'px'; ring.style.top = ry+'px';
+      requestAnimationFrame(lerp);
+    })();
+  }
 
   function setCursorScale(el) {
+    if (isTouch) return;
     el.addEventListener('mouseenter', function() {
       cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
       ring.style.transform   = 'translate(-50%,-50%) scale(1.3)';
