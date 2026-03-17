@@ -64,7 +64,9 @@
       "Bash(node tools/cloudinary_rename.js)",
       "Bash(node tools/generate_projects_json.js)",
       "Bash(powershell -Command \":*)",
-      "Bash(powershell -NoProfile -ExecutionPolicy Bypass -File \"c:\\\\Users\\\\AriadnaLópezBielingB\\\\BIELING ARCHITECTS\\\\BLNG Projects - Documents\\\\04 Marketing + Sales\\\\Website\\\\blng Website2026\\\\.tmp\\\\swap_svg.ps1\")"
+      "Bash(powershell -NoProfile -ExecutionPolicy Bypass -File \"c:\\\\Users\\\\AriadnaLópezBielingB\\\\BIELING ARCHITECTS\\\\BLNG Projects - Documents\\\\04 Marketing + Sales\\\\Website\\\\blng Website2026\\\\.tmp\\\\swap_svg.ps1\")",
+      "Bash(powershell -NoProfile -Command \"Rename-Item -Path ''c:\\\\Users\\\\AriadnaLópezBielingB\\\\BIELING ARCHITECTS\\\\BLNG Projects - Documents\\\\04 Marketing + Sales\\\\Website\\\\blng Website2026\\\\brand_assets\\\\blng studio.png'' -NewName ''blng-studio.png''\")",
+      "Bash(powershell -NoProfile -Command \"Test-Path ''c:\\\\Users\\\\AriadnaLópezBielingB\\\\BIELING ARCHITECTS\\\\BLNG Projects - Documents\\\\04 Marketing + Sales\\\\Website\\\\blng Website2026\\\\brand_assets\\\\blng-studio.png''\")"
     ]
   }
 }
