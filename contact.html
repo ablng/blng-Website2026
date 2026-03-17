@@ -258,13 +258,6 @@
   });
   nlClose.addEventListener('click', function() { closePanel(); });
 
-  document.getElementById('footer-newsletter-link').addEventListener('click', function(e) {
-    e.preventDefault();
-    var section = document.getElementById('newsletter-section');
-    section.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(function() { openPanel(); }, 400);
-  });
-
   nlSubmit.addEventListener('click', function() {
     var firstname = document.getElementById('nl-firstname').value.trim();
     var lastname  = document.getElementById('nl-lastname').value.trim();

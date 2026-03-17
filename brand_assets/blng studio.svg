@@ -7,14 +7,14 @@
    id="svg44"
    sodipodi:docname="blng studio.svg"
    inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
-   inkscape:export-filename="blng studio.svg"
+   inkscape:export-filename="blng studio.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
+   shape-rendering="crispEdges"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   shape-rendering="crispEdges">
+   xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
      id="namedview44"
      pagecolor="#ffffff"
@@ -36,16 +36,17 @@
      inkscape:current-layer="svg44" />
   <defs
      id="defs1">
-    <style>
+    <style
+       id="style1">
       svg { shape-rendering: crispEdges; transform: translateZ(0); }
       g, path, circle { shape-rendering: crispEdges; }
-      path[fill="#1c1c1a"] { stroke: #1c1c1a; stroke-width: 1; paint-order: stroke fill; }
+      path[fill=&quot;#1c1c1a&quot;] { stroke: #1c1c1a; stroke-width: 1; paint-order: stroke fill; }
     </style>
   </defs>
   <g
      id="letter-l"
      style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
-<g
+    <g
        id="g47"
        style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
       <path
@@ -61,10 +62,7 @@
   <g
      id="letter-g"
      style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
-
-
-
-<g
+    <g
        id="g51"
        style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
       <path
@@ -96,7 +94,7 @@
   <g
      id="letter-i"
      style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
-<circle
+    <circle
        cx="1316"
        cy="1080"
        r="19.84"
@@ -129,8 +127,7 @@
   <g
      id="letter-o"
      style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
-
-<g
+    <g
        id="g63"
        style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
       <path
@@ -146,9 +143,7 @@
   <g
      id="letter-d"
      style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
-
-
-<g
+    <g
        id="g59"
        style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
       <path
@@ -172,7 +167,7 @@
   <g
      id="letter-s"
      style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
-<g
+    <g
        id="g53"
        style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
       <path
@@ -188,7 +183,7 @@
   <g
      id="letter-t"
      style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
-<g
+    <g
        id="g55"
        style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
       <path
@@ -212,9 +207,7 @@
   <g
      id="letter-n"
      style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
-
-
-<g
+    <g
        id="g49"
        style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
       <path
@@ -246,9 +239,7 @@
   <g
      id="letter-u"
      style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
-
-
-<g
+    <g
        id="g57"
        style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
       <path
@@ -280,9 +271,7 @@
   <g
      id="letter-b"
      style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
-
-
-<g
+    <g
        id="g45"
        transform="translate(-3.6552669e-6,3.4531857e-5)"
        style="stroke:#1c1c1a;stroke-opacity:1;stroke-width:1.12496222;stroke-dasharray:none">
