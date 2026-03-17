@@ -26,7 +26,7 @@
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 12px 48px 12px 14px; display: flex; justify-content: space-between; align-items: center; background: var(--page-bg); border-bottom: 2px solid rgba(28,28,26,0.07); }
   #nav-logo { display: block; text-decoration: none; width: 573px; height: 122.5px; overflow: hidden; position: relative; opacity: 0.9; transition: opacity 0.25s; flex-shrink: 0; }
   #nav-logo:hover { opacity: 1; }
-  #nav-logo svg { position: absolute; left: 0; top: -347px; width: 573px; height: 811.2px; }
+  #nav-logo svg { position: absolute; left: 0; top: -347px; width: 573px; height: 811px; }
   .nav-links { display: flex; gap: 44px; list-style: none; }
   .nav-links a { font-size: 1.4rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--charcoal); transition: color 0.25s; }
   .nav-links a:hover { color: var(--terracotta); }
@@ -111,9 +111,6 @@
     .contact-grid { padding: 0 16px; }
     footer { padding: 28px 16px; }
   }
-  /* ─── LOGO RENDERING FIX ─── */
-  #nav-logo svg g, #nav-logo svg path, #nav-logo svg circle { shape-rendering: crispEdges; }
-  #nav-logo svg path[fill="#1c1c1a"] { stroke: #1c1c1a; stroke-width: 1px; paint-order: stroke fill; }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
@@ -125,7 +122,7 @@
 
 <!-- ─── NAV ─── -->
 <nav>
-  <a href="../index.html" id="nav-logo" aria-label="blng studio home"><svg version="1.1" viewBox="0 0 1683.6 2383.92" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" style="transform: translateZ(0);">
+  <a href="../index.html" id="nav-logo" aria-label="blng studio home"><svg version="1.1" viewBox="0 0 1683.6 2383.92" xmlns="http://www.w3.org/2000/svg" style="image-rendering: crisp-edges; transform: translateZ(0); will-change: transform;">
   <defs id="defs1" />
   <g id="letter-l">
     <path d="m 351.6127,1257.772 h 28.34647 V 1025.331 H 351.6127 Z" stroke="#1c1c1a" stroke-width="0.24" stroke-linecap="round" stroke-linejoin="round" fill="none" />
