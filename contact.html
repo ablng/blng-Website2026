@@ -111,6 +111,9 @@
     .contact-grid { padding: 0 16px; }
     footer { padding: 28px 16px; }
   }
+  /* ─── LOGO RENDERING FIX ─── */
+  #nav-logo svg g, #nav-logo svg path, #nav-logo svg circle { shape-rendering: crispEdges; }
+  #nav-logo svg path[fill="#1c1c1a"] { stroke: #1c1c1a; stroke-width: 1px; paint-order: stroke fill; }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
@@ -122,7 +125,7 @@
 
 <!-- ─── NAV ─── -->
 <nav>
-  <a href="../index.html" id="nav-logo" aria-label="blng studio home"><svg version="1.1" viewBox="0 0 1683.6 2383.92" xmlns="http://www.w3.org/2000/svg">
+  <a href="../index.html" id="nav-logo" aria-label="blng studio home"><svg version="1.1" viewBox="0 0 1683.6 2383.92" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" style="transform: translateZ(0);">
   <defs id="defs1" />
   <g id="letter-l">
     <path d="m 351.6127,1257.772 h 28.34647 V 1025.331 H 351.6127 Z" stroke="#1c1c1a" stroke-width="0.24" stroke-linecap="round" stroke-linejoin="round" fill="none" />
