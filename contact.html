@@ -76,8 +76,9 @@
   footer a:hover { color: var(--terracotta); }
 
   /* ─── SCROLL REVEAL ─── */
-  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.65s ease, transform 0.65s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal { opacity: 1; transform: translateY(0); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .js-loaded .reveal { opacity: 0; transform: translateY(16px); }
+  .js-loaded .reveal.visible { opacity: 1; transform: translateY(0); }
 
   /* ─── RESPONSIVE ─── */
   @media (max-width: 1024px) {
@@ -194,6 +195,9 @@
 <script>
 (function() {
   'use strict';
+
+  // Mark JS as loaded — enables scroll reveal hiding; without this, all content is visible by default
+  document.body.classList.add('js-loaded');
 
   // Footer random color
   var footerBgColors = ['#FFD67C','#B8CE88','#D98E6A'];
