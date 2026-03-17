@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal &amp; Privacy Notice — blng studio</title>
+<style>
+  :root {
+    --charcoal:   #1C1C1A;
+    --porcelain:  #F8F6F3;
+    --terracotta: #D98E6A;
+    --mustard:    #FFC850;
+    --green:      #7A973F;
+    --page-bg:    #F8F6F3;
+    --label:      rgba(28,28,26,0.4);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--page-bg); color: var(--charcoal); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ─── CURSOR ─── */
+  #cursor      { position: fixed; width: 10px; height: 10px; background: var(--terracotta); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s ease; opacity: 0; }
+  #cursor-ring { position: fixed; width: 38px; height: 38px; border: 1px solid var(--charcoal); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); opacity: 0; transition: opacity 0.2s; }
+
+  /* ─── NAV ─── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 12px 48px 12px 14px; display: flex; justify-content: space-between; align-items: center; background: var(--page-bg); border-bottom: 2px solid rgba(28,28,26,0.07); }
+  #nav-logo { display: block; text-decoration: none; opacity: 0.9; transition: opacity 0.25s; flex-shrink: 0; }
+  #nav-logo:hover { opacity: 1; }
+  #nav-logo img { width: 573px; display: block; }
+  .nav-links { display: flex; gap: 44px; list-style: none; }
+  .nav-links a { font-size: 1.4rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--charcoal); transition: color 0.25s; }
+  .nav-links a:hover { color: var(--terracotta); }
+  .nav-links a.active { color: var(--green); }
+
+  /* ─── HERO ─── */
+  .hero { padding: 200px 48px 96px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
+  .hero-heading { font-size: clamp(2.6rem, 5vw, 4.8rem); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; color: var(--charcoal); max-width: 820px; }
+
+  /* ─── LEGAL CONTENT ─── */
+  .legal-body { padding: 80px 80px 100px; max-width: 860px; }
+  .legal-section { padding: 48px 0; border-bottom: 2px solid rgba(28,28,26,0.08); }
+  .legal-section:last-child { border-bottom: none; }
+  .legal-section h2 { font-size: 1.1rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); margin-bottom: 20px; font-weight: 300; }
+  .legal-section p { font-size: 1.6rem; line-height: 1.85; color: var(--charcoal); margin-bottom: 10px; }
+  .legal-section p:last-child { margin-bottom: 0; }
+  .legal-section a { color: var(--charcoal); text-decoration: none; border-bottom: 2px solid rgba(28,28,26,0.2); transition: color 0.2s, border-color 0.2s; }
+  .legal-section a:hover { color: var(--terracotta); border-color: var(--terracotta); }
+
+  /* ─── FOOTER ─── */
+  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; margin-top: auto; }
+  .footer-address { font-size: 1.2rem; line-height: 1.9; color: var(--charcoal); letter-spacing: 0.04em; }
+  .footer-middle  { text-align: center; font-size: 1.2rem; line-height: 2; letter-spacing: 0.04em; color: var(--charcoal); }
+  .footer-right   { text-align: right; font-size: 1.2rem; line-height: 1.9; letter-spacing: 0.04em; color: var(--charcoal); }
+  footer a { color: var(--charcoal); text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; }
+  footer a:hover { color: var(--terracotta); }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    #nav-logo img { width: 401px; }
+    .legal-body { padding: 64px 48px 80px; }
+  }
+  @media (max-width: 768px) {
+    #nav-logo img { width: 298px; }
+    nav { padding: 10px 20px 10px 10px; }
+    .nav-links { gap: 24px; }
+    .nav-links a { font-size: 1.2rem; }
+    .hero { padding: 120px 24px 64px; }
+    .legal-body { padding: 48px 24px 72px; }
+    .legal-section p { font-size: 1.4rem; }
+    footer { grid-template-columns: 1fr; gap: 20px; padding: 40px 24px; }
+    .footer-middle { text-align: left; }
+    .footer-right { text-align: left; }
+  }
+  @media (max-width: 480px) {
+    #nav-logo img { width: 220px; }
+    nav { padding: 8px 14px 8px 8px; }
+    .nav-links { gap: 14px; }
+    .nav-links a { font-size: 1.0rem; }
+    .hero { padding: 96px 16px 48px; }
+    .legal-body { padding: 36px 16px 56px; }
+    footer { padding: 28px 16px; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="index.html" id="nav-logo" aria-label="blng studio home"><img src="brand_assets/blng-studio.png" alt="blng studio"></a>
+  <ul class="nav-links">
+    <li><a href="work.html">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero reveal">
+  <h1 class="hero-heading">Legal &amp; Privacy Notice</h1>
+</section>
+
+<!-- ─── LEGAL CONTENT ─── -->
+<main class="legal-body">
+
+  <div class="legal-section reveal">
+    <h2>Company</h2>
+    <p>Bieling Ltd (trading as blng studio) — Company No. 14298710</p>
+    <p>Registered Office: 3 Dericote Street, London E8 4PG, UK</p>
+    <p>VAT No. GB462523011</p>
+    <p>Contact: <a href="mailto:info@blng.studio">info@blng.studio</a></p>
+  </div>
+
+  <div class="legal-section reveal">
+    <h2>Privacy</h2>
+    <p>blng studio respects your privacy and complies with the requirements of the UK General Data Protection Regulation (GDPR). This notice explains how we handle personal information collected through our website and related services.</p>
+    <p>We collect and process only the data necessary to operate effectively and provide you with a smooth experience. We do not sell, rent, or share personal data with third parties.</p>
+  </div>
+
+  <div class="legal-section reveal">
+    <h2>Website &amp; Cookies</h2>
+    <p>Our website uses Google Analytics to understand how visitors use the site and to help us improve it. Cookies are used for this purpose. No personally identifiable information is collected or stored by us.</p>
+    <p>You can disable cookies through your browser settings if you prefer not to participate in analytics tracking.</p>
+  </div>
+
+  <div class="legal-section reveal">
+    <h2>Newsletter</h2>
+    <p>If you sign up for our newsletter, we collect your name and email address solely for the purpose of sending updates from blng studio. Your data will not be shared with third parties and will only be used to deliver our emails.</p>
+    <p>Each newsletter includes an unsubscribe link, and you can opt out at any time.</p>
+  </div>
+
+  <div class="legal-section reveal">
+    <h2>Personal Data</h2>
+    <p>We take reasonable precautions to protect personal information against loss, misuse, or unauthorised access. All personal data is stored securely and reviewed regularly to ensure accuracy and relevance.</p>
+    <p>We retain data only for as long as necessary and delete it when it's no longer required. If we ever need to share data for a specific reason, we will request your explicit consent first.</p>
+  </div>
+
+  <div class="legal-section reveal">
+    <h2>Intellectual Property</h2>
+    <p>All design, text, and images on this website are owned by Bieling Ltd or used with permission. They may not be copied, reproduced, or distributed for any purpose without prior written consent.</p>
+    <p>Please respect the rights of our designers and photographers.</p>
+  </div>
+
+  <div class="legal-section reveal">
+    <h2>Disclaimer</h2>
+    <p>We aim to keep all information on this website accurate and up to date. However, we cannot guarantee its completeness or suitability for every purpose.</p>
+    <p>blng studio accepts no liability for any direct or indirect loss arising from use of this website or its content, including links to external sites.</p>
+  </div>
+
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-address">3 Dericote Street,<br>London E8 4PG,<br>United Kingdom</div>
+  <div class="footer-middle">
+    <a href="tel:+442045589744">+44 20 4558 9744</a><br>
+    <a href="mailto:info@blng.studio">info@blng.studio</a><br>
+    <a href="https://www.linkedin.com/company/blng-studio/" target="_blank">LinkedIn</a> &nbsp;—&nbsp;
+    <a href="https://www.instagram.com/blng_studio/" target="_blank">Instagram</a>
+  </div>
+  <div class="footer-right">
+    <a href="legal.html">Legal &amp; Privacy Notice</a><br>
+    &copy; 2026 blng studio
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // Footer random color
+  var footerBgColors = ['#FFD67C','#B8CE88','#D98E6A'];
+  document.querySelector('footer').style.background = footerBgColors[Math.floor(Math.random() * footerBgColors.length)];
+
+  // ─── CURSOR ───
+  var cursor = document.getElementById('cursor');
+  var ring   = document.getElementById('cursor-ring');
+  var mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', function(e) {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left    = mx + 'px';
+    cursor.style.top     = my + 'px';
+    cursor.style.opacity = '1';
+    ring.style.opacity   = '0.4';
+  });
+  document.addEventListener('mouseleave', function() {
+    cursor.style.opacity = '0';
+    ring.style.opacity   = '0';
+  });
+  (function lerp() {
+    rx += (mx - rx) * 0.10;
+    ry += (my - ry) * 0.10;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(lerp);
+  })();
+
+  document.querySelectorAll('a, button').forEach(function(el) {
+    el.addEventListener('mouseenter', function() {
+      cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
+      ring.style.transform   = 'translate(-50%,-50%) scale(1.3)';
+      ring.style.opacity     = '0.75';
+    });
+    el.addEventListener('mouseleave', function() {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.transform   = 'translate(-50%,-50%) scale(1)';
+      ring.style.opacity     = '0.4';
+    });
+  });
+
+  // ─── SCROLL REVEAL ───
+  var reveals = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(function(el) { observer.observe(el); });
+
+})();
+</script>
+
+</body>
+</html>
