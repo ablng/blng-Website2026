@@ -828,7 +828,7 @@ function animateSlide(moves, durationMs){
 }
 
 async function runAnimation(){
-  await loadFeaturedPool();
+  loadFeaturedPool(); // fire in background — don't block the animation
   const svg   = document.getElementById('svg-bieling');
   const svgB  = document.getElementById('svg-blng');
   const wrap  = document.getElementById('logo-wrap');
@@ -959,40 +959,17 @@ async function loadFeaturedPool() {
     if (!resp.ok) return;
     const projects = await resp.json();
     const featured = projects.filter(p => p.featured);
-    if (featured.length < 2) return; // need at least 2 for 2-column layout
+    if (featured.length < 2) return;
 
-    const MAX_PROBE = 20;
-
-    // Probe all images for each featured project in parallel
-    const perProject = await Promise.all(featured.map(p => new Promise(resolve => {
-      const found = {};
-      let done = 0;
-      for (let n = 1; n <= MAX_PROBE; n++) {
-        const pad = n < 10 ? '0' + n : '' + n;
-        const url = `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_1400/${p.folder}-${pad}`;
-        const img = new Image();
-        img.onload  = () => { found[n] = url; if (++done === MAX_PROBE) resolve(found); };
-        img.onerror = () => {                  if (++done === MAX_PROBE) resolve(found); };
-        img.src = url;
-      }
-    }).then(found => {
-      const urls = [];
-      for (let k = 1; k <= MAX_PROBE; k++) { if (found[k]) urls.push(found[k]); }
-      // Fall back to -01 if nothing probed (avoids losing a project from the pool)
-      if (urls.length === 0) urls.push(
-        `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_1400/${p.folder}-01`
-      );
-      return urls.map(url => ({
-        name:   p.title,
-        img:    url,
-        colour: null,
-        slug:   p.slug,
-        w: 1600,
-        h: 2000,
-      }));
-    })));
-
-    const entries = perProject.flat();
+    // Use -01 image per project — no probing needed, images load lazily when used
+    const entries = featured.map(p => ({
+      name:   p.title,
+      img:    `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_1400/${p.folder}-01`,
+      colour: null,
+      slug:   p.slug,
+      w: 1600,
+      h: 2000,
+    }));
     if (entries.length >= 2) POOL = entries;
   } catch(e) { /* keep fallback */ }
 }
@@ -1004,10 +981,11 @@ const COLS = [
 ];
 const colPoolIdx = [0, 3];
 const MAX_CARDS = 8;
+let driftCards = []; // JS array — no DOM queries in rAF loop
 
 function spawnCard(colIdx, startY){
   const layer = document.getElementById('drift-layer');
-  if(layer.querySelectorAll('.drift-wrapper').length >= MAX_CARDS) return;
+  if(driftCards.length >= MAX_CARDS) return;
   const vw    = window.innerWidth;
   const col   = COLS[colIdx];
   const proj  = POOL[colPoolIdx[colIdx] % POOL.length];
@@ -1023,7 +1001,8 @@ function spawnCard(colIdx, startY){
 
   const card = document.createElement('div');
   card.className = 'drift-wrapper';
-  card.style.cssText = `width:${cardW}px;height:${cardH}px;left:${cardX}px;top:${startY}px;opacity:0;`;
+  // top:0 + will-change:transform — GPU compositing, no layout per frame
+  card.style.cssText = `width:${cardW}px;height:${cardH}px;left:${cardX}px;top:0;will-change:transform;transform:translateY(${Math.round(startY)}px);opacity:0;`;
 
   if(proj.img){
     const img = document.createElement('img'); img.src=proj.img; img.alt=proj.name; card.appendChild(img);
@@ -1038,7 +1017,9 @@ function spawnCard(colIdx, startY){
   card._speed = DRIFT_SPEED_MIN + Math.random()*(DRIFT_SPEED_MAX-DRIFT_SPEED_MIN);
   card._y     = startY;
   card._col   = colIdx;
+  card._h     = cardH; // cache height — avoids offsetHeight reads in rAF loop
   layer.appendChild(card);
+  driftCards.push(card);
 
   // Fade in after brief delay
   setTimeout(()=>{ card.style.transition='opacity 1.4s ease'; card.style.opacity='1'; }, 60);
@@ -1047,15 +1028,15 @@ function spawnCard(colIdx, startY){
 
 function colLowestBottom(colIdx){
   let lowest = 0;
-  document.querySelectorAll('.drift-wrapper').forEach(w => {
-    if(w._col === colIdx) lowest = Math.max(lowest, w._y + w.offsetHeight);
+  driftCards.forEach(w => {
+    if(w._col === colIdx) lowest = Math.max(lowest, w._y + w._h);
   });
   return lowest;
 }
 
 function colHighestTop(colIdx){
   let top = Infinity;
-  document.querySelectorAll('.drift-wrapper').forEach(w => {
+  driftCards.forEach(w => {
     if(w._col === colIdx) top = Math.min(top, w._y);
   });
   return top === Infinity ? 0 : top;
@@ -1109,25 +1090,27 @@ function startDrift(){
     const vh = window.innerHeight;
     // Decay boost smoothly back to zero
     scrollBoost *= 0.94;
-    document.querySelectorAll('.drift-wrapper').forEach(w=>{
+    // Iterate backwards so removal by index is safe
+    for(let i = driftCards.length - 1; i >= 0; i--){
+      const w = driftCards[i];
       w._y -= (w._speed + scrollBoost) * dt;
-      if(w._y + w.offsetHeight < 0){
+      if(w._y + w._h < 0){
         const col = w._col;
         w.remove();
-        // Chain new card just below the lowest existing card in this column
+        driftCards.splice(i, 1);
         const tail = colLowestBottom(col);
         spawnCard(col, tail + CARD_GAP);
       } else if(w._y > vh){
-        // Drifted off bottom (reverse scroll) — respawn above topmost existing card
         const col = w._col;
-        const cardH = w.offsetHeight;
+        const cardH = w._h;
         w.remove();
+        driftCards.splice(i, 1);
         const top = colHighestTop(col);
         spawnCard(col, top - cardH - CARD_GAP);
       } else {
-        w.style.top = w._y+'px';
+        w.style.transform = `translateY(${Math.round(w._y)}px)`;
       }
-    });
+    }
     requestAnimationFrame(tick);
   })(performance.now());
 }
@@ -1141,7 +1124,8 @@ window.addEventListener('resize', () => {
   resizeTimer = setTimeout(() => {
     const layer = document.getElementById('drift-layer');
     if (!layer || !layer.classList.contains('visible')) return;
-    layer.querySelectorAll('.drift-wrapper').forEach(w => w.remove());
+    driftCards.forEach(w => w.remove());
+    driftCards = [];
     buildDrift();
   }, 200);
 });

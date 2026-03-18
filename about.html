@@ -125,6 +125,7 @@
     .principals-photo-wrap img { max-width: 100%; }
     .slideshow-track { aspect-ratio: 3 / 2; }
     .ss-dots { display: none; }
+    .ss-btn { display: none; }
     .more-btn { font-size: 0.9rem; padding: 9px 20px; margin-top: 32px; }
     #nav-logo img { width: 298px; }
     nav { padding: 10px 20px 10px 10px; }
@@ -506,6 +507,47 @@
   }
   initBioToggles();
 
+  // ─── MOBILE PROFILE BIO TRUNCATION (Thomas / Josef) ───
+  function initProfileToggles() {
+    if (window.innerWidth > 768) return;
+    document.querySelectorAll('.profile-text').forEach(function(bio) {
+      if (bio.querySelector('.profile-more-btn')) return;
+      var paras = bio.querySelectorAll('p');
+      if (!paras.length) return;
+
+      // Split first paragraph at its first sentence boundary
+      var firstPText = paras[0].textContent;
+      var dotIdx = firstPText.search(/\.\s/);
+      if (dotIdx === -1) dotIdx = firstPText.lastIndexOf('.');
+      if (dotIdx === -1 && paras.length <= 1) return; // nothing to truncate
+
+      var hiddenSpan = document.createElement('span');
+      hiddenSpan.style.display = 'none';
+      if (dotIdx >= 0) {
+        var rest = firstPText.slice(dotIdx + 1).trim();
+        paras[0].textContent = firstPText.slice(0, dotIdx + 1);
+        if (rest) { hiddenSpan.textContent = ' ' + rest; paras[0].appendChild(hiddenSpan); }
+      }
+      for (var i = 1; i < paras.length; i++) paras[i].style.display = 'none';
+
+      var btn = document.createElement('button');
+      btn.className = 'more-btn profile-more-btn';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.innerHTML = '<span class="btn-label">More</span> <span class="btn-arrow">↓</span>';
+      var open = false;
+      btn.addEventListener('click', function() {
+        open = !open;
+        hiddenSpan.style.display = open ? '' : 'none';
+        for (var i = 1; i < paras.length; i++) paras[i].style.display = open ? '' : 'none';
+        btn.setAttribute('aria-expanded', open);
+        btn.querySelector('.btn-label').textContent = open ? 'Less' : 'More';
+        btn.querySelector('.btn-arrow').textContent = open ? '↑' : '↓';
+      });
+      bio.appendChild(btn);
+    });
+  }
+  initProfileToggles();
+
   // ─── MORE TOGGLE ───
   function initToggle(btnId, contentId) {
     var btn     = document.getElementById(btnId);
@@ -545,6 +587,19 @@
     if (prevBtn) prevBtn.addEventListener('click', function() { stopTimer(); goTo(current - 1); });
     if (nextBtn) nextBtn.addEventListener('click', function() { stopTimer(); goTo(current + 1); });
     dots.forEach(function(dot, i) { dot.addEventListener('click', function() { stopTimer(); goTo(i); }); });
+
+    // Touch swipe: left = next, right = prev
+    var track = el.querySelector('.slideshow-track');
+    if (track) {
+      var swipeStartX = 0;
+      track.addEventListener('touchstart', function(e) {
+        swipeStartX = e.touches[0].clientX;
+      }, { passive: true });
+      track.addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].clientX - swipeStartX;
+        if (Math.abs(dx) > 40) { stopTimer(); goTo(dx < 0 ? current + 1 : current - 1); }
+      }, { passive: true });
+    }
   }
   document.querySelectorAll('.slideshow').forEach(function(ss) { initSlideshow(ss); });
 
