@@ -889,15 +889,16 @@ async function runAnimation(){
   // ViewBox width 1369 covers full "blng studio" in blng.svg (x: 151→1520).
   // bieling vb_x stays at 430; blng vb_x = 430 − 278.84 = 151 so b aligns.
   // Both SVGs use the same vbW → same scale → letter height unchanged.
-  const VBW2  = 1369;
+  const VBW2 = 1369;
   const logoW2 = Math.min(Math.round(window.innerWidth * 0.82), 1140);
-  const logoH2 = Math.round(logoW2 * VB.h / VBW2);
+
   // Widen bieling SVG viewBox (letters stay put, space opens to the right)
   svg.setAttribute('viewBox', `430 1020 ${VBW2} 355`);
+  svg.style.width = logoW2 + 'px';
 
   // Prepare svg-blng: aligned viewBox, blng letters shown, studio letters hidden
   svgB.setAttribute('viewBox', `151 1020 ${VBW2} 355`);
-  svgB.style.cssText = `width:${logoW2}px; height:${logoH2}px; display:block; position:absolute; top:0; left:0; opacity:0;`;
+  svgB.style.cssText = `width:${logoW2}px; height:${logoH}px; display:block; position:absolute; top:0; left:0; opacity:0;`;
 
   const sG = id => svgB.querySelector(`g[id="${id}"]`);
   ['letter-b','letter-l','letter-n','letter-g'].forEach(id => {
@@ -907,17 +908,13 @@ async function runAnimation(){
     const el = sG(id); if(el) el.style.opacity = '0';
   });
 
-  // Expand wrap — transition both dimensions so size change is gradual
-  wrap.style.transition = 'width 0.5s ease, height 0.5s ease';
-  wrap.style.width  = logoW2 + 'px';
-  wrap.style.height = logoH2 + 'px';
-  // Transition svg size and cross-fade simultaneously
-  svg.style.transition = 'width 0.5s ease, height 0.5s ease, opacity 0.35s ease';
-  svg.style.width  = logoW2 + 'px';
-  svg.style.height = logoH2 + 'px';
-  svg.style.opacity = '0';
+  // Expand wrap width, cross-fade bieling → blng
+  wrap.style.transition = 'width 0.5s ease';
+  wrap.style.width = logoW2 + 'px';
   svgB.style.transition = 'opacity 0.35s ease';
   svgB.style.opacity = '1';
+  svg.style.transition  = 'opacity 0.35s ease';
+  svg.style.opacity = '0';
   await wait(600);
 
   // ── STEP 5: "studio" types out letter by letter ───────────────
@@ -1072,12 +1069,15 @@ function buildDrift(){
   spawnCard(1, Math.floor(vh * 0.45) + estH + CARD_GAP);
 }
 
-// ── SCROLL VELOCITY → DRIFT BOOST ────────────────────────────
-// Scrolling accelerates the drift temporarily; no new cards spawn.
+// ── SCROLL VELOCITY → DRIFT DIRECTION ────────────────────────
+// Desktop only: scroll down advances (faster upward drift),
+// scroll up reverses (downward drift = going back). Touch unchanged.
 let scrollBoost = 0;
-window.addEventListener('wheel', (e) => {
-  scrollBoost = Math.min(scrollBoost + Math.abs(e.deltaY) * 4, 500);
-}, { passive: true });
+if (window.innerWidth > 768) {
+  window.addEventListener('wheel', (e) => {
+    scrollBoost = Math.max(-400, Math.min(scrollBoost + e.deltaY * 4, 500));
+  }, { passive: true });
+}
 
 function startDrift(){
   let lastTime = performance.now();
@@ -1095,6 +1095,8 @@ function startDrift(){
         // Chain new card just below the lowest existing card in this column
         const tail = colLowestBottom(col);
         spawnCard(col, tail + CARD_GAP);
+      } else if(w._y > vh){
+        w.remove(); // drifted off bottom (reverse scroll); normal flow will respawn
       } else {
         w.style.top = w._y+'px';
       }

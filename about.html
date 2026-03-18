@@ -272,9 +272,7 @@
 <section class="principals">
 
   <div class="principals-photo-wrap">
-    <div class="principals-photo">
-      <span class="principals-photo-caption">Ariadna Lopez Bieling &amp; Leo Bieling — [Photo placeholder]</span>
-    </div>
+    <img src="https://res.cloudinary.com/dgelbnw1g/image/upload/f_auto,q_auto/team/team-ariadna-leo-group" alt="Ariadna López Bieling &amp; Leo Bieling" style="width:100%; display:block;">
   </div>
 
   <div class="principals-grid">
@@ -287,7 +285,7 @@
         <p>Beyond the studio, she draws from art, fashion, and performance. As a flamenco dancer, she brings the same precision and emotional honesty to her architecture: precise, human, quietly resonant.</p>
       </div>
       <div class="principal-section">
-        <span class="principal-section-label">Teaching &amp; Lectures</span>
+        <span class="principal-section-label">Teaching &amp; Talks</span>
         <p class="placeholder-note">Content to follow.</p>
       </div>
     </div>
@@ -623,28 +621,23 @@
     initBioToggles(grid);
   }
 
-  // ─── RENDER: LEGACY PROFILE (Cloudinary slideshow probe) ───
+  // ─── RENDER: LEGACY PROFILE (Cloudinary folder list) ───
   function renderLegacyProfile(leg, bioText, profileEl) {
-    var folder     = leg.slideshow_folder;
-    var probeTotal = 10;
-    var doneCount  = 0;
-    var found      = {};
+    var folder = leg.slideshow_folder;
+    var listUrl = 'https://res.cloudinary.com/' + CLOUD + '/image/list/' + folder + '.json';
 
-    for (var n = 1; n <= probeTotal; n++) {
-      (function(idx) {
-        var pad = idx < 10 ? '0' + idx : '' + idx;
-        var url = 'https://res.cloudinary.com/' + CLOUD +
-                  '/image/upload/f_auto,q_auto,w_800/' + folder + '-' + pad;
-        var img    = new Image();
-        img.onload  = function() { found[idx] = url; if (++doneCount === probeTotal) build(); };
-        img.onerror = function() {                    if (++doneCount === probeTotal) build(); };
-        img.src = url;
-      })(n);
-    }
+    fetch(listUrl)
+      .then(function(r) { return r.ok ? r.json() : { resources: [] }; })
+      .catch(function()  { return { resources: [] }; })
+      .then(function(data) {
+        var urls = (data.resources || []).map(function(r) {
+          return 'https://res.cloudinary.com/' + CLOUD +
+                 '/image/upload/f_auto,q_auto,w_800/' + r.public_id;
+        });
+        build(urls);
+      });
 
-    function build() {
-      var urls = [];
-      for (var k = 1; k <= probeTotal; k++) { if (found[k]) urls.push(found[k]); }
+    function build(urls) {
 
       var bioParagraphs = parseParagraphs(bioText);
       var ssId = 'ss-' + leg.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-$/, '');
