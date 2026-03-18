@@ -14,7 +14,8 @@
   }
   *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   html, body { width:100%; overflow-x:hidden; background:var(--porcelain); font-family:'DM Sans',sans-serif; }
-  body { cursor:none; min-height:8000vh; }
+  body { cursor:none; }
+  @media (max-width: 768px) { #cursor, #cursor-ring { display: none; } }
 
   #cursor { position:fixed; width:10px; height:10px; background:var(--terracotta); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform 0.15s ease; }
   #cursor-ring { position:fixed; width:38px; height:38px; border:1px solid var(--charcoal); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); opacity:0.4; }
@@ -888,11 +889,9 @@ async function runAnimation(){
   // ViewBox width 1369 covers full "blng studio" in blng.svg (x: 151→1520).
   // bieling vb_x stays at 430; blng vb_x = 430 − 278.84 = 151 so b aligns.
   // Both SVGs use the same vbW → same scale → letter height unchanged.
-  const VBW2 = 1369;
+  const VBW2  = 1369;
   const logoW2 = Math.min(Math.round(window.innerWidth * 0.82), 1140);
-  // Recompute height for new viewBox ratio so letters don't shrink on mobile
   const logoH2 = Math.round(logoW2 * VB.h / VBW2);
-
   // Widen bieling SVG viewBox (letters stay put, space opens to the right)
   svg.setAttribute('viewBox', `430 1020 ${VBW2} 355`);
 
@@ -960,14 +959,40 @@ async function loadFeaturedPool() {
     const projects = await resp.json();
     const featured = projects.filter(p => p.featured);
     if (featured.length < 2) return; // need at least 2 for 2-column layout
-    POOL = featured.map(p => ({
-      name:   p.title,
-      img:    `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_1400/${p.folder}-01`,
-      colour: null,
-      slug:   p.slug,
-      w: 1600,
-      h: 2000,  // default portrait ratio — image fills via object-fit:cover
-    }));
+
+    const MAX_PROBE = 20;
+
+    // Probe all images for each featured project in parallel
+    const perProject = await Promise.all(featured.map(p => new Promise(resolve => {
+      const found = {};
+      let done = 0;
+      for (let n = 1; n <= MAX_PROBE; n++) {
+        const pad = n < 10 ? '0' + n : '' + n;
+        const url = `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_1400/${p.folder}-${pad}`;
+        const img = new Image();
+        img.onload  = () => { found[n] = url; if (++done === MAX_PROBE) resolve(found); };
+        img.onerror = () => {                  if (++done === MAX_PROBE) resolve(found); };
+        img.src = url;
+      }
+    }).then(found => {
+      const urls = [];
+      for (let k = 1; k <= MAX_PROBE; k++) { if (found[k]) urls.push(found[k]); }
+      // Fall back to -01 if nothing probed (avoids losing a project from the pool)
+      if (urls.length === 0) urls.push(
+        `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_1400/${p.folder}-01`
+      );
+      return urls.map(url => ({
+        name:   p.title,
+        img:    url,
+        colour: null,
+        slug:   p.slug,
+        w: 1600,
+        h: 2000,
+      }));
+    })));
+
+    const entries = perProject.flat();
+    if (entries.length >= 2) POOL = entries;
   } catch(e) { /* keep fallback */ }
 }
 
@@ -1050,12 +1075,9 @@ function buildDrift(){
 // ── SCROLL VELOCITY → DRIFT BOOST ────────────────────────────
 // Scrolling accelerates the drift temporarily; no new cards spawn.
 let scrollBoost = 0;
-let lastScrollY = window.scrollY;
-window.addEventListener('scroll', () => {
-  const delta = window.scrollY - lastScrollY; // positive = scrolling down only
-  if (delta > 0) scrollBoost = Math.min(scrollBoost + delta * 4, 500);
-  lastScrollY = window.scrollY;
-});
+window.addEventListener('wheel', (e) => {
+  scrollBoost = Math.min(scrollBoost + Math.abs(e.deltaY) * 4, 500);
+}, { passive: true });
 
 function startDrift(){
   let lastTime = performance.now();

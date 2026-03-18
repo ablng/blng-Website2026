@@ -117,7 +117,7 @@
     #nav-logo img { width: 220px; }
     nav { padding: 8px 14px 8px 8px; }
     .nav-links { gap: 8px; }
-    .nav-links a { font-size: 0.7rem; letter-spacing: 0.04em; }
+    .nav-links a { font-size: 0.8rem; letter-spacing: 0; }
     .project-intro { padding: 96px 16px 32px; }
     .project-hero { padding: 0 16px; }
     .project-gallery { padding: 0 16px; }
@@ -125,7 +125,7 @@
     .project-next-wrap { padding: 40px 16px; }
     footer { padding: 32px 16px; }
     .g-masonry { columns: 1; }
-    .spec-row { grid-template-columns: 130px 1fr; }
+    .spec-row { grid-template-columns: 1fr; }
   }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -354,16 +354,26 @@
         });
         // On mobile, truncate to first sentence with a MORE/LESS toggle
         if(window.innerWidth <= 768){
-          var paras = descEl.querySelectorAll('p');
-          if(paras.length > 1){
-            for(var pi=1; pi<paras.length; pi++) paras[pi].style.display='none';
+          var allParas = descEl.querySelectorAll('p');
+          var firstText = allParas[0] ? allParas[0].textContent : '';
+          var sentEnd = firstText.search(/[.!?](\s|$)/);
+          var hasTruncation = sentEnd !== -1 && (sentEnd < firstText.length - 2 || allParas.length > 1);
+          if(hasTruncation){
+            var shownText = firstText.slice(0, sentEnd + 1);
+            var restOfFirst = firstText.slice(sentEnd + 1).trim();
+            allParas[0].textContent = shownText;
+            var hiddenEl = document.createElement('span');
+            hiddenEl.style.display = 'none';
+            if(restOfFirst){ var rp = document.createElement('p'); rp.textContent = restOfFirst; hiddenEl.appendChild(rp); }
+            for(var pi=1; pi<allParas.length; pi++){ hiddenEl.appendChild(allParas[pi].cloneNode(true)); allParas[pi].remove(); }
+            descEl.appendChild(hiddenEl);
             var moreBtn = document.createElement('button');
             moreBtn.className = 'desc-more-btn';
             moreBtn.innerHTML = 'More <span class="desc-arrow">↓</span>';
             var expanded = false;
             moreBtn.addEventListener('click', function(){
               expanded = !expanded;
-              for(var pi=1; pi<paras.length; pi++) paras[pi].style.display = expanded ? '' : 'none';
+              hiddenEl.style.display = expanded ? '' : 'none';
               moreBtn.innerHTML = expanded ? 'Less <span class="desc-arrow">↑</span>' : 'More <span class="desc-arrow">↓</span>';
             });
             descEl.appendChild(moreBtn);

@@ -139,6 +139,7 @@
     .pillar-text { font-size: 1.5rem; }
     .principals { padding: 64px 24px; }
     .principals-grid { grid-template-columns: 1fr; gap: 48px; }
+    .principal-name { font-size: 1.8rem; }
     .principal-bio p { font-size: 1.5rem; }
     .principal-section p { font-size: 1.4rem; }
     .roots { padding: 64px 24px; }
@@ -153,19 +154,18 @@
   @media (max-width: 480px) {
     #nav-logo img { width: 220px; }
     nav { padding: 8px 14px 8px 8px; }
-    .nav-links { gap: 14px; }
-    .nav-links a { font-size: 1.0rem; }
+    .nav-links { gap: 8px; }
+    .nav-links a { font-size: 0.8rem; letter-spacing: 0; }
     .opening { padding: 96px 16px 48px; }
     .opening-tagline { font-size: clamp(2.0rem, 6vw, 2.8rem); }
     .opening-oneliner { font-size: 1.4rem; }
     .manifesto { padding: 48px 16px 64px; }
     .manifesto-statement { font-size: 1.4rem; }
-    .nav-links { gap: 8px; }
-    .nav-links a { font-size: 0.7rem; letter-spacing: 0.04em; }
     .pillars { padding: 48px 16px 0; }
     .pillar-term { font-size: 1.4rem; }
     .pillar-text { font-size: 1.4rem; }
     .principals { padding: 48px 16px; }
+    .principal-name { font-size: 1.6rem; }
     .roots { padding: 48px 16px; }
     footer { padding: 28px 16px; }
   }
@@ -192,7 +192,6 @@
 <section class="opening">
   <h1 class="opening-tagline">We are advocates of design as a necessary tool for progress.</h1>
   <p class="opening-oneliner">We are London-based and internationally minded. Rooted in a family practice founded in 1955, we carry forward a tradition of craftsmanship, mastery, and care — not as nostalgia, but as a foundation for progress. Architecture, interiors, environments, objects — shaped by craft and research.</p>
-  <p class="opening-meta">London-based &nbsp;·&nbsp; Internationally minded &nbsp;·&nbsp; 1955</p>
 </section>
 
 <!-- ─── MANIFESTO ─── -->
@@ -600,6 +599,13 @@
       var paras = parseBioOnly(bioTexts[i]);
       var items = dir.section_items || [];
       html += '<div class="principal reveal">\n';
+      if (dir.photo) {
+        var photoUrl = 'https://res.cloudinary.com/' + CLOUD + '/image/upload/f_auto,q_auto,w_1400/' + dir.photo;
+        html += '<div class="principals-photo-wrap">\n';
+        html += '<div class="principals-photo" style="background-image:url(' + escHtml(photoUrl) + ');background-size:cover;background-position:center top;">\n';
+        html += '<span class="principals-photo-caption">' + escHtml(dir.name) + '</span>\n';
+        html += '</div>\n</div>\n';
+      }
       html += '<h2 class="principal-name">' + escHtml(dir.name) + '</h2>\n';
       html += '<div class="principal-bio">\n' + parasToHtml(paras) + '\n</div>\n';
       html += '<div class="principal-section">\n';
