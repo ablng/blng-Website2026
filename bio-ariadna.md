@@ -5,4 +5,4 @@ Before co-founding the London studio, she worked internationally at Heatherwick 
 Beyond the studio, she draws from art, fashion, and performance — fields where, as in design, the work only holds when idea, form, and expression are in alignment.
 
 ---talks---
-Architectural Association, London — Design Research Lab, MArch
+Architectural Association — Design Research Lab, London

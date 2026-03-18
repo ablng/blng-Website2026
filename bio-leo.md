@@ -5,10 +5,11 @@ Before co-founding the London studio, he worked internationally at Zaha Hadid Ar
 Outside the studio, Leo sails — a discipline that sharpens a hands-on understanding of structure, force, and material in the world as it actually is.
 
 ---teaching---
-ETH Zurich
+Architectural Association — Design Research Lab, London
+ETH, Zurich
 Tsinghua University, Beijing
 UCL Bartlett, London
 
 ---lectures---
-CAADRIA 2018
-Design Modelling Symposium, Berlin 2019
+CAADRIA 2018, Beijing
+Design Modelling Symposium, Berlin 
