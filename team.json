@@ -27,13 +27,55 @@
       "name": "Prof. Thomas Bieling",
       "generation": "2nd Generation",
       "bio": "bio-thomas.md",
-      "slideshow_folder": "blng-image-staging/team/thomas-bieling"
+      "images": [
+        "work-wikus-headquarters-conference-centre-07_duc3mh",
+        "work-wikus-headquarters-conference-centre-05_xlmleu",
+        "work-striegel-riverside-mixed-use-04_uqdnbu",
+        "work-st-isidor-church-04_dofvx2",
+        "work-st-isidor-church-03_thohcy",
+        "work-st-hubertus-sacristy-02_n4rgba",
+        "work-seminary-chapel-12_l3j3cs",
+        "work-fuhle-101-mixed-use-01_sbqdoo",
+        "work-seminary-chapel-04_uls4zl",
+        "work-schalles-house-mixed-use-03_ielbzk",
+        "work-sartorius-quartier-04_cx5dbg",
+        "work-hospital-entrance-hall-06_snetde",
+        "work-hospital-entrance-hall-01_zymhsq",
+        "work-druseltalstra-e-mixed-use-01_exxmer",
+        "work-hospital-entrance-hall-07_jjsoxf",
+        "work-druseltalstra-e-mixed-use-04_n6lugg",
+        "work-bellevue-apartments-08_ksif9q",
+        "work-k-s-headquarters-01_hukryf",
+        "work-ambulatory-cardiac-centre-01_olyfbc",
+        "work-deutsche-bahn-offices-railside-campus-06_iqifpw",
+        "work-eam-headquarters-02_grg7g8",
+        "work-crematorium-04_kfxawu",
+        "work-eam-headquarters-01_u2tbuv"
+      ]
     },
     {
       "name": "Josef Bieling",
       "generation": "Founder",
       "bio": "bio-josef.md",
-      "slideshow_folder": "blng-image-staging/team/josef-bieling"
+      "images": [
+        "work-st-theresia-church-02_vlq1al",
+        "work-homberg-parish-church-04_nldmfz",
+        "work-schiefbahn-monastery-church-05_k5pca6",
+        "work-weende-church-02_bovjgg",
+        "work-schiefbahn-monastery-church-03_bkwwrd",
+        "work-ihringshausen-church-04_z47zg6",
+        "work-homberg-parish-church-02_inskgj",
+        "work-homberg-parish-church-03_hzxiza",
+        "work-heuberg-church-03_mf6qqk",
+        "work-herz-mariae-church-01_uyl6jo",
+        "work-heuberg-church-02_ulob2x",
+        "work-herz-mariae-church-04_vopkav",
+        "work-grebendorf-parish-church-09_dk5qba",
+        "work-herz-mariae-church-03_xtckuj",
+        "work-grebendorf-parish-church-08_zut3sl",
+        "work-espenau-church-02_acthum",
+        "work-espenau-church-01_egrcu8"
+      ]
     }
   ]
 }

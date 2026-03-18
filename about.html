@@ -273,7 +273,7 @@
 <section class="principals">
 
   <div class="principals-photo-wrap">
-    <img src="https://res.cloudinary.com/dgelbnw1g/image/upload/f_auto,q_auto/blng-image-staging/team/team-ariadna-leo-group_ygrdxa" alt="Ariadna López Bieling &amp; Leo Bieling" style="width:100%; display:block;">
+    <img src="https://res.cloudinary.com/dgelbnw1g/image/upload/f_auto,q_auto/team-ariadna-leo-group" alt="Ariadna López Bieling &amp; Leo Bieling" style="width:100%; display:block;">
   </div>
 
   <div class="principals-grid">
@@ -621,21 +621,13 @@
     initBioToggles(grid);
   }
 
-  // ─── RENDER: LEGACY PROFILE (Cloudinary folder list) ───
+  // ─── RENDER: LEGACY PROFILE (hardcoded image list) ───
   function renderLegacyProfile(leg, bioText, profileEl) {
-    var folder = leg.slideshow_folder;
-    var listUrl = 'https://res.cloudinary.com/' + CLOUD + '/image/list/' + folder + '.json';
-
-    fetch(listUrl)
-      .then(function(r) { return r.ok ? r.json() : { resources: [] }; })
-      .catch(function()  { return { resources: [] }; })
-      .then(function(data) {
-        var urls = (data.resources || []).map(function(r) {
-          return 'https://res.cloudinary.com/' + CLOUD +
-                 '/image/upload/f_auto,q_auto,w_800/' + r.public_id;
-        });
-        build(urls);
-      });
+    var urls = (leg.images || []).map(function(id) {
+      return 'https://res.cloudinary.com/' + CLOUD +
+             '/image/upload/f_auto,q_auto,w_800/' + id;
+    });
+    build(urls);
 
     function build(urls) {
 

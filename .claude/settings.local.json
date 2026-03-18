@@ -66,7 +66,10 @@
       "Bash(powershell -Command \":*)",
       "Bash(powershell -NoProfile -ExecutionPolicy Bypass -File \"c:\\\\Users\\\\AriadnaLópezBielingB\\\\BIELING ARCHITECTS\\\\BLNG Projects - Documents\\\\04 Marketing + Sales\\\\Website\\\\blng Website2026\\\\.tmp\\\\swap_svg.ps1\")",
       "Bash(powershell -NoProfile -Command \"Rename-Item -Path ''c:\\\\Users\\\\AriadnaLópezBielingB\\\\BIELING ARCHITECTS\\\\BLNG Projects - Documents\\\\04 Marketing + Sales\\\\Website\\\\blng Website2026\\\\brand_assets\\\\blng studio.png'' -NewName ''blng-studio.png''\")",
-      "Bash(powershell -NoProfile -Command \"Test-Path ''c:\\\\Users\\\\AriadnaLópezBielingB\\\\BIELING ARCHITECTS\\\\BLNG Projects - Documents\\\\04 Marketing + Sales\\\\Website\\\\blng Website2026\\\\brand_assets\\\\blng-studio.png''\")"
+      "Bash(powershell -NoProfile -Command \"Test-Path ''c:\\\\Users\\\\AriadnaLópezBielingB\\\\BIELING ARCHITECTS\\\\BLNG Projects - Documents\\\\04 Marketing + Sales\\\\Website\\\\blng Website2026\\\\brand_assets\\\\blng-studio.png''\")",
+      "WebFetch(domain:res.cloudinary.com)",
+      "Bash(curl -s -u \"641272538763255:hrqq0MsvQzbMG7Av8YqwO2Ig3nQ\" \"https://api.cloudinary.com/v1_1/dgelbnw1g/resources/image?asset_folder=blng-image-staging%2Fteam%2Fjosef-bieling&max_results=100\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(r[''''public_id'''']\\) for r in data.get\\(''''resources'''',[]\\)]\")"
     ]
   }
 }
