@@ -894,11 +894,8 @@ async function runAnimation(){
   // bieling vb_x stays at 430; blng vb_x = 430 − 278.84 = 151 so b aligns.
   // Both SVGs use the same vbW → same scale → letter height unchanged.
   const VBW2 = 1369;
-  const logoW2 = Math.min(Math.round(window.innerWidth * 0.82), 1140);
-
-  // Widen bieling SVG viewBox (letters stay put, space opens to the right)
-  svg.setAttribute('viewBox', `430 1020 ${VBW2} 355`);
-  svg.style.width = logoW2 + 'px';
+  // Scale logoW2 so letter height stays constant (same px-per-SVG-unit as bieling)
+  const logoW2 = Math.min(Math.round(logoW * VBW2 / VBW_init), window.innerWidth - 32);
 
   // Prepare svg-blng: aligned viewBox, blng letters shown, studio letters hidden
   svgB.setAttribute('viewBox', `151 1020 ${VBW2} 355`);
@@ -912,13 +909,18 @@ async function runAnimation(){
     const el = sG(id); if(el) el.style.opacity = '0';
   });
 
-  // Expand wrap width, cross-fade bieling → blng
+  // Start cross-fade first — bieling begins fading before its viewBox changes
   wrap.style.transition = 'width 0.5s ease';
   wrap.style.width = logoW2 + 'px';
-  svgB.style.transition = 'opacity 0.35s ease';
-  svgB.style.opacity = '1';
-  svg.style.transition  = 'opacity 0.35s ease';
+  svg.style.transition  = 'opacity 0.3s ease';
   svg.style.opacity = '0';
+  svgB.style.transition = 'opacity 0.4s ease';
+  svgB.style.opacity = '1';
+  // Defer bieling viewBox update to next frame — already fading, jump is invisible
+  requestAnimationFrame(() => {
+    svg.setAttribute('viewBox', `430 1020 ${VBW2} 355`);
+    svg.style.width = logoW2 + 'px';
+  });
   await wait(600);
 
   // ── STEP 5: "studio" types out letter by letter ───────────────
@@ -1069,16 +1071,21 @@ if (window.innerWidth > 768) {
     scrollBoost = Math.max(-400, Math.min(scrollBoost + e.deltaY * 4, 500));
   }, { passive: true });
 } else {
-  // Mobile: touch swipe up = advance drift, swipe down = reverse
-  let touchStartY = 0;
+  // Mobile: velocity-based boost — cards match natural finger speed
+  let lastTouchY = 0, lastTouchTime = 0;
   window.addEventListener('touchstart', (e) => {
-    touchStartY = e.touches[0].clientY;
+    lastTouchY = e.touches[0].clientY;
+    lastTouchTime = performance.now();
+    scrollBoost = 0; // kill residual momentum on new touch
   }, { passive: true });
   window.addEventListener('touchmove', (e) => {
-    e.preventDefault(); // prevent iOS from consuming swipe for browser UI
-    const dy = touchStartY - e.touches[0].clientY; // positive = swipe up
-    scrollBoost = Math.max(-400, Math.min(scrollBoost + dy * 6, 600));
-    touchStartY = e.touches[0].clientY;
+    e.preventDefault();
+    const now = performance.now();
+    const elapsed = Math.max(now - lastTouchTime, 4); // min 4ms to avoid div/0
+    const dy = lastTouchY - e.touches[0].clientY; // positive = swipe up
+    scrollBoost = Math.max(-2000, Math.min((dy / elapsed) * 1000, 2000));
+    lastTouchY = e.touches[0].clientY;
+    lastTouchTime = now;
   }, { passive: false });
 }
 
@@ -1089,7 +1096,7 @@ function startDrift(){
     lastTime = now;
     const vh = window.innerHeight;
     // Decay boost smoothly back to zero
-    scrollBoost *= 0.94;
+    scrollBoost *= 0.97;
     // Iterate backwards so removal by index is safe
     for(let i = driftCards.length - 1; i >= 0; i--){
       const w = driftCards[i];
