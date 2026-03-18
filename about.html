@@ -49,8 +49,7 @@
   /* ─── MORE / FILTER BUTTON ─── */
   .more-btn { display: inline-flex; align-items: center; gap: 12px; font-family: 'DM Sans', sans-serif; font-size: 1.1rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 28px; border-radius: 999px; border: 2px solid rgba(28,28,26,0.35); background: transparent; color: var(--charcoal); transition: border-color 0.2s, color 0.2s; margin-top: 48px; cursor: pointer; }
   .more-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
-  .more-btn .btn-arrow { transition: transform 0.2s; font-style: normal; }
-  .more-btn.open .btn-arrow { transform: rotate(180deg); }
+  .more-btn .btn-arrow { font-style: normal; }
 
   /* ─── PILLARS ─── */
   .pillars { padding: 80px 48px 0 80px; border-top: 2px solid rgba(28,28,26,0.08); border-bottom: 2px solid rgba(28,28,26,0.08); }
@@ -122,6 +121,8 @@
     .roots-profiles { gap: 48px; }
   }
   @media (max-width: 768px) {
+    .slideshow-track { aspect-ratio: 3 / 2; }
+    .ss-dots { display: none; }
     .more-btn { font-size: 0.9rem; padding: 9px 20px; margin-top: 32px; }
     #nav-logo img { width: 298px; }
     nav { padding: 10px 20px 10px 10px; }
@@ -273,7 +274,7 @@
 <section class="principals">
 
   <div class="principals-photo-wrap">
-    <img src="https://res.cloudinary.com/dgelbnw1g/image/upload/f_auto,q_auto/team-ariadna-leo-group" alt="Ariadna López Bieling &amp; Leo Bieling" style="width:50%; display:block;">
+    <img src="https://res.cloudinary.com/dgelbnw1g/image/upload/f_auto,q_auto/team-ariadna-leo-group" alt="Ariadna López Bieling &amp; Leo Bieling" style="width:100%; display:block;">
   </div>
 
   <div class="principals-grid">

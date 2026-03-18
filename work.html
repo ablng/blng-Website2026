@@ -87,6 +87,7 @@
     .mp-type { font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); opacity:0.7; }
     .mp-hero { overflow:hidden; max-height:0; opacity:0; margin-left:0; margin-right:0; transition:max-height 0.65s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease; }
     .mp-item.is-active .mp-hero { max-height:100vw; opacity:1; }
+    .mp-hero a { display:block; }
     .mp-hero img { width:100%; display:block; }
   }
   @media (max-width: 480px) {
@@ -336,7 +337,9 @@
           '</span>' +
         '</a>' +
         '<div class="mp-hero">' +
-          '<img src="' + escHtml(heroUrl) + '" alt="' + escHtml(p.title) + '" loading="lazy">' +
+          '<a href="project.html?project=' + encodeURIComponent(p.slug) + '">' +
+            '<img src="' + escHtml(heroUrl) + '" alt="' + escHtml(p.title) + '" loading="lazy">' +
+          '</a>' +
         '</div>';
 
       list.appendChild(item);

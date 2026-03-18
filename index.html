@@ -1094,10 +1094,11 @@ if (window.innerWidth > 768) {
     touchStartY = e.touches[0].clientY;
   }, { passive: true });
   window.addEventListener('touchmove', (e) => {
+    e.preventDefault(); // prevent iOS from consuming swipe for browser UI
     const dy = touchStartY - e.touches[0].clientY; // positive = swipe up
-    scrollBoost = Math.max(-400, Math.min(scrollBoost + dy * 4, 500));
+    scrollBoost = Math.max(-400, Math.min(scrollBoost + dy * 6, 600));
     touchStartY = e.touches[0].clientY;
-  }, { passive: true });
+  }, { passive: false });
 }
 
 function startDrift(){
