@@ -71,6 +71,23 @@
     footer { grid-template-columns:1fr; gap:20px; padding:40px 24px; }
     .footer-middle { text-align:left; }
     .footer-right { text-align:left; }
+
+    /* ─── MOBILE WORK LIST ─── */
+    main.mobile-work { padding-left:0; padding-right:0; }
+    main.mobile-work .filters { display:none; }
+    main.mobile-work .list-area { margin-left:0; }
+    .mp-list { border-top:2px solid rgba(28,28,26,0.1); }
+    .mp-item { border-bottom:2px solid rgba(28,28,26,0.07); }
+    .mp-name-row { display:flex; justify-content:space-between; align-items:baseline; padding:20px 24px; text-decoration:none; color:var(--charcoal); opacity:0.32; transition:opacity 0.5s ease; }
+    .mp-item.is-active .mp-name-row { opacity:1; }
+    .mp-name-text { font-size:1.7rem; font-weight:300; letter-spacing:0.01em; line-height:1.25; transition:font-size 0.4s ease; }
+    .mp-item.is-active .mp-name-text { font-size:2.1rem; }
+    .mp-meta { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; margin-left:16px; }
+    .mp-year { font-size:1.0rem; letter-spacing:0.1em; color:var(--green); }
+    .mp-type { font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); opacity:0.7; }
+    .mp-hero { overflow:hidden; max-height:0; opacity:0; margin-left:0; margin-right:0; transition:max-height 0.65s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease; }
+    .mp-item.is-active .mp-hero { max-height:100vw; opacity:1; }
+    .mp-hero img { width:100%; display:block; }
   }
   @media (max-width: 480px) {
     #nav-logo img { width:220px; }
@@ -291,12 +308,76 @@
       .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  // ── MOBILE: SCROLLING FOCUS LIST ────────────────────────────
+  function renderMobile(projects) {
+    var mainEl = document.querySelector('main');
+    mainEl.classList.add('mobile-work');
+
+    var list = document.getElementById('project-list');
+    list.className = 'mp-list';
+    list.innerHTML = '';
+
+    var activeIndex = -1;
+
+    projects.forEach(function(p, i) {
+      var heroUrl = 'https://res.cloudinary.com/' + CLOUD +
+                    '/image/upload/f_auto,q_auto,w_900/' + p.folder + '-01';
+      var typeLabel = (p.type && p.type[0]) ? p.type[0] : '';
+
+      var item = document.createElement('div');
+      item.className = 'mp-item';
+      item.dataset.index = i;
+      item.innerHTML =
+        '<a class="mp-name-row" href="project.html?project=' + encodeURIComponent(p.slug) + '">' +
+          '<span class="mp-name-text">' + escHtml(p.title) + '</span>' +
+          '<span class="mp-meta">' +
+            '<span class="mp-year">' + escHtml(p.year) + '</span>' +
+            (typeLabel ? '<span class="mp-type">' + escHtml(typeLabel) + '</span>' : '') +
+          '</span>' +
+        '</a>' +
+        '<div class="mp-hero">' +
+          '<img src="' + escHtml(heroUrl) + '" alt="' + escHtml(p.title) + '" loading="lazy">' +
+        '</div>';
+
+      list.appendChild(item);
+    });
+
+    var items = list.querySelectorAll('.mp-item');
+
+    function setActive(index) {
+      if (index === activeIndex) return;
+      activeIndex = index;
+      items.forEach(function(el, i) {
+        el.classList.toggle('is-active', i === index);
+      });
+    }
+
+    // Activate first project immediately
+    setActive(0);
+
+    // IntersectionObserver: activate project when its name row enters
+    // the zone from 10% to 40% below the top of the viewport
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          setActive(parseInt(entry.target.dataset.index, 10));
+        }
+      });
+    }, { rootMargin: '-10% 0px -55% 0px', threshold: 0 });
+
+    items.forEach(function(item) { observer.observe(item); });
+  }
+
   fetch('projects.json')
     .then(function(r){ return r.json(); })
     .then(function(projects) {
       allProjects = projects;
-      buildFilters(projects);
-      renderRows();
+      if (window.innerWidth <= 768) {
+        renderMobile(projects);
+      } else {
+        buildFilters(projects);
+        renderRows();
+      }
     })
     .catch(function(){ /* show nothing on error */ });
 

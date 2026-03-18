@@ -840,11 +840,13 @@ async function runAnimation(){
   // bieling letters span x: 477–1207, y: 1025–1370 (incl. g descender)
   // ViewBox frames bieling with small margins
   const VB = { x: 430, y: 1020, w: 820, h: 355 };
-  svg.setAttribute('viewBox', `${VB.x} ${VB.y} ${VB.w} ${VB.h}`);
+  const isMobileAnim = window.innerWidth <= 768;
+  // On mobile: use the final VBW from the start so letter height matches blng studio (no jump)
+  const VBW_init = isMobileAnim ? 1369 : VB.w;
+  const logoW = Math.min(window.innerWidth * 0.82, isMobileAnim ? 1140 : 680);
+  const logoH = Math.round(logoW * VB.h / VBW_init);
 
-  const logoW = Math.min(window.innerWidth * 0.82, 680);
-  const logoH = Math.round(logoW * VB.h / VB.w);
-
+  svg.setAttribute('viewBox', `${VB.x} ${VB.y} ${VBW_init} ${VB.h}`);
   wrap.style.cssText = `width:${logoW}px; height:${logoH}px; position:relative; overflow:visible; flex-shrink:0;`;
   svg.style.cssText  = `width:${logoW}px; height:${logoH}px; display:block; opacity:0;`;
 
@@ -1076,6 +1078,17 @@ let scrollBoost = 0;
 if (window.innerWidth > 768) {
   window.addEventListener('wheel', (e) => {
     scrollBoost = Math.max(-400, Math.min(scrollBoost + e.deltaY * 4, 500));
+  }, { passive: true });
+} else {
+  // Mobile: touch swipe up = advance drift, swipe down = reverse
+  let touchStartY = 0;
+  window.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  window.addEventListener('touchmove', (e) => {
+    const dy = touchStartY - e.touches[0].clientY; // positive = swipe up
+    scrollBoost = Math.max(-400, Math.min(scrollBoost + dy * 4, 500));
+    touchStartY = e.touches[0].clientY;
   }, { passive: true });
 }
 

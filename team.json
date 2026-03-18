@@ -4,7 +4,6 @@
     {
       "name": "Ariadna López Bieling",
       "bio": "bio-ariadna.md",
-      "photo": "team/ariadna-lopez-bieling.jpg",
       "section_label": "Teaching & Talks",
       "section_items": [
         "Architectural Association, London — Design Research Lab, MArch"
@@ -13,7 +12,6 @@
     {
       "name": "Leo Bieling",
       "bio": "bio-leo.md",
-      "photo": "team/leo-bieling.jpg",
       "section_label": "Teaching & Lectures",
       "section_items": [
         "ETH Zurich",
@@ -29,13 +27,13 @@
       "name": "Prof. Thomas Bieling",
       "generation": "2nd Generation",
       "bio": "bio-thomas.md",
-      "slideshow_folder": "team/thomas-bieling"
+      "slideshow_folder": "blng-image-staging/team/thomas-bieling"
     },
     {
       "name": "Josef Bieling",
       "generation": "Founder",
       "bio": "bio-josef.md",
-      "slideshow_folder": "team/josef-bieling"
+      "slideshow_folder": "blng-image-staging/team/josef-bieling"
     }
   ]
 }
