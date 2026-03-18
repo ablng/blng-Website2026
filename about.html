@@ -273,7 +273,7 @@
 <section class="principals">
 
   <div class="principals-photo-wrap">
-    <img src="https://res.cloudinary.com/dgelbnw1g/image/upload/f_auto,q_auto/team-ariadna-leo-group" alt="Ariadna López Bieling &amp; Leo Bieling" style="width:100%; display:block;">
+    <img src="https://res.cloudinary.com/dgelbnw1g/image/upload/f_auto,q_auto/team-ariadna-leo-group" alt="Ariadna López Bieling &amp; Leo Bieling" style="width:50%; display:block;">
   </div>
 
   <div class="principals-grid">
@@ -536,9 +536,12 @@
       if (dots[current]) dots[current].classList.add('active');
     }
 
-    if (prevBtn) prevBtn.addEventListener('click', function() { goTo(current - 1); });
-    if (nextBtn) nextBtn.addEventListener('click', function() { goTo(current + 1); });
-    dots.forEach(function(dot, i) { dot.addEventListener('click', function() { goTo(i); }); });
+    var timer = setInterval(function() { goTo(current + 1); }, 4000);
+    function stopTimer() { clearInterval(timer); }
+
+    if (prevBtn) prevBtn.addEventListener('click', function() { stopTimer(); goTo(current - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { stopTimer(); goTo(current + 1); });
+    dots.forEach(function(dot, i) { dot.addEventListener('click', function() { stopTimer(); goTo(i); }); });
   }
   document.querySelectorAll('.slideshow').forEach(function(ss) { initSlideshow(ss); });
 
