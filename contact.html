@@ -273,18 +273,25 @@
     nlSubmit.disabled = true;
     nlSubmit.textContent = 'Sending…';
 
+    var payload = {
+      fields: [
+        { name: 'firstname', value: firstname },
+        { name: 'lastname',  value: lastname  },
+        { name: 'last_name', value: lastname  },
+        { name: 'email',     value: email     }
+      ]
+    };
+    console.log('[HubSpot] Submitting payload:', JSON.stringify(payload, null, 2));
+
     fetch('https://api.hsforms.com/submissions/v3/integration/submit/145903215/b298049f-d109-41e4-8f54-7db0f6971155', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        fields: [
-          { name: 'firstname', value: firstname },
-          { name: 'lastname',  value: lastname  },
-          { name: 'email',     value: email     }
-        ]
-      })
+      body: JSON.stringify(payload)
     })
     .then(function(res) {
+      res.clone().text().then(function(body) {
+        console.log('[HubSpot] Response status:', res.status, '| Body:', body);
+      });
       if (res.ok) {
         nlPanel.querySelector('.nl-fields').style.display = 'none';
         nlPanel.querySelector('.nl-submit-row').style.display = 'none';

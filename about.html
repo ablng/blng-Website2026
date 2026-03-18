@@ -600,9 +600,8 @@
       if (dir.photo) {
         var photoUrl = 'https://res.cloudinary.com/' + CLOUD + '/image/upload/f_auto,q_auto,w_1400/' + dir.photo;
         html += '<div class="principals-photo-wrap">\n';
-        html += '<div class="principals-photo" style="background-image:url(' + escHtml(photoUrl) + ');background-size:cover;background-position:center top;">\n';
-        html += '<span class="principals-photo-caption">' + escHtml(dir.name) + '</span>\n';
-        html += '</div>\n</div>\n';
+        html += '<img src="' + escHtml(photoUrl) + '" alt="' + escHtml(dir.name) + '" style="width:100%;display:block;">\n';
+        html += '</div>\n';
       }
       html += '<h2 class="principal-name">' + escHtml(dir.name) + '</h2>\n';
       html += '<div class="principal-bio">\n' + parasToHtml(paras) + '\n</div>\n';
