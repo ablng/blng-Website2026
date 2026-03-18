@@ -355,17 +355,19 @@
     // Activate first project immediately
     setActive(0);
 
-    // IntersectionObserver: activate project when its name row enters
-    // the zone from 10% to 40% below the top of the viewport
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          setActive(parseInt(entry.target.dataset.index, 10));
-        }
+    // Scroll-based activation: find the last item whose top has crossed 35% from top
+    // This fires for exactly one item at a time regardless of scroll speed
+    function updateActive() {
+      var threshold = window.innerHeight * 0.35;
+      var best = 0;
+      items.forEach(function(item, i) {
+        var top = item.getBoundingClientRect().top;
+        if (top <= threshold) best = i;
       });
-    }, { rootMargin: '-10% 0px -55% 0px', threshold: 0 });
-
-    items.forEach(function(item) { observer.observe(item); });
+      setActive(best);
+    }
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
   }
 
   fetch('projects.json')

@@ -6,9 +6,9 @@ Outside the studio, Leo sails — a discipline that sharpens a hands-on understa
 
 ---teaching---
 Architectural Association — Design Research Lab, London
+UCL Bartlett, London
 ETH, Zurich
 Tsinghua University, Beijing
-UCL Bartlett, London
 
 ---lectures---
 CAADRIA 2018, Beijing

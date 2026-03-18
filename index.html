@@ -846,7 +846,9 @@ async function runAnimation(){
   const logoW = Math.min(window.innerWidth * 0.82, isMobileAnim ? 1140 : 680);
   const logoH = Math.round(logoW * VB.h / VBW_init);
 
-  svg.setAttribute('viewBox', `${VB.x} ${VB.y} ${VBW_init} ${VB.h}`);
+  // On mobile center bieling (letter center ≈ x842) within the wider viewBox
+  const VBX_init = isMobileAnim ? Math.round(842 - VBW_init / 2) : VB.x;
+  svg.setAttribute('viewBox', `${VBX_init} ${VB.y} ${VBW_init} ${VB.h}`);
   wrap.style.cssText = `width:${logoW}px; height:${logoH}px; position:relative; overflow:visible; flex-shrink:0;`;
   svg.style.cssText  = `width:${logoW}px; height:${logoH}px; display:block; opacity:0;`;
 
@@ -1044,13 +1046,19 @@ function spawnCard(colIdx, startY){
 }
 
 function colLowestBottom(colIdx){
-  // Returns the y of the bottom edge of the lowest card in this column.
-  // If none, returns 0.
   let lowest = 0;
   document.querySelectorAll('.drift-wrapper').forEach(w => {
     if(w._col === colIdx) lowest = Math.max(lowest, w._y + w.offsetHeight);
   });
   return lowest;
+}
+
+function colHighestTop(colIdx){
+  let top = Infinity;
+  document.querySelectorAll('.drift-wrapper').forEach(w => {
+    if(w._col === colIdx) top = Math.min(top, w._y);
+  });
+  return top === Infinity ? 0 : top;
 }
 
 const CARD_GAP = 80; // px between stacked cards in same column
@@ -1109,7 +1117,12 @@ function startDrift(){
         const tail = colLowestBottom(col);
         spawnCard(col, tail + CARD_GAP);
       } else if(w._y > vh){
-        w.remove(); // drifted off bottom (reverse scroll); normal flow will respawn
+        // Drifted off bottom (reverse scroll) — respawn above topmost existing card
+        const col = w._col;
+        const cardH = w.offsetHeight;
+        w.remove();
+        const top = colHighestTop(col);
+        spawnCard(col, top - cardH - CARD_GAP);
       } else {
         w.style.top = w._y+'px';
       }
