@@ -64,6 +64,7 @@
   .principals { padding: 96px 48px 96px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
   .section-label { font-size: 1.0rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--label); display: block; margin-bottom: 40px; }
   .principals-photo-wrap { margin-bottom: 72px; }
+  .principals-photo-wrap img { max-width: 50%; }
   .principals-photo { width: 100%; max-width: 760px; aspect-ratio: 4 / 3; background: linear-gradient(145deg, #c8bfb2 0%, #a89880 60%, #8a7a68 100%); display: flex; align-items: flex-end; padding: 20px 24px; }
   .principals-photo-caption { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--porcelain); }
   .principals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
@@ -121,6 +122,7 @@
     .roots-profiles { gap: 48px; }
   }
   @media (max-width: 768px) {
+    .principals-photo-wrap img { max-width: 100%; }
     .slideshow-track { aspect-ratio: 3 / 2; }
     .ss-dots { display: none; }
     .more-btn { font-size: 0.9rem; padding: 9px 20px; margin-top: 32px; }
@@ -568,6 +570,18 @@
     return parseParagraphs(m >= 0 ? text.slice(0, m) : text);
   }
 
+  // Parse named sections (---talks---, ---teaching---, etc.) from bio MD
+  function parseSectionsFromBio(text) {
+    var sections = [];
+    var re = /---(\w+)---\n([\s\S]*?)(?=---\w|$)/g;
+    var m;
+    while ((m = re.exec(text)) !== null) {
+      var items = m[2].trim().split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
+      if (items.length) sections.push({ name: m[1], items: items });
+    }
+    return sections;
+  }
+
   function parasToHtml(paras, cls) {
     return paras.map(function(p) {
       var lines = p.split('\n').map(renderLine).join('<br>\n');
@@ -610,14 +624,28 @@
       }
       html += '<h2 class="principal-name">' + escHtml(dir.name) + '</h2>\n';
       html += '<div class="principal-bio">\n' + parasToHtml(paras) + '\n</div>\n';
-      html += '<div class="principal-section">\n';
-      html += '<span class="principal-section-label">' + escHtml(dir.section_label) + '</span>\n';
-      if (items.length === 0) {
-        html += '<p class="placeholder-note">Content to follow.</p>\n';
+      var bioSections = parseSectionsFromBio(bioTexts[i]);
+      if (bioSections.length > 0) {
+        // Render each section from the MD file
+        bioSections.forEach(function(sec) {
+          var label = sec.name.charAt(0).toUpperCase() + sec.name.slice(1);
+          html += '<div class="principal-section">\n';
+          html += '<span class="principal-section-label">' + escHtml(label) + '</span>\n';
+          sec.items.forEach(function(item) { html += '<p>' + escHtml(item) + '</p>\n'; });
+          html += '</div>\n';
+        });
       } else {
-        items.forEach(function(item) { html += '<p>' + escHtml(item) + '</p>\n'; });
+        // Fall back to team.json section_items
+        html += '<div class="principal-section">\n';
+        html += '<span class="principal-section-label">' + escHtml(dir.section_label) + '</span>\n';
+        if (items.length === 0) {
+          html += '<p class="placeholder-note">Content to follow.</p>\n';
+        } else {
+          items.forEach(function(item) { html += '<p>' + escHtml(item) + '</p>\n'; });
+        }
+        html += '</div>\n';
       }
-      html += '</div>\n</div>\n';
+      html += '</div>\n';
     });
     grid.innerHTML = html;
     observeReveal(grid);
