@@ -23,7 +23,7 @@
   #cursor-ring { position: fixed; width: 38px; height: 38px; border: 1px solid var(--charcoal); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); opacity: 0; transition: opacity 0.2s; }
 
   /* ─── NAV ─── */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 12px 48px 12px 14px; display: flex; justify-content: space-between; align-items: center; background: var(--page-bg); border-bottom: 2px solid rgba(28,28,26,0.07); }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 12px 48px 12px 80px; display: flex; justify-content: space-between; align-items: center; background: var(--page-bg); border-bottom: 2px solid rgba(28,28,26,0.07); }
   #nav-logo { display: block; text-decoration: none; opacity: 0.9; transition: opacity 0.25s; flex-shrink: 0; }
   #nav-logo:hover { opacity: 1; }
   #nav-logo img { width: 573px; display: block; }
@@ -95,8 +95,9 @@
   .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; display: flex; align-items: flex-end; padding: 16px 18px; }
   .slide.active { opacity: 1; }
   .slideshow-controls { display: flex; align-items: center; gap: 24px; margin-top: 14px; }
-  .ss-btn { font-family: 'DM Sans', sans-serif; font-size: 2.2rem; background: none; border: none; color: var(--charcoal); padding: 0 12px; transition: color 0.2s; line-height: 1; }
+  .ss-btn { background: none; border: none; color: var(--charcoal); padding: 0 12px; transition: color 0.2s; cursor: pointer; display: flex; align-items: center; }
   .ss-btn:hover { color: var(--terracotta); }
+  .ss-btn svg { display: block; }
   .ss-dots { display: flex; gap: 6px; flex: 1; }
   .ss-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--charcoal); opacity: 0.2; transition: opacity 0.2s; }
   .ss-dot.active { opacity: 1; background: var(--terracotta); }
@@ -124,12 +125,13 @@
   @media (max-width: 768px) {
     .principals-photo-wrap img { max-width: 100%; }
     .slideshow-track { aspect-ratio: 3 / 2; }
-    .ss-dots { display: none; }
+    .ss-dots { justify-content: center; overflow: hidden; max-height: 20px; flex-wrap: nowrap; flex: 1; }
     .ss-btn { display: none; }
+    .slideshow-controls { justify-content: center; padding: 0 24px; }
     .slideshow { margin-left: -24px; margin-right: -24px; }
     .more-btn { font-size: 0.9rem; padding: 9px 20px; margin-top: 32px; }
     #nav-logo img { width: 298px; }
-    nav { padding: 10px 20px 10px 10px; }
+    nav { padding: 10px 20px 10px 24px; }
     .nav-links { gap: 24px; }
     .nav-links a { font-size: 1.2rem; }
     .opening { padding: 120px 24px 60px; }
@@ -160,9 +162,9 @@
   @media (max-width: 480px) {
     .slideshow { margin-left: -16px; margin-right: -16px; }
     #nav-logo img { width: 220px; }
-    nav { padding: 8px 14px 8px 8px; }
-    .nav-links { gap: 8px; }
-    .nav-links a { font-size: 0.8rem; letter-spacing: 0; }
+    nav { padding: 8px 14px 8px 16px; }
+    .nav-links { gap: 12px; }
+    .nav-links a { font-size: 1.0rem; letter-spacing: 0; }
     .opening { padding: 96px 16px 48px; }
     .opening-tagline { font-size: clamp(2.0rem, 6vw, 2.8rem); }
     .opening-oneliner { font-size: 1.4rem; }
@@ -346,13 +348,13 @@
             </div>
           </div>
           <div class="slideshow-controls">
-            <button class="ss-btn ss-prev" aria-label="Previous">←</button>
+            <button class="ss-btn ss-prev" aria-label="Previous"><svg width="48" height="18" viewBox="0 0 48 18" xmlns="http://www.w3.org/2000/svg"><line x1="48" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="2.5"/><polygon points="17,0 0,9 17,18" fill="currentColor"/></svg></button>
             <div class="ss-dots">
               <span class="ss-dot active"></span>
               <span class="ss-dot"></span>
               <span class="ss-dot"></span>
             </div>
-            <button class="ss-btn ss-next" aria-label="Next">→</button>
+            <button class="ss-btn ss-next" aria-label="Next"><svg width="48" height="18" viewBox="0 0 48 18" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="9" x2="37" y2="9" stroke="currentColor" stroke-width="2.5"/><polygon points="31,0 48,9 31,18" fill="currentColor"/></svg></button>
           </div>
         </div>
         <div class="profile-text">
@@ -374,13 +376,13 @@
             </div>
           </div>
           <div class="slideshow-controls">
-            <button class="ss-btn ss-prev" aria-label="Previous">←</button>
+            <button class="ss-btn ss-prev" aria-label="Previous"><svg width="48" height="18" viewBox="0 0 48 18" xmlns="http://www.w3.org/2000/svg"><line x1="48" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="2.5"/><polygon points="17,0 0,9 17,18" fill="currentColor"/></svg></button>
             <div class="ss-dots">
               <span class="ss-dot active"></span>
               <span class="ss-dot"></span>
               <span class="ss-dot"></span>
             </div>
-            <button class="ss-btn ss-next" aria-label="Next">→</button>
+            <button class="ss-btn ss-next" aria-label="Next"><svg width="48" height="18" viewBox="0 0 48 18" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="9" x2="37" y2="9" stroke="currentColor" stroke-width="2.5"/><polygon points="31,0 48,9 31,18" fill="currentColor"/></svg></button>
           </div>
         </div>
         <div class="profile-text">
@@ -575,6 +577,15 @@
   }
   initToggle('manifesto-btn', 'manifesto-more');
   initToggle('roots-btn',     'roots-more');
+  // Re-run profile toggles when roots section opens (elements were hidden at page load)
+  var _rootsBtn = document.getElementById('roots-btn');
+  if (_rootsBtn) {
+    _rootsBtn.addEventListener('click', function() {
+      if (document.getElementById('roots-more').classList.contains('open')) {
+        initProfileToggles();
+      }
+    });
+  }
 
   // ─── SLIDESHOW ───
   function initSlideshow(el) {
@@ -790,14 +801,14 @@
       html += '</div>\n'; // slideshow-track
 
       html += '<div class="slideshow-controls">\n';
-      html += '<button class="ss-btn ss-prev" aria-label="Previous">←</button>\n';
+      html += '<button class="ss-btn ss-prev" aria-label="Previous"><svg width="48" height="18" viewBox="0 0 48 18" xmlns="http://www.w3.org/2000/svg"><line x1="48" y1="9" x2="11" y2="9" stroke="currentColor" stroke-width="2.5"/><polygon points="17,0 0,9 17,18" fill="currentColor"/></svg></button>\n';
       html += '<div class="ss-dots">';
       var numDots = Math.max(1, urls.length);
       for (var d = 0; d < numDots; d++) {
         html += '<span class="ss-dot' + (d === 0 ? ' active' : '') + '"></span>';
       }
       html += '</div>\n';
-      html += '<button class="ss-btn ss-next" aria-label="Next">→</button>\n';
+      html += '<button class="ss-btn ss-next" aria-label="Next"><svg width="48" height="18" viewBox="0 0 48 18" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="9" x2="37" y2="9" stroke="currentColor" stroke-width="2.5"/><polygon points="31,0 48,9 31,18" fill="currentColor"/></svg></button>\n';
       html += '</div>\n'; // slideshow-controls
       html += '</div>\n'; // slideshow
 

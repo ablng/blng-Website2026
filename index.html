@@ -917,9 +917,12 @@ async function runAnimation(){
   svgB.style.transition = 'opacity 0.4s ease';
   svgB.style.opacity = '1';
   // Defer bieling viewBox update to next frame — already fading, jump is invisible
+  // On mobile VBW_init already equals VBW2 so no viewBox change needed (avoids x-shift jump)
   requestAnimationFrame(() => {
-    svg.setAttribute('viewBox', `430 1020 ${VBW2} 355`);
-    svg.style.width = logoW2 + 'px';
+    if (!isMobileAnim) {
+      svg.setAttribute('viewBox', `430 1020 ${VBW2} 355`);
+      svg.style.width = logoW2 + 'px';
+    }
   });
   await wait(600);
 
