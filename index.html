@@ -789,8 +789,8 @@
 'use strict';
 
 // ── DRIFT CONTROLS ────────────────────────────────────────────
-const DRIFT_SPEED_MIN = 40;    // px/s upward
-const DRIFT_SPEED_MAX = 80;    // px/s upward
+const DRIFT_SPEED_MIN = 80;    // px/s upward
+const DRIFT_SPEED_MAX = 150;   // px/s upward
 
 // CURSOR (pointer devices only)
 const isTouch = window.matchMedia('(hover: none)').matches;
@@ -861,19 +861,19 @@ async function runAnimation(){
   [lB,lI,lE,lL,lI2,lN,lG].forEach(el => { if(el) el.style.opacity = '0'; });
 
   // ── STEP 1: "bieling" fades in ────────────────────────────────
-  await wait(300);
-  svg.style.transition = 'opacity 0.7s ease';
+  await wait(225);
+  svg.style.transition = 'opacity 0.53s ease';
   svg.style.opacity = '1';
   [lB,lI,lE,lL,lI2,lN,lG].forEach(el => {
-    if(el){ el.style.transition = 'opacity 0.5s ease'; el.style.opacity = '1'; }
+    if(el){ el.style.transition = 'opacity 0.38s ease'; el.style.opacity = '1'; }
   });
-  await wait(1400); // hold so viewer can read
+  await wait(1050); // hold so viewer can read
 
   // ── STEP 2: i, e, i fade out — gaps appear ────────────────────
   [lI, lE, lI2].forEach(el => {
-    if(el){ el.style.transition = 'opacity 0.55s ease'; el.style.opacity = '0'; }
+    if(el){ el.style.transition = 'opacity 0.41s ease'; el.style.opacity = '0'; }
   });
-  await wait(750);
+  await wait(560);
 
   // ── STEP 3: b, l, n, g close the gaps ────────────────────────
   // All deltas in SVG user units (bieling.svg coordinate space).
@@ -885,9 +885,9 @@ async function runAnimation(){
     [lL, -190.55],
     [lN, -240.93],
     [lG, -242],
-  ], 750);
+  ], 560);
 
-  await wait(300);
+  await wait(225);
 
   // ── STEP 4: Expand to "blng studio" ──────────────────────────
   // ViewBox width 1369 covers full "blng studio" in blng.svg (x: 151→1520).
@@ -910,11 +910,11 @@ async function runAnimation(){
   });
 
   // Start cross-fade first — bieling begins fading before its viewBox changes
-  wrap.style.transition = 'width 0.5s ease';
+  wrap.style.transition = 'width 0.38s ease';
   wrap.style.width = logoW2 + 'px';
-  svg.style.transition  = 'opacity 0.3s ease';
+  svg.style.transition  = 'opacity 0.23s ease';
   svg.style.opacity = '0';
-  svgB.style.transition = 'opacity 0.4s ease';
+  svgB.style.transition = 'opacity 0.3s ease';
   svgB.style.opacity = '1';
   // Defer bieling viewBox update to next frame — already fading, jump is invisible
   // On mobile VBW_init already equals VBW2 so no viewBox change needed (avoids x-shift jump)
@@ -924,23 +924,23 @@ async function runAnimation(){
       svg.style.width = logoW2 + 'px';
     }
   });
-  await wait(600);
+  await wait(450);
 
   // ── STEP 5: "studio" types out letter by letter ───────────────
   for(const id of ['letter-s','letter-t','letter-u','letter-d','letter-i','letter-o']){
     const el = sG(id);
-    if(el){ el.style.transition = 'opacity 0.12s ease'; el.style.opacity = '1'; }
-    await wait(110);
+    if(el){ el.style.transition = 'opacity 0.09s ease'; el.style.opacity = '1'; }
+    await wait(83);
   }
-  await wait(400);
+  await wait(300);
 
   // ── Show UI + start drift ─────────────────────────────────────
   buildDrift();
-  await wait(400);
+  await wait(300);
   document.getElementById('drift-layer').classList.add('visible');
   document.getElementById('nav').classList.add('visible');
   document.getElementById('tagline').classList.add('visible');
-  await wait(400);
+  await wait(300);
   startDrift();
 }
 
@@ -966,16 +966,32 @@ async function loadFeaturedPool() {
     const featured = projects.filter(p => p.featured);
     if (featured.length < 2) return;
 
-    // Use -01 image per project — no probing needed, images load lazily when used
-    const entries = featured.map(p => ({
-      name:   p.title,
-      img:    `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_1400/${p.folder}-01`,
-      colour: null,
-      slug:   p.slug,
-      w: 1600,
-      h: 2000,
-    }));
-    if (entries.length >= 2) POOL = entries;
+    // Probe up to 12 images per project in parallel; collect all that exist
+    const PROBE_MAX = 12;
+    function pad2(n){ return n < 10 ? '0'+n : String(n); }
+    const allProbes = [];
+    featured.forEach(p => {
+      for (let n = 1; n <= PROBE_MAX; n++) {
+        const url = `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto,w_1400/${p.folder}-${pad2(n)}`;
+        allProbes.push(new Promise(resolve => {
+          const img = new Image();
+          img.onload  = () => resolve({ name: p.title, img: url, colour: null, slug: p.slug,
+            w: img.naturalWidth || 1600, h: img.naturalHeight || 2000 });
+          img.onerror = () => resolve(null);
+          img.src = url;
+        }));
+      }
+    });
+    const results = await Promise.all(allProbes);
+    const entries = results.filter(Boolean);
+    if (entries.length >= 2) {
+      // Shuffle so images from different projects interleave naturally
+      for (let i = entries.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [entries[i], entries[j]] = [entries[j], entries[i]];
+      }
+      POOL = entries;
+    }
   } catch(e) { /* keep fallback */ }
 }
 

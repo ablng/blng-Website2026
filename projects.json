@@ -77,7 +77,7 @@
     "collaborators": "",
     "slug": "sartorius-quartier",
     "folder": "work-sartorius-quartier",
-    "featured": true
+    "featured": false
   },
   {
     "title": "Façade Revitalization",
@@ -196,7 +196,7 @@
     "collaborators": "",
     "slug": "neue-mitte-urban-renewal",
     "folder": "work-neue-mitte-urban-renewal",
-    "featured": true
+    "featured": false
   },
   {
     "title": "Fuhle 101 Mixed-Use",
@@ -371,7 +371,7 @@
     "collaborators": "Architectural Association",
     "slug": "fabric-to-form-lycra-casting-research",
     "folder": "work-fabric-to-form-lycra-casting-research",
-    "featured": false
+    "featured": true
   },
   {
     "title": "Robotic Clay Printing: Form & Code",

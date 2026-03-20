@@ -98,12 +98,13 @@
   .ss-btn { background: none; border: none; color: var(--charcoal); padding: 0 12px; transition: color 0.2s; cursor: pointer; display: flex; align-items: center; }
   .ss-btn:hover { color: var(--terracotta); }
   .ss-btn svg { display: block; }
-  .ss-dots { display: flex; gap: 6px; flex: 1; }
-  .ss-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--charcoal); opacity: 0.2; transition: opacity 0.2s; }
-  .ss-dot.active { opacity: 1; background: var(--terracotta); }
+  .ss-dots { display: flex; gap: 6px; flex: 1; justify-content: center; }
+  .ss-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--charcoal); opacity: 1; transition: background 0.2s, transform 0.2s; cursor: pointer; }
+  .ss-dot:hover { background: var(--terracotta); }
+  .ss-dot.active { background: var(--green); }
 
   /* ─── FOOTER ─── */
-  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 45px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; margin-top: auto; }
+  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; margin-top: auto; }
   .footer-address { font-size: 1.25rem; line-height: 1.9; color: var(--charcoal); letter-spacing: 0.04em; }
   .footer-middle  { text-align: center; font-size: 1.25rem; line-height: 2; letter-spacing: 0.04em; color: var(--charcoal); }
   .footer-right   { text-align: right; font-size: 1.25rem; line-height: 1.9; letter-spacing: 0.04em; color: var(--charcoal); }
@@ -217,8 +218,7 @@
     <div class="manifesto-more" id="manifesto-more">
       <p class="manifesto-statement">We are London-based and internationally minded.<br>
       Rooted in a family practice founded in 1955,<br>
-      we carry forward a tradition of craftsmanship, mastery, and care<br>
-      not as nostalgia, but as a foundation for progress.</p>
+      we carry forward a tradition of craftsmanship, mastery, and care — not as nostalgia, but as a foundation for progress.</p>
 
       <p class="manifesto-statement">Our work is shaped through <em>mestizaje</em>:<br>
       where history, craft, research, and innovation converge.<br>
@@ -485,9 +485,8 @@
   }
   observeReveal();
 
-  // ─── MOBILE BIO TRUNCATION ───
+  // ─── BIO TRUNCATION (desktop + mobile) ───
   function initBioToggles(root) {
-    if (window.innerWidth > 768) return;
     (root || document).querySelectorAll('.principal-bio').forEach(function(bio) {
       var paras = bio.querySelectorAll('p');
       if (paras.length <= 1) return;
