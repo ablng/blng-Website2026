@@ -37,7 +37,7 @@
   .hero-heading { font-size: clamp(2.6rem, 5vw, 4.8rem); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; color: var(--charcoal); max-width: 820px; }
 
   /* ─── LEGAL CONTENT ─── */
-  .legal-body { padding: 80px 80px 100px; max-width: 860px; }
+  .legal-body { padding: 80px 80px 100px; max-width: 860px; flex: 1 0 auto; }
   .legal-section { padding: 48px 0; border-bottom: 2px solid rgba(28,28,26,0.08); }
   .legal-section:last-child { border-bottom: none; }
   .legal-section h2 { font-size: 1.1rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); margin-bottom: 20px; font-weight: 300; }
@@ -47,7 +47,7 @@
   .legal-section a:hover { color: var(--terracotta); border-color: var(--terracotta); }
 
   /* ─── FOOTER ─── */
-  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; margin-top: auto; }
+  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; flex-shrink: 0; }
   .footer-address { font-size: 1.2rem; line-height: 1.9; color: var(--charcoal); letter-spacing: 0.04em; }
   .footer-middle  { text-align: center; font-size: 1.2rem; line-height: 2; letter-spacing: 0.04em; color: var(--charcoal); }
   .footer-right   { text-align: right; font-size: 1.2rem; line-height: 1.9; letter-spacing: 0.04em; color: var(--charcoal); }

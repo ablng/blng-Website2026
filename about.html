@@ -77,7 +77,7 @@
   .placeholder-note { font-style: italic; color: var(--terracotta); font-size: 1.6rem; }
 
   /* ─── ROOTS ─── */
-  .roots { padding: 96px 48px 96px 80px; }
+  .roots { padding: 96px 48px 96px 80px; flex: 1 0 auto; }
   .roots-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-bottom: 0; }
   .roots-headline { font-size: clamp(3.0rem, 5vw, 4.4rem); font-weight: 300; line-height: 1.25; color: var(--charcoal); margin-bottom: 0; }
   .roots-intro-body p { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 16px; }
@@ -104,7 +104,7 @@
   .ss-dot.active { background: var(--green); }
 
   /* ─── FOOTER ─── */
-  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; margin-top: auto; }
+  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: start; flex-shrink: 0; }
   .footer-address { font-size: 1.25rem; line-height: 1.9; color: var(--charcoal); letter-spacing: 0.04em; }
   .footer-middle  { text-align: center; font-size: 1.25rem; line-height: 2; letter-spacing: 0.04em; color: var(--charcoal); }
   .footer-right   { text-align: right; font-size: 1.25rem; line-height: 1.9; letter-spacing: 0.04em; color: var(--charcoal); }
@@ -489,9 +489,12 @@
   function initBioToggles(root) {
     (root || document).querySelectorAll('.principal-bio').forEach(function(bio) {
       var paras = bio.querySelectorAll('p');
-      if (paras.length <= 1) return;
       if (bio.querySelector('.bio-more-btn')) return; // already initialised
+      // Sibling .principal-section elements (Teaching, Lectures, etc.)
+      var sections = Array.from(bio.parentElement.querySelectorAll('.principal-section'));
+      if (paras.length <= 1 && sections.length === 0) return;
       for (var i = 1; i < paras.length; i++) paras[i].style.display = 'none';
+      sections.forEach(function(s) { s.style.display = 'none'; });
       var btn = document.createElement('button');
       btn.className = 'more-btn bio-more-btn';
       btn.setAttribute('aria-expanded', 'false');
@@ -500,6 +503,7 @@
       btn.addEventListener('click', function() {
         open = !open;
         for (var i = 1; i < paras.length; i++) paras[i].style.display = open ? '' : 'none';
+        sections.forEach(function(s) { s.style.display = open ? '' : 'none'; });
         btn.classList.toggle('open', open);
         btn.setAttribute('aria-expanded', open);
         btn.querySelector('.btn-label').textContent = open ? 'Less' : 'More';
