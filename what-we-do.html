@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What We Do — blng studio</title>
+<style>
+  :root {
+    --charcoal:   #1C1C1A;
+    --porcelain:  #F8F6F3;
+    --terracotta: #D98E6A;
+    --mustard:    #FFC850;
+    --green:      #7A973F;
+    --page-bg:    #F8F6F3;
+    --label:      rgba(28,28,26,0.45);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--page-bg); color: var(--charcoal); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ─── CURSOR ─── */
+  #cursor      { position: fixed; width: 10px; height: 10px; background: var(--terracotta); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s ease; opacity: 0; }
+  #cursor-ring { position: fixed; width: 38px; height: 38px; border: 1px solid var(--charcoal); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); opacity: 0; transition: opacity 0.2s; }
+
+  /* ─── NAV ─── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 12px 48px 12px 80px; display: flex; justify-content: space-between; align-items: center; background: var(--page-bg); border-bottom: 2px solid rgba(28,28,26,0.07); }
+  #nav-logo { display: block; text-decoration: none; opacity: 0.9; transition: opacity 0.25s; flex-shrink: 0; }
+  #nav-logo:hover { opacity: 1; }
+  #nav-logo img { width: 487px; display: block; }
+  .nav-links { display: flex; gap: 44px; list-style: none; }
+  .nav-links a { font-size: 1.4rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--charcoal); transition: color 0.25s; }
+  .nav-links a:hover { color: var(--terracotta); }
+  .nav-links a.active { color: var(--green); }
+
+  /* ─── OPENING ─── */
+  .opening { padding: 200px 48px 80px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
+  .opening-tagline { font-size: clamp(2.6rem, 5vw, 4.8rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.01em; color: var(--charcoal); margin-bottom: 48px; }
+  .opening-oneliner { font-size: 1.9rem; line-height: 1.85; color: var(--charcoal); max-width: 1300px; }
+
+  /* ─── MORE BUTTON — copied verbatim from about.html ─── */
+  .more-btn { display: inline-flex; align-items: center; gap: 12px; font-family: 'DM Sans', sans-serif; font-size: 1.1rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 28px; border-radius: 999px; border: 2px solid rgba(28,28,26,0.35); background: transparent; color: var(--charcoal); transition: border-color 0.2s, color 0.2s; margin-top: 48px; cursor: pointer; }
+  .more-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
+  .more-btn .btn-arrow { font-style: normal; }
+
+  /* ─── SECTION LABEL ─── */
+  .section-label { font-size: 1.0rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--label); display: block; margin-bottom: 40px; }
+
+  /* ─── SERVICES ─── */
+  .services { flex: 1 0 auto; }
+  .service-entry { display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; padding: 72px 48px 72px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
+  .service-entry:last-child { border-bottom: none; }
+  .service-left { position: sticky; top: 80px; align-self: start; }
+  .service-index { font-size: 1.0rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--label); display: block; margin-bottom: 20px; }
+  .service-name { font-size: clamp(2.6rem, 5vw, 4.8rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.01em; color: var(--charcoal); }
+  .service-right p { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 16px; }
+  .service-right p:last-of-type { margin-bottom: 0; }
+  .service-more { display: none; }
+  .service-more.open { display: block; }
+  .suited-section { margin-top: 40px; padding-top: 28px; border-top: 2px solid rgba(28,28,26,0.08); }
+  .suited-label { font-size: 1.0rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--label); display: block; margin-bottom: 14px; }
+  .suited-text { font-size: 1.6rem; line-height: 1.85; color: var(--charcoal); }
+
+  /* ─── CLIENTS ─── */
+  .clients { padding: 96px 48px 96px 80px; border-top: 2px solid rgba(28,28,26,0.08); }
+  .clients-intro { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 56px; max-width: 900px; }
+  .clients-list { columns: 4; column-gap: 48px; list-style: none; }
+  .clients-list li { font-size: 1.6rem; line-height: 2.1; color: var(--charcoal); break-inside: avoid; }
+
+  /* ─── FOOTER ─── */
+  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: end; flex-shrink: 0; margin-top: auto; }
+  .footer-address { font-size: 1.25rem; line-height: 1.9; color: var(--charcoal); letter-spacing: 0.04em; }
+  .footer-middle  { text-align: center; font-size: 1.25rem; line-height: 2; letter-spacing: 0.04em; color: var(--charcoal); }
+  .footer-right   { text-align: right; font-size: 1.25rem; line-height: 1.9; letter-spacing: 0.04em; color: var(--charcoal); }
+  footer a { color: var(--charcoal); text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; }
+  footer a:hover { color: var(--terracotta); }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal { opacity: 1; transform: translateY(0); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .js-loaded .reveal { opacity: 0; transform: translateY(16px); }
+  .js-loaded .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    #nav-logo img { width: 401px; }
+    .service-entry { gap: 0 48px; }
+    .clients-list { columns: 3; }
+  }
+  @media (max-width: 768px) {
+    #nav-logo img { width: 298px; }
+    nav { padding: 10px 20px 10px 24px; }
+    .nav-links { gap: 24px; }
+    .nav-links a { font-size: 1.2rem; }
+    .opening { padding: 120px 24px 60px; }
+    .opening-tagline { font-size: clamp(2.2rem, 6vw, 3.2rem); margin-bottom: 32px; }
+    .opening-oneliner { font-size: 1.6rem; }
+    .more-btn { font-size: 0.9rem; padding: 9px 20px; margin-top: 32px; }
+    .service-entry { grid-template-columns: 1fr; gap: 20px 0; padding: 48px 24px; }
+    .service-left { position: static; }
+    .service-name { font-size: clamp(2.2rem, 6vw, 3.2rem); }
+    .service-right p { font-size: 1.5rem; }
+    .suited-text { font-size: 1.4rem; }
+    .clients { padding: 64px 24px; }
+    .clients-intro { font-size: 1.5rem; margin-bottom: 40px; }
+    .clients-list { columns: 2; column-gap: 24px; }
+    .clients-list li { font-size: 1.4rem; line-height: 2.0; }
+    footer { grid-template-columns: 1fr; gap: 20px; padding: 40px 24px; }
+    .footer-middle { text-align: left; }
+    .footer-right { text-align: left; }
+  }
+  @media (max-width: 480px) {
+    #nav-logo img { width: 220px; }
+    nav { padding: 8px 14px 8px 16px; }
+    .nav-links { gap: 12px; }
+    .nav-links a { font-size: 1.0rem; letter-spacing: 0; }
+    .opening { padding: 96px 16px 48px; }
+    .opening-tagline { font-size: clamp(2.0rem, 6vw, 2.8rem); }
+    .opening-oneliner { font-size: 1.4rem; }
+    .service-entry { padding: 40px 16px; }
+    .service-name { font-size: clamp(2.0rem, 6vw, 2.8rem); }
+    .clients { padding: 48px 16px; }
+    .clients-list { columns: 2; column-gap: 16px; }
+    .clients-list li { font-size: 1.3rem; }
+    footer { padding: 28px 16px; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="index.html" id="nav-logo" aria-label="blng studio home"><img src="brand_assets/blng-studio-crop.png" alt="blng studio"></a>
+  <ul class="nav-links">
+    <li><a href="work.html">Work</a></li>
+    <li><a href="what-we-do.html" class="active">What We Do</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ─── OPENING ─── -->
+<section class="opening">
+  <h1 class="opening-tagline">Design thinking applied from the first question to the final detail.</h1>
+  <p class="opening-oneliner">Nine areas of practice. One continuing commitment to design that advances.</p>
+</section>
+
+<!-- ─── SERVICES ─── -->
+<section class="services">
+  <div id="services-list">
+    <!-- populated by loadServices() -->
+  </div>
+</section>
+
+<!-- ─── CLIENTS ─── -->
+<section class="clients reveal" id="clients-section">
+  <span class="section-label">Selected Clients</span>
+  <p class="clients-intro" id="clients-intro"></p>
+  <ul class="clients-list" id="clients-list"></ul>
+  <button class="more-btn" id="clients-btn" aria-expanded="false">
+    <span class="btn-label">More</span> <span class="btn-arrow">↓</span>
+  </button>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-address">3 Dericote Street,<br>London E8 4PG,<br>United Kingdom</div>
+  <div class="footer-middle">
+    <a href="tel:+442045589744">+44 20 4558 9744</a><br>
+    <a href="mailto:info@blng.studio">info@blng.studio</a><br>
+    <a href="https://www.linkedin.com/company/blng-studio" target="_blank">LinkedIn</a> &nbsp;—&nbsp;
+    <a href="https://www.instagram.com/blng_studio/" target="_blank">Instagram</a>
+  </div>
+  <div class="footer-right">
+    <a href="legal.html">Legal &amp; Privacy Notice</a><br>
+    &copy; 2026 blng studio
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // Mark JS as loaded — enables scroll reveal hiding; without this, all content is visible by default
+  document.body.classList.add('js-loaded');
+
+  // ─── FOOTER ───
+  var footerBgColors = ['#FFD67C', '#B8CE88', '#D98E6A'];
+  document.querySelector('footer').style.background = footerBgColors[Math.floor(Math.random() * footerBgColors.length)];
+
+  // ─── CURSOR (pointer devices only) ───
+  var isTouch = window.matchMedia('(hover: none)').matches;
+  var cursor, ring;
+  if (!isTouch) {
+    cursor = document.getElementById('cursor');
+    ring   = document.getElementById('cursor-ring');
+    var mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', function(e) {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left    = mx + 'px';
+      cursor.style.top     = my + 'px';
+      cursor.style.opacity = '1';
+      ring.style.opacity   = '0.4';
+    });
+    document.addEventListener('mouseleave', function() {
+      cursor.style.opacity = '0';
+      ring.style.opacity   = '0';
+    });
+    (function lerp() {
+      rx += (mx - rx) * 0.10;
+      ry += (my - ry) * 0.10;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(lerp);
+    })();
+  }
+
+  function bindCursorHover(root) {
+    if (isTouch) return;
+    (root || document).querySelectorAll('a, button').forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
+        ring.style.transform   = 'translate(-50%,-50%) scale(1.3)';
+        ring.style.opacity     = '0.75';
+      });
+      el.addEventListener('mouseleave', function() {
+        cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+        ring.style.transform   = 'translate(-50%,-50%) scale(1)';
+        ring.style.opacity     = '0.4';
+      });
+    });
+  }
+  bindCursorHover();
+
+  // ─── SCROLL REVEAL ───
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  function observeReveal(root) {
+    (root || document).querySelectorAll('.reveal').forEach(function(el) {
+      if (!el.classList.contains('visible')) observer.observe(el);
+    });
+  }
+  observeReveal();
+
+  // ─── MORE TOGGLE (by id) — copied verbatim from about.html ───
+  function initToggle(btnId, contentId) {
+    var btn     = document.getElementById(btnId);
+    var content = document.getElementById(contentId);
+    if (!btn || !content) return;
+    btn.addEventListener('click', function() {
+      var isOpen = content.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', isOpen);
+      btn.querySelector('.btn-label').textContent = isOpen ? 'Less' : 'More';
+      btn.querySelector('.btn-arrow').textContent  = isOpen ? '↑' : '↓';
+    });
+  }
+
+  // ─── CONTENT HELPERS ───
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function renderLine(line) {
+    return escHtml(line).replace(/\*(.*?)\*/g, '<em>$1</em>');
+  }
+
+  // ─── SERVICE MD PARSER ───
+  // Splits on ---suited--- marker; everything before is body paragraphs,
+  // everything after is the suited-to line.
+  function parseServiceMd(text) {
+    var parts = text.split(/\r?\n---suited---\r?\n/);
+    var bodyText  = parts[0] || '';
+    var suitedText = parts[1] ? parts[1].trim() : '';
+    var paras = bodyText.trim().split(/\n\n+/).map(function(p) {
+      return p.trim();
+    }).filter(function(p) { return p.length > 0; });
+    return { paras: paras, suited: suitedText };
+  }
+
+  // ─── RENDER: SERVICES ───
+  function renderServices(services, bioTexts) {
+    var container = document.getElementById('services-list');
+    if (!container) return;
+    var html = '';
+
+    services.forEach(function(svc, i) {
+      var parsed  = parseServiceMd(bioTexts[i] || '');
+      var paras   = parsed.paras;
+      var suited  = parsed.suited;
+      var hasMore = paras.length > 1 || suited.length > 0;
+
+      html += '<div class="service-entry reveal">\n';
+
+      // Left column: index + name (sticky on desktop)
+      html += '  <div class="service-left">\n';
+      html += '    <span class="service-index">' + escHtml(svc.index) + '</span>\n';
+      html += '    <h2 class="service-name">' + escHtml(svc.name) + '</h2>\n';
+      html += '  </div>\n';
+
+      // Right column: body copy + toggle
+      html += '  <div class="service-right">\n';
+
+      // First paragraph — always visible
+      html += '    <div class="service-body">\n';
+      html += '      <p>' + renderLine(paras[0] || '') + '</p>\n';
+      html += '    </div>\n';
+
+      if (hasMore) {
+        // Hidden section: remaining paragraphs + suited-to
+        html += '    <div class="service-more" id="svc-more-' + i + '">\n';
+        for (var j = 1; j < paras.length; j++) {
+          html += '      <p>' + renderLine(paras[j]) + '</p>\n';
+        }
+        if (suited) {
+          html += '      <div class="suited-section">\n';
+          html += '        <span class="suited-label">Suited To</span>\n';
+          html += '        <p class="suited-text">' + escHtml(suited) + '</p>\n';
+          html += '      </div>\n';
+        }
+        html += '    </div>\n';
+
+        // Toggle button — exact structure from about.html
+        html += '    <button class="more-btn" id="svc-btn-' + i + '" aria-expanded="false">\n';
+        html += '      <span class="btn-label">More</span> <span class="btn-arrow">↓</span>\n';
+        html += '    </button>\n';
+      }
+
+      html += '  </div>\n';
+      html += '</div>\n';
+    });
+
+    container.innerHTML = html;
+
+    // Wire up toggles for each service entry
+    services.forEach(function(svc, i) {
+      initToggle('svc-btn-' + i, 'svc-more-' + i);
+    });
+
+    observeReveal(container);
+    bindCursorHover(container);
+  }
+
+  // ─── RENDER: CLIENTS ───
+  function renderClients(data) {
+    var intro   = document.getElementById('clients-intro');
+    var list    = document.getElementById('clients-list');
+    var btn     = document.getElementById('clients-btn');
+    if (!list || !btn) return;
+
+    if (intro) intro.textContent = data.intro || '';
+
+    var clients = data.clients || [];
+    var VISIBLE = 8;
+    var html = '';
+    clients.forEach(function(c) {
+      html += '<li>' + escHtml(c) + '</li>\n';
+    });
+    list.innerHTML = html;
+
+    // Hide items beyond the first VISIBLE
+    var items = Array.from(list.querySelectorAll('li'));
+    items.slice(VISIBLE).forEach(function(li) { li.style.display = 'none'; });
+
+    var open = false;
+    btn.addEventListener('click', function() {
+      open = !open;
+      items.slice(VISIBLE).forEach(function(li) { li.style.display = open ? '' : 'none'; });
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+      btn.querySelector('.btn-label').textContent = open ? 'Less' : 'More';
+      btn.querySelector('.btn-arrow').textContent  = open ? '↑' : '↓';
+    });
+
+    bindCursorHover(document.getElementById('clients-section'));
+  }
+
+  // ─── LOADERS ───
+  async function loadServices() {
+    try {
+      var r = await fetch('services.json');
+      if (!r.ok) return;
+      var services = await r.json();
+
+      var bioTexts = await Promise.all(services.map(async function(svc) {
+        var br = await fetch(svc.bio);
+        return br.ok ? await br.text() : '';
+      }));
+
+      renderServices(services, bioTexts);
+    } catch(e) {
+      console.warn('Services load error:', e);
+    }
+  }
+
+  async function loadClients() {
+    try {
+      var r = await fetch('clients.json');
+      if (!r.ok) return;
+      var data = await r.json();
+      renderClients(data);
+    } catch(e) {
+      console.warn('Clients load error:', e);
+    }
+  }
+
+  loadServices();
+  loadClients();
+
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5157d2ec6bb74ca8b1f7267d65a83efc"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

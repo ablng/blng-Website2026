@@ -1,0 +1,11 @@
+[
+  { "index": "01", "slug": "01-architecture",         "name": "Architecture",                      "bio": "services/01-architecture.md" },
+  { "index": "02", "slug": "02-environments",         "name": "Environments",                      "bio": "services/02-environments.md" },
+  { "index": "03", "slug": "03-spatial-design",       "name": "Spatial Design & Installations",    "bio": "services/03-spatial-design.md" },
+  { "index": "04", "slug": "04-objects",              "name": "Objects",                           "bio": "services/04-objects.md" },
+  { "index": "05", "slug": "05-design-consultancy",   "name": "Design Consultancy",                "bio": "services/05-design-consultancy.md" },
+  { "index": "06", "slug": "06-land-feasibility",     "name": "Land & Development Feasibility",    "bio": "services/06-land-feasibility.md" },
+  { "index": "07", "slug": "07-computational-design", "name": "Computational Design Consultancy",  "bio": "services/07-computational-design.md" },
+  { "index": "08", "slug": "08-ai-augmented",         "name": "AI-Augmented Processes",            "bio": "services/08-ai-augmented.md" },
+  { "index": "09", "slug": "09-research",             "name": "Research & Academic Collaboration", "bio": "services/09-research.md" }
+]
