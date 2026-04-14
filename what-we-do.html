@@ -50,7 +50,7 @@
   .service-entry { display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; padding: 72px 48px 72px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); align-items: center; }
   .service-entry:last-child { border-bottom: none; }
   .service-left { position: sticky; top: 80px; align-self: center; }
-  .service-name { font-size: 2.4rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; color: var(--charcoal); }
+  .service-name { font-size: clamp(2.6rem, 5vw, 4.8rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.01em; color: var(--charcoal); }
   .service-right p { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 16px; }
   .service-right p:last-of-type { margin-bottom: 0; }
   .service-more { display: none; }
@@ -95,7 +95,7 @@
     .more-btn { font-size: 0.9rem; padding: 9px 20px; margin-top: 32px; }
     .service-entry { grid-template-columns: 1fr; gap: 20px 0; padding: 48px 24px; align-items: start; }
     .service-left { position: static; }
-    .service-name { font-size: 2.2rem; }
+    .service-name { font-size: clamp(2.2rem, 6vw, 3.2rem); }
     .service-right p { font-size: 1.5rem; }
     .suited-text { font-size: 1.4rem; }
     .clients { padding: 64px 24px; }
@@ -115,7 +115,7 @@
     .opening-tagline { font-size: clamp(2.0rem, 6vw, 2.8rem); }
     .opening-oneliner { font-size: 1.4rem; }
     .service-entry { padding: 40px 16px; }
-    .service-name { font-size: 2.0rem; }
+    .service-name { font-size: clamp(2.0rem, 6vw, 2.8rem); }
     .clients { padding: 48px 16px; }
     .clients-list { columns: 2; column-gap: 16px; }
     .clients-list li { font-size: 1.3rem; }
