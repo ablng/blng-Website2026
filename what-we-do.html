@@ -50,7 +50,7 @@
   .service-entry { display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; padding: 72px 48px 72px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); align-items: center; }
   .service-entry:last-child { border-bottom: none; }
   .service-left { position: sticky; top: 80px; align-self: center; }
-  .service-name { font-size: 2.4rem; font-weight: 300; line-height: 1.25; letter-spacing: -0.01em; color: var(--charcoal); }
+  .service-name { font-size: 2.4rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; color: var(--charcoal); }
   .service-right p { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 16px; }
   .service-right p:last-of-type { margin-bottom: 0; }
   .service-more { display: none; }
@@ -61,7 +61,7 @@
 
   /* ─── CLIENTS ─── */
   .clients { padding: 96px 48px 96px 80px; border-top: 2px solid rgba(28,28,26,0.08); }
-  .clients-intro { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 56px; max-width: 900px; }
+  .clients-intro { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 56px; white-space: nowrap; }
   .clients-list { columns: 4; column-gap: 48px; list-style: none; }
   .clients-list li { font-size: 1.6rem; line-height: 2.1; color: var(--charcoal); break-inside: avoid; }
 
@@ -163,9 +163,6 @@
   <span class="section-label">Selected Clients</span>
   <p class="clients-intro" id="clients-intro"></p>
   <ul class="clients-list" id="clients-list"></ul>
-  <button class="more-btn" id="clients-btn" aria-expanded="false">
-    <span class="btn-label">More</span> <span class="btn-arrow">↓</span>
-  </button>
 </section>
 
 <!-- ─── FOOTER ─── -->
@@ -358,32 +355,16 @@
   function renderClients(data) {
     var intro   = document.getElementById('clients-intro');
     var list    = document.getElementById('clients-list');
-    var btn     = document.getElementById('clients-btn');
-    if (!list || !btn) return;
+    if (!list) return;
 
     if (intro) intro.textContent = data.intro || '';
 
     var clients = data.clients || [];
-    var VISIBLE = 8;
     var html = '';
     clients.forEach(function(c) {
       html += '<li>' + escHtml(c) + '</li>\n';
     });
     list.innerHTML = html;
-
-    // Hide items beyond the first VISIBLE
-    var items = Array.from(list.querySelectorAll('li'));
-    items.slice(VISIBLE).forEach(function(li) { li.style.display = 'none'; });
-
-    var open = false;
-    btn.addEventListener('click', function() {
-      open = !open;
-      items.slice(VISIBLE).forEach(function(li) { li.style.display = open ? '' : 'none'; });
-      btn.classList.toggle('open', open);
-      btn.setAttribute('aria-expanded', open);
-      btn.querySelector('.btn-label').textContent = open ? 'Less' : 'More';
-      btn.querySelector('.btn-arrow').textContent  = open ? '↑' : '↓';
-    });
 
     bindCursorHover(document.getElementById('clients-section'));
   }
