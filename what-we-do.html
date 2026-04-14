@@ -47,11 +47,10 @@
 
   /* ─── SERVICES ─── */
   .services { flex: 1 0 auto; }
-  .service-entry { display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; padding: 72px 48px 72px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
+  .service-entry { display: grid; grid-template-columns: 1fr 2fr; gap: 0 80px; padding: 72px 48px 72px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); align-items: center; }
   .service-entry:last-child { border-bottom: none; }
-  .service-left { position: sticky; top: 80px; align-self: start; }
-  .service-index { font-size: 1.0rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--label); display: block; margin-bottom: 20px; }
-  .service-name { font-size: clamp(2.6rem, 5vw, 4.8rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.01em; color: var(--charcoal); }
+  .service-left { position: sticky; top: 80px; align-self: center; }
+  .service-name { font-size: 2.4rem; font-weight: 300; line-height: 1.25; letter-spacing: -0.01em; color: var(--charcoal); }
   .service-right p { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 16px; }
   .service-right p:last-of-type { margin-bottom: 0; }
   .service-more { display: none; }
@@ -94,9 +93,9 @@
     .opening-tagline { font-size: clamp(2.2rem, 6vw, 3.2rem); margin-bottom: 32px; }
     .opening-oneliner { font-size: 1.6rem; }
     .more-btn { font-size: 0.9rem; padding: 9px 20px; margin-top: 32px; }
-    .service-entry { grid-template-columns: 1fr; gap: 20px 0; padding: 48px 24px; }
+    .service-entry { grid-template-columns: 1fr; gap: 20px 0; padding: 48px 24px; align-items: start; }
     .service-left { position: static; }
-    .service-name { font-size: clamp(2.2rem, 6vw, 3.2rem); }
+    .service-name { font-size: 2.2rem; }
     .service-right p { font-size: 1.5rem; }
     .suited-text { font-size: 1.4rem; }
     .clients { padding: 64px 24px; }
@@ -116,7 +115,7 @@
     .opening-tagline { font-size: clamp(2.0rem, 6vw, 2.8rem); }
     .opening-oneliner { font-size: 1.4rem; }
     .service-entry { padding: 40px 16px; }
-    .service-name { font-size: clamp(2.0rem, 6vw, 2.8rem); }
+    .service-name { font-size: 2.0rem; }
     .clients { padding: 48px 16px; }
     .clients-list { columns: 2; column-gap: 16px; }
     .clients-list li { font-size: 1.3rem; }
@@ -140,8 +139,8 @@
   <a href="index.html" id="nav-logo" aria-label="blng studio home"><img src="brand_assets/blng-studio-crop.png" alt="blng studio"></a>
   <ul class="nav-links">
     <li><a href="work.html">Work</a></li>
-    <li><a href="what-we-do.html" class="active">What We Do</a></li>
     <li><a href="about.html">About</a></li>
+    <li><a href="what-we-do.html" class="active">What We Do</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav>
@@ -307,9 +306,8 @@
 
       html += '<div class="service-entry reveal">\n';
 
-      // Left column: index + name (sticky on desktop)
+      // Left column: name (sticky on desktop)
       html += '  <div class="service-left">\n';
-      html += '    <span class="service-index">' + escHtml(svc.index) + '</span>\n';
       html += '    <h2 class="service-name">' + escHtml(svc.name) + '</h2>\n';
       html += '  </div>\n';
 
