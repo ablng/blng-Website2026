@@ -982,22 +982,15 @@ async function runAnimation(){
     const el = sG(id); if(el) el.style.opacity = '0';
   });
 
-  // Start cross-fade first — bieling begins fading before its viewBox changes
-  wrap.style.transition = 'width 0.38s ease';
+  // Smooth cross-fade — blng positions align between both SVGs (~255px from left)
+  // so a clean simultaneous fade works without any viewBox repositioning
+  wrap.style.transition = 'width 0.6s ease';
   wrap.style.width = logoW2 + 'px';
-  svg.style.transition  = 'opacity 0.23s ease';
+  svg.style.transition  = 'opacity 0.45s ease';
   svg.style.opacity = '0';
-  svgB.style.transition = 'opacity 0.3s ease';
+  svgB.style.transition = 'opacity 0.5s ease';
   svgB.style.opacity = '1';
-  // Defer bieling viewBox update to next frame — already fading, jump is invisible
-  // On mobile VBW_init already equals VBW2 so no viewBox change needed (avoids x-shift jump)
-  requestAnimationFrame(() => {
-    if (!isMobileAnim) {
-      svg.setAttribute('viewBox', `430 1020 ${VBW2} 355`);
-      svg.style.width = logoW2 + 'px';
-    }
-  });
-  await wait(450);
+  await wait(600);
 
   // ── STEP 5: "studio" types out letter by letter ───────────────
   for(const id of ['letter-s','letter-t','letter-u','letter-d','letter-i','letter-o']){
