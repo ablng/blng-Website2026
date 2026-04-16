@@ -91,7 +91,7 @@
 
   #tagline { position:fixed; bottom:44px; left:0; right:0; text-align:center; z-index:10; opacity:0; transform:translateY(10px); transition:opacity 0.9s ease, transform 0.9s ease; pointer-events:none; }
   #tagline.visible { opacity:1; transform:translateY(0); }
-  #tagline p { font-size:1.1rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--charcoal); }
+  #tagline h1 { font-size:1.1rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--charcoal); font-weight:inherit; }
 
   /* ─── RESPONSIVE ─── */
   @media (max-width: 1024px) {
@@ -103,13 +103,13 @@
     .nav-links { gap:24px; }
     .nav-links a { font-size:1.2rem; }
     #tagline { bottom:28px; }
-    #tagline p { font-size:0.95rem; letter-spacing:0.15em; }
+    #tagline h1 { font-size:0.95rem; letter-spacing:0.15em; }
   }
   @media (max-width: 480px) {
     nav { padding:18px 16px; }
     .nav-links { gap:16px; }
     .nav-links a { font-size:1.0rem; }
-    #tagline p { font-size:0.85rem; letter-spacing:0.1em; }
+    #tagline h1 { font-size:0.85rem; letter-spacing:0.1em; }
   }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -838,7 +838,7 @@
   </div>
 </div>
 
-<div id="tagline"><p>Architecture &amp; Design &nbsp;&middot;&nbsp; London &nbsp;&middot;&nbsp; 1955</p></div>
+<div id="tagline"><h1>Architecture &amp; Design &nbsp;&middot;&nbsp; London &nbsp;&middot;&nbsp; 1955</h1></div>
 
 <script>
 'use strict';
