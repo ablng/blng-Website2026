@@ -3,7 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What We Do — blng studio</title>
+<title>What We Do — blng studio | Architecture &amp; Design Services, London</title>
+
+<!-- SEO -->
+<meta name="description" content="Nine areas of practice spanning architecture, interior design, research and strategy. blng studio applies design thinking from the first question to the final detail.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://blng.studio/what-we-do.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://blng.studio/what-we-do.html">
+<meta property="og:title" content="What We Do — blng studio | Architecture &amp; Design Services, London">
+<meta property="og:description" content="Nine areas of practice spanning architecture, interior design, research and strategy. blng studio applies design thinking from the first question to the final detail.">
+<meta property="og:image" content="https://blng.studio/brand_assets/blng-studio.png">
+<meta property="og:site_name" content="blng studio">
+<meta property="og:locale" content="en_GB">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What We Do — blng studio | Architecture &amp; Design Services, London">
+<meta name="twitter:description" content="Nine areas of practice spanning architecture, interior design, research and strategy. blng studio applies design thinking from the first question to the final detail.">
+<meta name="twitter:image" content="https://blng.studio/brand_assets/blng-studio.png">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://blng.studio/what-we-do.html",
+  "url": "https://blng.studio/what-we-do.html",
+  "name": "What We Do — blng studio",
+  "description": "Nine areas of practice spanning architecture, interior design, research and strategy.",
+  "isPartOf": { "@id": "https://blng.studio/#organization" },
+  "provider": {
+    "@type": "Organization",
+    "@id": "https://blng.studio/#organization",
+    "name": "blng studio"
+  }
+}
+</script>
+
 <style>
   :root {
     --charcoal:   #1C1C1A;
@@ -148,7 +187,7 @@
 <!-- ─── OPENING ─── -->
 <section class="opening">
   <h1 class="opening-tagline">Design thinking applied from the first question to the final detail.</h1>
-  <p class="opening-oneliner">Nine areas of practice. One continuing commitment to design that advances.</p>
+  <p class="opening-oneliner">Multiple areas of expertise. One continuing commitment to design that advances.</p>
 </section>
 
 <!-- ─── SERVICES ─── -->
@@ -160,8 +199,7 @@
 
 <!-- ─── CLIENTS ─── -->
 <section class="clients reveal" id="clients-section">
-  <span class="section-label">Selected Clients</span>
-  <p class="clients-intro" id="clients-intro"></p>
+  <h2 class="service-name" style="margin-bottom: 56px;">Selected Clients</h2>
   <ul class="clients-list" id="clients-list"></ul>
 </section>
 
@@ -353,11 +391,8 @@
 
   // ─── RENDER: CLIENTS ───
   function renderClients(data) {
-    var intro   = document.getElementById('clients-intro');
-    var list    = document.getElementById('clients-list');
+    var list = document.getElementById('clients-list');
     if (!list) return;
-
-    if (intro) intro.textContent = data.intro || '';
 
     var clients = data.clients || [];
     var html = '';
