@@ -382,7 +382,7 @@
         '</a>' +
         '<div class="mp-hero">' +
           '<a href="project.html?project=' + encodeURIComponent(p.slug) + '">' +
-            '<img src="' + escHtml(heroUrl) + '" alt="' + escHtml(p.title) + '" loading="lazy">' +
+            '<img src="' + escHtml(heroUrl) + '" alt="' + escHtml(p.title + (p.location ? ', ' + p.location : '') + ' — blng studio') + '" loading="lazy">' +
           '</a>' +
         '</div>';
 

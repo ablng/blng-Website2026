@@ -833,8 +833,15 @@
   }
 
   // ─── RENDER: LEGACY PROFILE (hardcoded image list) ───
+  function altFromImageId(id, personName) {
+    var slug = id.replace(/^work-/, '').replace(/_[^_]+$/, '').replace(/-\d+$/, '');
+    var title = slug.split('-').map(function(w){ return w.charAt(0).toUpperCase() + w.slice(1); }).join(' ');
+    return title + ' — ' + personName + ', blng studio';
+  }
+
   function renderLegacyProfile(leg, bioText, profileEl) {
-    var urls = (leg.images || []).map(function(id) {
+    var images = leg.images || [];
+    var urls = images.map(function(id) {
       return 'https://res.cloudinary.com/' + CLOUD +
              '/image/upload/f_auto,q_auto,w_800/' + id;
     });
@@ -854,9 +861,11 @@
       if (urls.length === 0) {
         html += '<div class="slide active" style="background:linear-gradient(135deg,#c8c4b8 0%,#a09888 100%);"></div>\n';
       } else {
-        urls.forEach(function(u, i) {
+        images.forEach(function(id, i) {
+          var u = 'https://res.cloudinary.com/' + CLOUD + '/image/upload/f_auto,q_auto,w_800/' + id;
+          var imgAlt = altFromImageId(id, leg.name);
           html += '<div class="slide' + (i === 0 ? ' active' : '') + '">' +
-                  '<img src="' + escHtml(u) + '" alt="" style="width:100%;height:100%;object-fit:cover;">' +
+                  '<img src="' + escHtml(u) + '" alt="' + escHtml(imgAlt) + '" style="width:100%;height:100%;object-fit:cover;">' +
                   '</div>\n';
         });
       }
