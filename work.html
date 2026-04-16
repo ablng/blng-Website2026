@@ -142,6 +142,23 @@
     .row-title { font-size:1.3rem; padding:0; }
     footer { padding:28px 16px; }
   }
+
+  /* ─── MOBILE MENU ─── */
+  .menu-btn { display: none; background: none; border: none; padding: 8px; flex-direction: column; gap: 6px; align-items: center; justify-content: center; }
+  .menu-btn span { display: block; width: 24px; height: 2px; background: var(--charcoal); }
+  .mobile-menu { position: fixed; inset: 0; z-index: 500; display: flex; flex-direction: column; padding: 28px 24px; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+  .mobile-menu.open { opacity: 1; pointer-events: all; }
+  .mobile-menu-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 72px; }
+  .mobile-menu-logo { text-decoration: none; }
+  .mobile-menu-logo img { width: 200px; display: block; }
+  .mobile-menu-close { background: none; border: none; font-size: 1.4rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--charcoal); font-family: 'DM Sans', sans-serif; padding: 0; }
+  .mobile-menu-links { list-style: none; display: flex; flex-direction: column; gap: 32px; }
+  .mobile-menu-links a { font-size: 1.4rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--charcoal); font-family: 'DM Sans', sans-serif; }
+  .mobile-menu-links a.active { color: var(--green); }
+  @media (max-width: 768px) {
+    .nav-links { display: none !important; }
+    .menu-btn { display: flex; }
+  }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
@@ -163,6 +180,7 @@
     <li><a href="what-we-do.html">What We Do</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
+  <button id="menu-btn" class="menu-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
 </nav>
 
 <div id="hover-panel">
@@ -430,6 +448,31 @@
     })
     .catch(function(){ /* show nothing on error */ });
 
+})();
+</script>
+<!-- ─── MOBILE MENU OVERLAY ─── -->
+<div id="mobile-menu" class="mobile-menu">
+  <div class="mobile-menu-header">
+    <a href="index.html" class="mobile-menu-logo" aria-label="blng studio home"><img src="brand_assets/blng-studio-crop.png" alt="blng studio"></a>
+    <button id="menu-close" class="mobile-menu-close" aria-label="Close menu">✕</button>
+  </div>
+  <ul class="mobile-menu-links">
+    <li><a href="work.html" class="active">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="what-we-do.html">What We Do</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</div>
+<script>
+(function(){
+  var btn   = document.getElementById('menu-btn');
+  var menu  = document.getElementById('mobile-menu');
+  var close = document.getElementById('menu-close');
+  var colors = ['#FFD67C','#B8CE88','#D98E6A'];
+  function openMenu()  { menu.style.background = colors[Math.floor(Math.random()*colors.length)]; menu.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeMenu() { menu.classList.remove('open'); document.body.style.overflow=''; }
+  if (btn)   btn.addEventListener('click', openMenu);
+  if (close) close.addEventListener('click', closeMenu);
 })();
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5157d2ec6bb74ca8b1f7267d65a83efc"}'></script><!-- End Cloudflare Web Analytics -->
