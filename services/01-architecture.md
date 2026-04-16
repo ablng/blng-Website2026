@@ -4,5 +4,7 @@ We work across RIBA Stages 0–6, either as lead architect, as design architect 
 
 Our experience spans residential, cultural, commercial, and civic typologies, with particular strength in technically complex or formally ambitious briefs.
 
+We have particular experience in sustainable construction — hybrid timber structures and low-embodied-carbon design — and in projects requiring careful contextual integration within historic urban fabric.
+
 ---suited---
 Developers · Housing associations · Public sector bodies · Cultural institutions · Private clients

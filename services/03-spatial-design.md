@@ -4,5 +4,7 @@ This is work at the edge of architecture and art: fast, material, and often fabr
 
 We have experience developing proposals for open and invited competitions, and can move from concept to fabrication-ready documentation efficiently.
 
+Work in this area has included competition pavilions, museum and gallery installations, urban interventions, and brand-commissioned spatial experiences — across the UK, Germany, and internationally.
+
 ---suited---
 Cultural institutions · Festivals · Municipalities · Brands seeking spatial activations · Competition organisers

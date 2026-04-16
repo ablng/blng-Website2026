@@ -4,5 +4,7 @@ This includes generative spatial exploration in early design stages, AI-assisted
 
 For clients navigating how AI intersects with their own design or development processes, we offer direct advice grounded in practice rather than speculation.
 
+We are based in London and available for engagements across the UK and Europe, either as embedded consultants or as an independent advisory resource.
+
 ---suited---
 Architecture and design practices modernising their workflows · Developers and corporates integrating AI into built environment processes · Organisations seeking practical AI strategy

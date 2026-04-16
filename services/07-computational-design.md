@@ -2,7 +2,7 @@ We apply computational design as a core working method across all our projects, 
 
 This includes parametric modelling, scripted geometry, performance-driven design optimisation, data-informed massing, and the development of bespoke tools and workflows for specific project types. We have experience building repeatable, adaptable design processes for practices working at volume or complexity.
 
-For developers, engineers, or larger practices with technically demanding briefs, computational consultancy can significantly compress iteration time and expand the solution space.
+For developers, engineers, or larger practices with technically demanding briefs, computational consultancy can significantly compress iteration time and expand the solution space. Our computational practice operates across the UK, Germany, and internationally.
 
 ---suited---
 Architecture and engineering practices · Developers with complex or high-volume briefs · Product manufacturers · Technology companies working at the intersection of design and computation
