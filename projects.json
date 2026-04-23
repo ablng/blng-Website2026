@@ -8,21 +8,21 @@
       "Commercial"
     ],
     "programme": "Mixed-Use, Residential, Retail",
-    "description": "Located on the site of Hamburg's historic Holsten brewery, this competition proposal reimagines a city block as a sequence of distinct residential parcels — each with its own character, yet coherent as a whole.",
-    "client": "",
-    "location": "",
-    "status": "",
-    "area": "",
-    "scope": "",
+    "description": "Located on the site of Hamburg's historic Holsten brewery, this competition proposal reimagines a city block as a sequence of distinct residential parcels — each with its own character, yet coherent as a whole.\nRather than a single monolithic volume, the block is broken into smaller, plot-scaled buildings — varied in height and setback — creating a streetscape that feels familiar, walkable, and alive. Small retail and dining units at the ground floor corners sustain activity throughout the day, keeping the street genuinely engaged at human scale.\nRecycled brick, graded in tone to echo the existing brewery buildings, gives the façades a tactile warmth and material continuity with the neighbourhood. Climbing planting structures, integrated planter balconies, and green rooftops layer in softness and seasonal change — making the building feel as much grown as built.\nInside, the dwellings are designed around the idea of a home that opens outward — toward the street, the courtyard, the sky. Generous loggien, floor-to-ceiling glazing, and shared rooftop terraces ensure that every resident has a genuine relationship with the city around them.\nPassive energy strategies and rooftop solar are embedded quietly into the design — reducing operational load without compromise to comfort or character.",
+    "client": "Undisclosed",
+    "location": "Hamburg, Germany",
+    "status": "Competition",
+    "area": "8,750 m²",
+    "scope": "Architecture",
     "collaborators": "",
     "slug": "holsten-residential-district",
     "folder": "work-holsten-residential-district",
-    "featured": false
+    "featured": true
   },
   {
     "title": "District Administration Extension — Hybrid Timber",
     "year": "2025",
-    "projectNumber": "0100",
+    "projectNumber": "100",
     "type": [
       "Office"
     ],
@@ -41,7 +41,7 @@
   {
     "title": "Sophienschule Campus",
     "year": "2025",
-    "projectNumber": "0111",
+    "projectNumber": "111",
     "type": [
       "Education"
     ],
@@ -60,7 +60,7 @@
   {
     "title": "Cathedral Museum & Monastery Renewal",
     "year": "2024",
-    "projectNumber": "0090",
+    "projectNumber": "90",
     "type": [
       "Cultural",
       "Retrofit"
@@ -75,108 +75,6 @@
     "collaborators": "Ingrid Bussenius - Interior Design",
     "slug": "cathedral-museum-monastery-renewal",
     "folder": "work-cathedral-museum-monastery-renewal",
-    "featured": false
-  },
-  {
-    "title": "Sartorius Quartier",
-    "year": "2022",
-    "projectNumber": "0092",
-    "type": [
-      "Residential",
-      "Commercial",
-      "Urban Design",
-      "Hotel"
-    ],
-    "programme": "Mixed-Use, Residential, Hotel, Retail",
-    "description": "On the former industrial site and factory premises of Sartorius AG in the northern part of Göttingen, a new mixed-use district is brough to life, jointly developed by HAMBURG TEAM and Sartorius AG. Three historic buildings on site have been retained and refurbished and together with an open hall and a new building, will form the new district. The district includes residential buildings, daycare center, commercial spaces along with a hotel with a restaurant and connecting retail space. Additionally, a new concept of smart- serviced apartments with be at the center of the distric, while a rooftop Skybar brings life to the area with unmatchable views of the city. This visionary project aims to blend history with innovation, fostering a dynamic environment for work, life, and leisure in the heart of Göttingen.The project has been awarded the Brownfield Prize, for it's positive tranformation from an unused industrial site to a lively neighbourhood.",
-    "client": "Hamburg Team",
-    "location": "Göttingen, Germany",
-    "status": "Completed",
-    "area": "35,000 m²",
-    "scope": "Architecture",
-    "collaborators": "",
-    "slug": "sartorius-quartier",
-    "folder": "work-sartorius-quartier",
-    "featured": false
-  },
-  {
-    "title": "Façade Revitalization",
-    "year": "2022",
-    "projectNumber": "0146",
-    "type": [
-      "Office",
-      "Retrofit"
-    ],
-    "programme": "Office, Retrofit",
-    "description": "Our proposal for revitalizing the façade of a corporate headquarters blends timelessness with modern sustainability, prioritizing durability and energy efficiency. Focused on meeting our client's needs and reflecting their identity, the design strives for both aesthetic impact and functionality. A highlight of the project is the energy-optimized brick façade. High-quality bricks, carefully chosen for their thermal properties, enhance insulation, reducing energy consumption significantly compared to the current structure. We prioritize a clear and welcoming ground-floor entrance, essential for a corporate setting, by optimizing traffic flow and removing barriers. Strategic placements of glass cubes as interventions add contemporary flair and natural light, creating focal points that enhance the overall aesthetic and functionality. Revitalizing architectural landmarks brings myriad benefits, from improved energy efficiency to enhanced aesthetics, ultimately creating spaces that inspire and contribute positively to occupants and their surroundings.",
-    "client": "Undisclosed",
-    "location": "Hamburg, Germany",
-    "status": "Competition - Finalist",
-    "area": "",
-    "scope": "Architecture",
-    "collaborators": "",
-    "slug": "facade-revitalization",
-    "folder": "work-facade-revitalization",
-    "featured": false
-  },
-  {
-    "title": "Office & Kindergarten Pavilion",
-    "year": "2022",
-    "projectNumber": "0147",
-    "type": [
-      "Education",
-      "Office"
-    ],
-    "programme": "Office, Kindergarten",
-    "description": "Our response to the competition brief, focuses on the addition of a new building, housing a day-care center and flexible offices. Drawing inspiration from adjacent buildings, our proposal completed the development of the company's campus. A key focus of the office floors is to create contemporary workspaces that are flexible, well-lit, and conducive to communication. The layout features single, double, and team offices flanking a versatile multi-functional zone, comprising meeting rooms, waiting areas and suporting spaces. We prioritize access to outdoor spaces to enhance well-being - including terraces, balconies and courtyards on every floor. The integration of the kindergarden at the ground floor enables flexibility for working parents. Densely planted areas and the use of softer materials like wood create a safe environment for the children. The design proposal fosters a family-friendly environment within the workplace, promoting a better work-life balance.",
-    "client": "Undisclosed",
-    "location": "Hannover, Germany",
-    "status": "Competition - First Prize",
-    "area": "",
-    "scope": "Architecture",
-    "collaborators": "",
-    "slug": "office-kindergarten-pavilion",
-    "folder": "work-office-kindergarten-pavilion",
-    "featured": false
-  },
-  {
-    "title": "Bergedorf District",
-    "year": "2022",
-    "projectNumber": "0151",
-    "type": [
-      "Residential",
-      "Commercial",
-      "Urban Design"
-    ],
-    "programme": "Mixed-Use, Urban Design",
-    "description": "The brief seeks an innovative urban development strategy for Bergedorf's central shopping streets, revitalizing currently abandoned spaces. The design proposes a cohesive yet distinctive vision for the 2 plots in question. Drawing inspiration from the existing urban fabric, the proposed buildings maintain a harmonious scale and structure, with additional like public offerings and roof terraces. Ground floors are designed with spacious, open-plan retail areas, acting as an extension of the surrounding park and plazas. The proposed apartment building offers an inner courtyard and rooftop gardens for a serene green spaces for relaxation and play. Enhancements extend beyond the buildings, with urban interventions redesigned to promote connectivity - prioritizing pedestrian comfort and access while maintaining convenience for motorists and cyclists. Kaiser-Wilhelm-Plaza is envisioned as a welcoming green space, complementing the castle garden and offering potential for dining, events, and markets. Through thoughtful urban planning, the project aims to enhance Bergedorf's charm and functionality, creating inviting spaces for residents and visitors alike.",
-    "client": "D-H3 and Trei Real Estate in partnership with city of Hamburg",
-    "location": "Bergedorf Hamburg, Germany",
-    "status": "Competition - Finalist",
-    "area": "",
-    "scope": "Architecture",
-    "collaborators": "Studio Polymorph - Landscape Architecture",
-    "slug": "bergedorf-district",
-    "folder": "work-bergedorf-district",
-    "featured": true
-  },
-  {
-    "title": "Primary School Community Hub",
-    "year": "2022",
-    "projectNumber": "0155",
-    "type": [
-      "Education"
-    ],
-    "programme": "School, Kindergarten, Community",
-    "description": "Our studio focuses on designing a new community center for an existing primary school, addressing the need for a larger cafeteria, modern kindergarten, and dynamic youth center. Centered on innovation and functionality, our proposal elevates the school campus while setting a new standard for neighborhood infrastructure.Key features include a central gathering space seamlessly integrated with the entrance foyer and the childcare center, providing convenient access to terrace-like outdoor area to be used by the local community. Efficiency is prioritized through prefabricated construction elements, while sustainability is ensured with mineral construction and a hybrid support structure. Throughout the process, adaptability remains paramount, facilitating seamless modifications to meet evolving needs.",
-    "client": "Rosengarten Community",
-    "location": "Rosengarten, Germany",
-    "status": "Competition - Shortlist",
-    "area": "",
-    "scope": "Architecture",
-    "collaborators": "DREWES + SPETH\nIB Hausladen",
-    "slug": "primary-school-community-hub",
-    "folder": "work-primary-school-community-hub",
     "featured": false
   },
   {
@@ -199,9 +97,111 @@
     "featured": false
   },
   {
+    "title": "Façade Revitalization",
+    "year": "2022",
+    "projectNumber": "146",
+    "type": [
+      "Office",
+      "Retrofit"
+    ],
+    "programme": "Office, Retrofit",
+    "description": "Our proposal for revitalizing the façade of a corporate headquarters blends timelessness with modern sustainability, prioritizing durability and energy efficiency. Focused on meeting our client's needs and reflecting their identity, the design strives for both aesthetic impact and functionality. A highlight of the project is the energy-optimized brick façade. High-quality bricks, carefully chosen for their thermal properties, enhance insulation, reducing energy consumption significantly compared to the current structure. We prioritize a clear and welcoming ground-floor entrance, essential for a corporate setting, by optimizing traffic flow and removing barriers. Strategic placements of glass cubes as interventions add contemporary flair and natural light, creating focal points that enhance the overall aesthetic and functionality. Revitalizing architectural landmarks brings myriad benefits, from improved energy efficiency to enhanced aesthetics, ultimately creating spaces that inspire and contribute positively to occupants and their surroundings.",
+    "client": "Undisclosed",
+    "location": "Hamburg, Germany",
+    "status": "Competition - Finalist",
+    "area": "",
+    "scope": "Architecture",
+    "collaborators": "",
+    "slug": "facade-revitalization",
+    "folder": "work-facade-revitalization",
+    "featured": false
+  },
+  {
+    "title": "Office & Kindergarten Pavilion",
+    "year": "2022",
+    "projectNumber": "147",
+    "type": [
+      "Education",
+      "Office"
+    ],
+    "programme": "Office, Kindergarten",
+    "description": "Our response to the competition brief, focuses on the addition of a new building, housing a day-care center and flexible offices. Drawing inspiration from adjacent buildings, our proposal completed the development of the company's campus. A key focus of the office floors is to create contemporary workspaces that are flexible, well-lit, and conducive to communication. The layout features single, double, and team offices flanking a versatile multi-functional zone, comprising meeting rooms, waiting areas and suporting spaces. We prioritize access to outdoor spaces to enhance well-being - including terraces, balconies and courtyards on every floor. The integration of the kindergarden at the ground floor enables flexibility for working parents. Densely planted areas and the use of softer materials like wood create a safe environment for the children. The design proposal fosters a family-friendly environment within the workplace, promoting a better work-life balance.",
+    "client": "Undisclosed",
+    "location": "Hannover, Germany",
+    "status": "Competition - First Prize",
+    "area": "",
+    "scope": "Architecture",
+    "collaborators": "",
+    "slug": "office-kindergarten-pavilion",
+    "folder": "work-office-kindergarten-pavilion",
+    "featured": false
+  },
+  {
+    "title": "Bergedorf District",
+    "year": "2022",
+    "projectNumber": "151",
+    "type": [
+      "Residential",
+      "Commercial",
+      "Urban Design"
+    ],
+    "programme": "Mixed-Use, Urban Design",
+    "description": "The brief seeks an innovative urban development strategy for Bergedorf's central shopping streets, revitalizing currently abandoned spaces. The design proposes a cohesive yet distinctive vision for the 2 plots in question. Drawing inspiration from the existing urban fabric, the proposed buildings maintain a harmonious scale and structure, with additional like public offerings and roof terraces. Ground floors are designed with spacious, open-plan retail areas, acting as an extension of the surrounding park and plazas. The proposed apartment building offers an inner courtyard and rooftop gardens for a serene green spaces for relaxation and play. Enhancements extend beyond the buildings, with urban interventions redesigned to promote connectivity - prioritizing pedestrian comfort and access while maintaining convenience for motorists and cyclists. Kaiser-Wilhelm-Plaza is envisioned as a welcoming green space, complementing the castle garden and offering potential for dining, events, and markets. Through thoughtful urban planning, the project aims to enhance Bergedorf's charm and functionality, creating inviting spaces for residents and visitors alike.",
+    "client": "D-H3 and Trei Real Estate in partnership with city of Hamburg",
+    "location": "Bergedorf Hamburg, Germany",
+    "status": "Competition - Finalist",
+    "area": "",
+    "scope": "Architecture",
+    "collaborators": "Studio Polymorph - Landscape Architecture",
+    "slug": "bergedorf-district",
+    "folder": "work-bergedorf-district",
+    "featured": true
+  },
+  {
+    "title": "Primary School Community Hub",
+    "year": "2022",
+    "projectNumber": "155",
+    "type": [
+      "Education"
+    ],
+    "programme": "School, Kindergarten, Community",
+    "description": "Our studio focuses on designing a new community center for an existing primary school, addressing the need for a larger cafeteria, modern kindergarten, and dynamic youth center. Centered on innovation and functionality, our proposal elevates the school campus while setting a new standard for neighborhood infrastructure.Key features include a central gathering space seamlessly integrated with the entrance foyer and the childcare center, providing convenient access to terrace-like outdoor area to be used by the local community. Efficiency is prioritized through prefabricated construction elements, while sustainability is ensured with mineral construction and a hybrid support structure. Throughout the process, adaptability remains paramount, facilitating seamless modifications to meet evolving needs.",
+    "client": "Rosengarten Community",
+    "location": "Rosengarten, Germany",
+    "status": "Competition - Shortlist",
+    "area": "",
+    "scope": "Architecture",
+    "collaborators": "DREWES + SPETH\nIB Hausladen",
+    "slug": "primary-school-community-hub",
+    "folder": "work-primary-school-community-hub",
+    "featured": false
+  },
+  {
+    "title": "Sartorius Quartier",
+    "year": "2022",
+    "projectNumber": "92",
+    "type": [
+      "Residential",
+      "Commercial",
+      "Urban Design",
+      "Hotel"
+    ],
+    "programme": "Mixed-Use, Residential, Hotel, Retail",
+    "description": "On the former industrial site and factory premises of Sartorius AG in the northern part of Göttingen, a new mixed-use district is brough to life, jointly developed by HAMBURG TEAM and Sartorius AG. Three historic buildings on site have been retained and refurbished and together with an open hall and a new building, will form the new district. The district includes residential buildings, daycare center, commercial spaces along with a hotel with a restaurant and connecting retail space. Additionally, a new concept of smart- serviced apartments with be at the center of the distric, while a rooftop Skybar brings life to the area with unmatchable views of the city. This visionary project aims to blend history with innovation, fostering a dynamic environment for work, life, and leisure in the heart of Göttingen.The project has been awarded the Brownfield Prize, for it's positive tranformation from an unused industrial site to a lively neighbourhood.",
+    "client": "Hamburg Team",
+    "location": "Göttingen, Germany",
+    "status": "Completed",
+    "area": "35,000 m²",
+    "scope": "Architecture",
+    "collaborators": "",
+    "slug": "sartorius-quartier",
+    "folder": "work-sartorius-quartier",
+    "featured": false
+  },
+  {
     "title": "Neue Mitte — Urban Renewal",
     "year": "2021",
-    "projectNumber": "0132",
+    "projectNumber": "132",
     "type": [
       "Residential",
       "Urban Design"
@@ -221,7 +221,7 @@
   {
     "title": "Fuhle 101 Mixed-Use",
     "year": "2020",
-    "projectNumber": "0083",
+    "projectNumber": "83",
     "type": [
       "Office",
       "Commercial"
@@ -241,7 +241,7 @@
   {
     "title": "Europacity Neighbourhood",
     "year": "2019",
-    "projectNumber": "0030",
+    "projectNumber": "30",
     "type": [
       "Residential",
       "Urban Design"
@@ -261,7 +261,7 @@
   {
     "title": "Bellevue Apartments",
     "year": "2019",
-    "projectNumber": "0099",
+    "projectNumber": "99",
     "type": [
       "Residential"
     ],
@@ -280,7 +280,7 @@
   {
     "title": "Seminary Chapel",
     "year": "2018",
-    "projectNumber": "0023",
+    "projectNumber": "23",
     "type": [
       "Sacred",
       "Cultural"
@@ -300,7 +300,7 @@
   {
     "title": "WIKUS Headquarters & Conference Centre",
     "year": "2018",
-    "projectNumber": "0081",
+    "projectNumber": "81",
     "type": [
       "Office"
     ],
@@ -319,7 +319,7 @@
   {
     "title": "Papiermühlengasse Urban Block",
     "year": "2018",
-    "projectNumber": "0098",
+    "projectNumber": "98",
     "type": [
       "Office",
       "Commercial"
@@ -335,25 +335,6 @@
     "slug": "papiermuhlengasse-urban-block",
     "folder": "work-papiermuhlengasse-urban-block",
     "featured": true
-  },
-  {
-    "title": "Catholic University Auditorium & Seminar Pavilion",
-    "year": "2017",
-    "projectNumber": "0076",
-    "type": [
-      "Education"
-    ],
-    "programme": "Auditorium, Seminar Spaces",
-    "description": "The Catholic University of Applied Sciences is enhancing its academic environment to accommodate its growing student body. Addressing the pressing need for additional lecture halls and seminar rooms, we designed and delivered a new single-story building seamlessly integrating into the historic charm of the campus and its lush parkland setting. Designed to harmonize with the existing architecture, the new structure delicately rises above ground level, exuding an aura of lightness amidst the solidity of surrounding walls and portals. Accessible from both the park and the main building, the new facility prioritizes inclusivity with barrier-free entrances. Inside, wooden feautures provide warmth and acoustic comfort. Floor-to-ceiling glass panels on its facades infuse teaching spaces with natural light while versatile partition walls ensure flexibility in teaching methodologies. Constructed primarily from sustainable materials, including renewable wood for structural elements, the building embraces eco-conscious design. All elements come together creating a serene and conducive environment for learning and collaboration.",
-    "client": "Erzbistum Paderborn",
-    "location": "Paderborn, Germany",
-    "status": "Completed",
-    "area": "1,000 m²",
-    "scope": "Architecture",
-    "collaborators": "",
-    "slug": "catholic-university-auditorium-seminar-pavilion",
-    "folder": "work-catholic-university-auditorium-seminar-pavilion",
-    "featured": false
   },
   {
     "title": "Robotic Fibre-Weaving Canopy",
@@ -372,6 +353,25 @@
     "collaborators": "Architectural Association",
     "slug": "robotic-fibre-weaving-canopy",
     "folder": "work-robotic-fibre-weaving-canopy",
+    "featured": false
+  },
+  {
+    "title": "Catholic University Auditorium & Seminar Pavilion",
+    "year": "2017",
+    "projectNumber": "76",
+    "type": [
+      "Education"
+    ],
+    "programme": "Auditorium, Seminar Spaces",
+    "description": "The Catholic University of Applied Sciences is enhancing its academic environment to accommodate its growing student body. Addressing the pressing need for additional lecture halls and seminar rooms, we designed and delivered a new single-story building seamlessly integrating into the historic charm of the campus and its lush parkland setting. Designed to harmonize with the existing architecture, the new structure delicately rises above ground level, exuding an aura of lightness amidst the solidity of surrounding walls and portals. Accessible from both the park and the main building, the new facility prioritizes inclusivity with barrier-free entrances. Inside, wooden feautures provide warmth and acoustic comfort. Floor-to-ceiling glass panels on its facades infuse teaching spaces with natural light while versatile partition walls ensure flexibility in teaching methodologies. Constructed primarily from sustainable materials, including renewable wood for structural elements, the building embraces eco-conscious design. All elements come together creating a serene and conducive environment for learning and collaboration.",
+    "client": "Erzbistum Paderborn",
+    "location": "Paderborn, Germany",
+    "status": "Completed",
+    "area": "1,000 m²",
+    "scope": "Architecture",
+    "collaborators": "",
+    "slug": "catholic-university-auditorium-seminar-pavilion",
+    "folder": "work-catholic-university-auditorium-seminar-pavilion",
     "featured": false
   },
   {
@@ -415,7 +415,7 @@
   {
     "title": "Schalles House — Mixed-Use",
     "year": "2014",
-    "projectNumber": "0014",
+    "projectNumber": "14",
     "type": [
       "Residential",
       "Commercial"
@@ -435,7 +435,7 @@
   {
     "title": "Motel One",
     "year": "2014",
-    "projectNumber": "0064",
+    "projectNumber": "64",
     "type": [
       "Commercial"
     ],
@@ -449,25 +449,6 @@
     "collaborators": "",
     "slug": "motel-one",
     "folder": "work-motel-one",
-    "featured": false
-  },
-  {
-    "title": "Kassel-Calden Airport Terminal",
-    "year": "2013",
-    "projectNumber": "0003",
-    "type": [
-      "Transport"
-    ],
-    "programme": "Airport Terminal",
-    "description": "The transformation of the current airfield into a full-fledged airport encompasses several key developments. These include the creation of a new runway and parallel taxiway, alongside essential facilities such as a terminal building, control tower, firefighting stations, and maintenance hangars. Future plans include the provision of a general aviation terminal and a larger commercial zone catering to future aviation needs. This expansion aims to facilitate regular tourist, low-cost, and business flights while bolstering existing commercial activities associated with the airport. The terminal design emphasizes efficiency, featuring a compact two-story structure. Notably, the design allows for potential future expansion, with provisions for extending the building longitudinally on both sides. The terminal layout comprises three levels: Level 0, situated at apron level and accessible from the airside; Level 1, the primary terminal level accessible from landside; and Level 2, accommodating technical and ancillary functions, seamlessly integrated for easy accessibility.",
-    "client": "Flughafen GmbH",
-    "location": "Kassel-Calden, Germany",
-    "status": "Completed",
-    "area": "",
-    "scope": "Architecture",
-    "collaborators": "",
-    "slug": "kassel-calden-airport-terminal",
-    "folder": "work-kassel-calden-airport-terminal",
     "featured": false
   },
   {
@@ -489,6 +470,25 @@
     "slug": "hybrid-house-live-work",
     "folder": "work-hybrid-house-live-work",
     "featured": true
+  },
+  {
+    "title": "Kassel-Calden Airport Terminal",
+    "year": "2013",
+    "projectNumber": "3",
+    "type": [
+      "Transport"
+    ],
+    "programme": "Airport Terminal",
+    "description": "The transformation of the current airfield into a full-fledged airport encompasses several key developments. These include the creation of a new runway and parallel taxiway, alongside essential facilities such as a terminal building, control tower, firefighting stations, and maintenance hangars. Future plans include the provision of a general aviation terminal and a larger commercial zone catering to future aviation needs. This expansion aims to facilitate regular tourist, low-cost, and business flights while bolstering existing commercial activities associated with the airport. The terminal design emphasizes efficiency, featuring a compact two-story structure. Notably, the design allows for potential future expansion, with provisions for extending the building longitudinally on both sides. The terminal layout comprises three levels: Level 0, situated at apron level and accessible from the airside; Level 1, the primary terminal level accessible from landside; and Level 2, accommodating technical and ancillary functions, seamlessly integrated for easy accessibility.",
+    "client": "Flughafen GmbH",
+    "location": "Kassel-Calden, Germany",
+    "status": "Completed",
+    "area": "",
+    "scope": "Architecture",
+    "collaborators": "",
+    "slug": "kassel-calden-airport-terminal",
+    "folder": "work-kassel-calden-airport-terminal",
+    "featured": false
   },
   {
     "title": "Albert-Schweitzer-School Student Research Center",
@@ -709,7 +709,7 @@
   {
     "title": "St. Hubertus Sacristy",
     "year": "2004",
-    "projectNumber": "06",
+    "projectNumber": "6",
     "type": [
       "Sacred"
     ],
@@ -805,7 +805,7 @@
   {
     "title": "EAM Headquarters",
     "year": "1995",
-    "projectNumber": "01",
+    "projectNumber": "1",
     "type": [
       "Office"
     ],
