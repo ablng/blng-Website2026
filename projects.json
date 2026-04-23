@@ -1,28 +1,8 @@
 [
   {
-    "title": "Holsten Residential District",
-    "year": "2026",
-    "projectNumber": "144",
-    "type": [
-      "Residential",
-      "Commercial"
-    ],
-    "programme": "Mixed-Use, Residential, Retail",
-    "description": "Located on the site of Hamburg's historic Holsten brewery, this competition proposal reimagines a city block as a sequence of distinct residential parcels — each with its own character, yet coherent as a whole.\nRather than a single monolithic volume, the block is broken into smaller, plot-scaled buildings — varied in height and setback — creating a streetscape that feels familiar, walkable, and alive. Small retail and dining units at the ground floor corners sustain activity throughout the day, keeping the street genuinely engaged at human scale.\nRecycled brick, graded in tone to echo the existing brewery buildings, gives the façades a tactile warmth and material continuity with the neighbourhood. Climbing planting structures, integrated planter balconies, and green rooftops layer in softness and seasonal change — making the building feel as much grown as built.\nInside, the dwellings are designed around the idea of a home that opens outward — toward the street, the courtyard, the sky. Generous loggien, floor-to-ceiling glazing, and shared rooftop terraces ensure that every resident has a genuine relationship with the city around them.\nPassive energy strategies and rooftop solar are embedded quietly into the design — reducing operational load without compromise to comfort or character.",
-    "client": "Undisclosed",
-    "location": "Hamburg, Germany",
-    "status": "Competition",
-    "area": "8,750 m²",
-    "scope": "Architecture",
-    "collaborators": "",
-    "slug": "holsten-residential-district",
-    "folder": "work-holsten-residential-district",
-    "featured": false
-  },
-  {
     "title": "District Administration Extension — Hybrid Timber",
     "year": "2025",
-    "projectNumber": "100",
+    "projectNumber": "0100",
     "type": [
       "Office"
     ],
@@ -32,16 +12,16 @@
     "location": "Eutin, Germany",
     "status": "Under Construction",
     "area": "3,500 m²",
-    "scope": "Architecture and Interior Design",
+    "scope": "Architecture",
     "collaborators": "DREWES + SPETH\nIB Hausladen",
     "slug": "district-administration-extension-hybrid-timber",
     "folder": "work-district-administration-extension-hybrid-timber",
-    "featured": false
+    "featured": true
   },
   {
     "title": "Sophienschule Campus",
     "year": "2025",
-    "projectNumber": "111",
+    "projectNumber": "0111",
     "type": [
       "Education"
     ],
@@ -51,16 +31,16 @@
     "location": "Hamburg, Germany",
     "status": "Under Construction",
     "area": "5,700 m²",
-    "scope": "Architecture and Interior Design",
+    "scope": "Architecture",
     "collaborators": "WES - Landscape Architecture",
     "slug": "sophienschule-campus",
     "folder": "work-sophienschule-campus",
-    "featured": false
+    "featured": true
   },
   {
     "title": "Cathedral Museum & Monastery Renewal",
     "year": "2024",
-    "projectNumber": "90",
+    "projectNumber": "0090",
     "type": [
       "Cultural",
       "Retrofit"
@@ -78,28 +58,31 @@
     "featured": false
   },
   {
-    "title": "Geometries of Physics: Structural Networks Workshop",
+    "title": "Sartorius Quartier",
     "year": "2022",
-    "projectNumber": "04R",
+    "projectNumber": "0092",
     "type": [
-      "Research"
+      "Residential",
+      "Commercial",
+      "Urban Design",
+      "Hotel"
     ],
-    "programme": "Academic Workshop",
-    "description": "Led by our Directors, this academic research workshop starts with a simple premise: How much does your model weigh? How much load can it bear? The objective is to delve into the exploration of intuitive, load-bearing networks, bridging analogue and digital methodologies to innovate in modularity and connectivity. Inspired by historical pioneers such as Gaudí and their gravity-based form-finding methods, participants will begin by experimenting with hanging chain models and load tracing studies to uncover natural structural principles. The discovered networks will then be materialized using techniques rooted in stereotomy, including the use of ruled surfaces, clay block formations, and robotic foam wire cutting. Through iterative stress testing and cataloging, the workshop emphasizes achieving an optimal balance between material efficiency and load capacity. This hands-on exploration lays the groundwork for scalable architectural solutions that challenge conventional construction approaches and celebrate the synergy of physics and design.",
-    "client": "Research",
-    "location": "London, UK",
+    "programme": "Mixed-Use, Residential, Hotel, Retail",
+    "description": "On the former industrial site and factory premises of Sartorius AG in the northern part of Göttingen, a new mixed-use district is brough to life, jointly developed by HAMBURG TEAM and Sartorius AG. Three historic buildings on site have been retained and refurbished and together with an open hall and a new building, will form the new district. The district includes residential buildings, daycare center, commercial spaces along with a hotel with a restaurant and connecting retail space. Additionally, a new concept of smart- serviced apartments with be at the center of the distric, while a rooftop Skybar brings life to the area with unmatchable views of the city. This visionary project aims to blend history with innovation, fostering a dynamic environment for work, life, and leisure in the heart of Göttingen.The project has been awarded the Brownfield Prize, for it's positive tranformation from an unused industrial site to a lively neighbourhood.",
+    "client": "Hamburg Team",
+    "location": "Göttingen, Germany",
     "status": "Completed",
-    "area": "",
-    "scope": "Computational Design and Digital Fabrication",
-    "collaborators": "Architectural Association",
-    "slug": "geometries-of-physics-structural-networks-workshop",
-    "folder": "work-geometries-of-physics-structural-networks-workshop",
+    "area": "35,000 m²",
+    "scope": "Architecture",
+    "collaborators": "",
+    "slug": "sartorius-quartier",
+    "folder": "work-sartorius-quartier",
     "featured": false
   },
   {
     "title": "Façade Revitalization",
     "year": "2022",
-    "projectNumber": "146",
+    "projectNumber": "0146",
     "type": [
       "Office",
       "Retrofit"
@@ -119,7 +102,7 @@
   {
     "title": "Office & Kindergarten Pavilion",
     "year": "2022",
-    "projectNumber": "147",
+    "projectNumber": "0147",
     "type": [
       "Education",
       "Office"
@@ -139,7 +122,7 @@
   {
     "title": "Bergedorf District",
     "year": "2022",
-    "projectNumber": "151",
+    "projectNumber": "0151",
     "type": [
       "Residential",
       "Commercial",
@@ -151,16 +134,16 @@
     "location": "Bergedorf Hamburg, Germany",
     "status": "Competition - Finalist",
     "area": "",
-    "scope": "Urban Design and Architecture",
+    "scope": "Architecture",
     "collaborators": "Studio Polymorph - Landscape Architecture",
     "slug": "bergedorf-district",
     "folder": "work-bergedorf-district",
-    "featured": false
+    "featured": true
   },
   {
     "title": "Primary School Community Hub",
     "year": "2022",
-    "projectNumber": "155",
+    "projectNumber": "0155",
     "type": [
       "Education"
     ],
@@ -177,31 +160,28 @@
     "featured": false
   },
   {
-    "title": "Sartorius Quartier",
+    "title": "Geometries of Physics: Structural Networks Workshop",
     "year": "2022",
-    "projectNumber": "92",
+    "projectNumber": "04R",
     "type": [
-      "Residential",
-      "Commercial",
-      "Urban Design",
-      "Hotel"
+      "Research"
     ],
-    "programme": "Mixed-Use, Residential, Hotel, Retail",
-    "description": "On the former industrial site and factory premises of Sartorius AG in the northern part of Göttingen, a new mixed-use district is brough to life, jointly developed by HAMBURG TEAM and Sartorius AG. Three historic buildings on site have been retained and refurbished and together with an open hall and a new building, will form the new district. The district includes residential buildings, daycare center, commercial spaces along with a hotel with a restaurant and connecting retail space. Additionally, a new concept of smart- serviced apartments with be at the center of the distric, while a rooftop Skybar brings life to the area with unmatchable views of the city. This visionary project aims to blend history with innovation, fostering a dynamic environment for work, life, and leisure in the heart of Göttingen.The project has been awarded the Brownfield Prize, for it's positive tranformation from an unused industrial site to a lively neighbourhood.",
-    "client": "Hamburg Team",
-    "location": "Göttingen, Germany",
+    "programme": "Academic Workshop",
+    "description": "Led by our Directors, this academic research workshop starts with a simple premise: How much does your model weigh? How much load can it bear? The objective is to delve into the exploration of intuitive, load-bearing networks, bridging analogue and digital methodologies to innovate in modularity and connectivity. Inspired by historical pioneers such as Gaudí and their gravity-based form-finding methods, participants will begin by experimenting with hanging chain models and load tracing studies to uncover natural structural principles. The discovered networks will then be materialized using techniques rooted in stereotomy, including the use of ruled surfaces, clay block formations, and robotic foam wire cutting. Through iterative stress testing and cataloging, the workshop emphasizes achieving an optimal balance between material efficiency and load capacity. This hands-on exploration lays the groundwork for scalable architectural solutions that challenge conventional construction approaches and celebrate the synergy of physics and design.",
+    "client": "Research",
+    "location": "London, UK",
     "status": "Completed",
-    "area": "35,000 m²",
-    "scope": "Urban Design and Architecture",
-    "collaborators": "",
-    "slug": "sartorius-quartier",
-    "folder": "work-sartorius-quartier",
+    "area": "",
+    "scope": "Architecture",
+    "collaborators": "Architectural Association",
+    "slug": "geometries-of-physics-structural-networks-workshop",
+    "folder": "work-geometries-of-physics-structural-networks-workshop",
     "featured": false
   },
   {
     "title": "Neue Mitte — Urban Renewal",
     "year": "2021",
-    "projectNumber": "132",
+    "projectNumber": "0132",
     "type": [
       "Residential",
       "Urban Design"
@@ -221,7 +201,7 @@
   {
     "title": "Fuhle 101 Mixed-Use",
     "year": "2020",
-    "projectNumber": "83",
+    "projectNumber": "0083",
     "type": [
       "Office",
       "Commercial"
@@ -236,12 +216,12 @@
     "collaborators": "",
     "slug": "fuhle-101-mixed-use",
     "folder": "work-fuhle-101-mixed-use",
-    "featured": false
+    "featured": true
   },
   {
     "title": "Europacity Neighbourhood",
     "year": "2019",
-    "projectNumber": "30",
+    "projectNumber": "0030",
     "type": [
       "Residential",
       "Urban Design"
@@ -252,16 +232,16 @@
     "location": "Berlin, Germany",
     "status": "Completed",
     "area": "33,000 m²",
-    "scope": "Urban Design and Architecture",
+    "scope": "Architecture",
     "collaborators": "Design Area 12.4: Bieling Architects\n\nDesign Area 11.2, 11.3, 11.4, 12.5, 12.1, 12.2: Max Dudler\n\nDesign Area 12.3., 11.1: Lorenzen Mayer Architects\n\nExecution of all construction areas: Bieling Architects",
     "slug": "europacity-neighbourhood",
     "folder": "work-europacity-blocks",
-    "featured": false
+    "featured": true
   },
   {
     "title": "Bellevue Apartments",
     "year": "2019",
-    "projectNumber": "99",
+    "projectNumber": "0099",
     "type": [
       "Residential"
     ],
@@ -275,12 +255,12 @@
     "collaborators": "",
     "slug": "bellevue-apartments",
     "folder": "work-bellevue-apartments",
-    "featured": false
+    "featured": true
   },
   {
     "title": "Seminary Chapel",
     "year": "2018",
-    "projectNumber": "23",
+    "projectNumber": "0023",
     "type": [
       "Sacred",
       "Cultural"
@@ -291,16 +271,16 @@
     "location": "Paderborn, Germany",
     "status": "Completed",
     "area": "13,500 m²",
-    "scope": "Architecture and Interior Design",
+    "scope": "Architecture",
     "collaborators": "",
     "slug": "seminary-chapel",
     "folder": "work-seminary-chapel",
-    "featured": false
+    "featured": true
   },
   {
     "title": "WIKUS Headquarters & Conference Centre",
     "year": "2018",
-    "projectNumber": "81",
+    "projectNumber": "0081",
     "type": [
       "Office"
     ],
@@ -314,12 +294,12 @@
     "collaborators": "IB Hausladen",
     "slug": "wikus-headquarters-conference-centre",
     "folder": "work-wikus-headquarters-conference-centre",
-    "featured": false
+    "featured": true
   },
   {
     "title": "Papiermühlengasse Urban Block",
     "year": "2018",
-    "projectNumber": "98",
+    "projectNumber": "0098",
     "type": [
       "Office",
       "Commercial"
@@ -334,31 +314,12 @@
     "collaborators": "",
     "slug": "papiermuhlengasse-urban-block",
     "folder": "work-papiermuhlengasse-urban-block",
-    "featured": false
-  },
-  {
-    "title": "Robotic Fibre-Weaving Canopy",
-    "year": "2017",
-    "projectNumber": "03R",
-    "type": [
-      "Research"
-    ],
-    "programme": "Fabrication Research",
-    "description": "This project investigates the innovative use of robotic fiber weaving in conjunction with flat-packed wood structures. The process begins with on-site assembly of the wood components, utilizing snap-in-place joints to create a precise three-dimensional framework. Within this framework, robotic weaving technology is employed to intricately craft the canopy, translating complex geometries into a cohesive and functional design. The synergy between the flat-packed structure and robotic weaving allows for the creation of efficient, yet aesthetically striking forms that challenge traditional construction practices. By merging material efficiency with structural integrity, this project serves as a foundation for future exploration of scalable, unique architectural solutions, demonstrating the vast potential of robotic fiber weaving in modern design.",
-    "client": "Research",
-    "location": "London, UK",
-    "status": "Completed",
-    "area": "",
-    "scope": "Computational Design and Digital Fabrication",
-    "collaborators": "Architectural Association",
-    "slug": "robotic-fibre-weaving-canopy",
-    "folder": "work-robotic-fibre-weaving-canopy",
-    "featured": false
+    "featured": true
   },
   {
     "title": "Catholic University Auditorium & Seminar Pavilion",
     "year": "2017",
-    "projectNumber": "76",
+    "projectNumber": "0076",
     "type": [
       "Education"
     ],
@@ -375,6 +336,25 @@
     "featured": false
   },
   {
+    "title": "Robotic Fibre-Weaving Canopy",
+    "year": "2017",
+    "projectNumber": "03R",
+    "type": [
+      "Research"
+    ],
+    "programme": "Fabrication Research",
+    "description": "This project investigates the innovative use of robotic fiber weaving in conjunction with flat-packed wood structures. The process begins with on-site assembly of the wood components, utilizing snap-in-place joints to create a precise three-dimensional framework. Within this framework, robotic weaving technology is employed to intricately craft the canopy, translating complex geometries into a cohesive and functional design. The synergy between the flat-packed structure and robotic weaving allows for the creation of efficient, yet aesthetically striking forms that challenge traditional construction practices. By merging material efficiency with structural integrity, this project serves as a foundation for future exploration of scalable, unique architectural solutions, demonstrating the vast potential of robotic fiber weaving in modern design.",
+    "client": "Research",
+    "location": "London, UK",
+    "status": "Completed",
+    "area": "",
+    "scope": "Architecture",
+    "collaborators": "Architectural Association",
+    "slug": "robotic-fibre-weaving-canopy",
+    "folder": "work-robotic-fibre-weaving-canopy",
+    "featured": false
+  },
+  {
     "title": "Fabric to Form: Lycra Casting Research",
     "year": "2016",
     "projectNumber": "01R",
@@ -387,11 +367,11 @@
     "location": "London, UK",
     "status": "Completed",
     "area": "",
-    "scope": "Computational Design and Digital Fabrication",
+    "scope": "Architecture",
     "collaborators": "Architectural Association",
     "slug": "fabric-to-form-lycra-casting-research",
     "folder": "work-fabric-to-form-lycra-casting-research",
-    "featured": false
+    "featured": true
   },
   {
     "title": "Robotic Clay Printing: Form & Code",
@@ -415,7 +395,7 @@
   {
     "title": "Schalles House — Mixed-Use",
     "year": "2014",
-    "projectNumber": "14",
+    "projectNumber": "0014",
     "type": [
       "Residential",
       "Commercial"
@@ -435,7 +415,7 @@
   {
     "title": "Motel One",
     "year": "2014",
-    "projectNumber": "64",
+    "projectNumber": "0064",
     "type": [
       "Commercial"
     ],
@@ -449,6 +429,25 @@
     "collaborators": "",
     "slug": "motel-one",
     "folder": "work-motel-one",
+    "featured": false
+  },
+  {
+    "title": "Kassel-Calden Airport Terminal",
+    "year": "2013",
+    "projectNumber": "0003",
+    "type": [
+      "Transport"
+    ],
+    "programme": "Airport Terminal",
+    "description": "The transformation of the current airfield into a full-fledged airport encompasses several key developments. These include the creation of a new runway and parallel taxiway, alongside essential facilities such as a terminal building, control tower, firefighting stations, and maintenance hangars. Future plans include the provision of a general aviation terminal and a larger commercial zone catering to future aviation needs. This expansion aims to facilitate regular tourist, low-cost, and business flights while bolstering existing commercial activities associated with the airport. The terminal design emphasizes efficiency, featuring a compact two-story structure. Notably, the design allows for potential future expansion, with provisions for extending the building longitudinally on both sides. The terminal layout comprises three levels: Level 0, situated at apron level and accessible from the airside; Level 1, the primary terminal level accessible from landside; and Level 2, accommodating technical and ancillary functions, seamlessly integrated for easy accessibility.",
+    "client": "Flughafen GmbH",
+    "location": "Kassel-Calden, Germany",
+    "status": "Completed",
+    "area": "",
+    "scope": "Architecture",
+    "collaborators": "",
+    "slug": "kassel-calden-airport-terminal",
+    "folder": "work-kassel-calden-airport-terminal",
     "featured": false
   },
   {
@@ -469,26 +468,7 @@
     "collaborators": "",
     "slug": "hybrid-house-live-work",
     "folder": "work-hybrid-house-live-work",
-    "featured": false
-  },
-  {
-    "title": "Kassel-Calden Airport Terminal",
-    "year": "2013",
-    "projectNumber": "3",
-    "type": [
-      "Transport"
-    ],
-    "programme": "Airport Terminal",
-    "description": "The transformation of the current airfield into a full-fledged airport encompasses several key developments. These include the creation of a new runway and parallel taxiway, alongside essential facilities such as a terminal building, control tower, firefighting stations, and maintenance hangars. Future plans include the provision of a general aviation terminal and a larger commercial zone catering to future aviation needs. This expansion aims to facilitate regular tourist, low-cost, and business flights while bolstering existing commercial activities associated with the airport. The terminal design emphasizes efficiency, featuring a compact two-story structure. Notably, the design allows for potential future expansion, with provisions for extending the building longitudinally on both sides. The terminal layout comprises three levels: Level 0, situated at apron level and accessible from the airside; Level 1, the primary terminal level accessible from landside; and Level 2, accommodating technical and ancillary functions, seamlessly integrated for easy accessibility.",
-    "client": "Flughafen GmbH",
-    "location": "Kassel-Calden, Germany",
-    "status": "Completed",
-    "area": "",
-    "scope": "Architecture",
-    "collaborators": "",
-    "slug": "kassel-calden-airport-terminal",
-    "folder": "work-kassel-calden-airport-terminal",
-    "featured": false
+    "featured": true
   },
   {
     "title": "Albert-Schweitzer-School Student Research Center",
@@ -709,7 +689,7 @@
   {
     "title": "St. Hubertus Sacristy",
     "year": "2004",
-    "projectNumber": "6",
+    "projectNumber": "06",
     "type": [
       "Sacred"
     ],
@@ -805,7 +785,7 @@
   {
     "title": "EAM Headquarters",
     "year": "1995",
-    "projectNumber": "1",
+    "projectNumber": "01",
     "type": [
       "Office"
     ],
