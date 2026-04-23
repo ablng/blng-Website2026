@@ -1,5 +1,25 @@
 [
   {
+    "title": "Holsten Residential District",
+    "year": "2026",
+    "projectNumber": "144",
+    "type": [
+      "Residential",
+      "Commercial"
+    ],
+    "programme": "Mixed-Use, Residential, Retail",
+    "description": "Located on the site of Hamburg's historic Holsten brewery, this competition proposal reimagines a city block as a sequence of distinct residential parcels — each with its own character, yet coherent as a whole.",
+    "client": "",
+    "location": "",
+    "status": "",
+    "area": "",
+    "scope": "",
+    "collaborators": "",
+    "slug": "holsten-residential-district",
+    "folder": "work-holsten-residential-district",
+    "featured": false
+  },
+  {
     "title": "District Administration Extension — Hybrid Timber",
     "year": "2025",
     "projectNumber": "0100",

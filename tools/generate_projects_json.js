@@ -67,6 +67,16 @@ function parseCSV(text) {
 }
 
 // ── MAIN ──────────────────────────────────────────────────────────────────────
+
+// Preserve existing featured values so running the generator doesn't reset them
+const existingFeatured = {};
+if (fs.existsSync(JSON_PATH)) {
+  try {
+    JSON.parse(fs.readFileSync(JSON_PATH, 'utf8'))
+      .forEach(p => { existingFeatured[p.slug] = p.featured; });
+  } catch {}
+}
+
 const csv  = fs.readFileSync(CSV_PATH, 'utf8');
 const rows = parseCSV(csv);
 
@@ -111,8 +121,8 @@ for (let i = 1; i < rows.length; i++) {
     scope:         (row[col['Scope']]          || '').trim(),
     collaborators: (row[col['Collaborators']]  || '').trim(),
     slug,
-    folder: FOLDER_OVERRIDES[slug] || `work-${slug}`,   // actual Cloudinary public_id prefix
-    featured: false,
+    folder:   FOLDER_OVERRIDES[slug] || `work-${slug}`,
+    featured: existingFeatured[slug] ?? false,
   });
 }
 
