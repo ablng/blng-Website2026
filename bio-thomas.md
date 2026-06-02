@@ -1,7 +1,9 @@
-Succeeding his father in 1988, Prof. Thomas Bieling led the practice through a period of prolific expansion and design transformation, extending its reach across Germany and Central Europe.
+Prof. Thomas Bieling is Board Chairman of blng studio, having led the family practice as its second generation from 1988. Succeeding his father Josef, Thomas brought a rare balance to the studio — the ability to lead with design at every scale while building a practice of lasting commercial and civic impact.
 
-His work was marked by a distinct architectural sensibility — refined, contextual, and expressive — positioning the studio at the forefront of design dialogue in Germany.
+Under his leadership, the studio expanded significantly across Germany and Central Europe, establishing a second base in Hamburg and building a body of work across commercial, residential, and civic typologies. Among his seminal works is the EAM Headquarters, featuring a full facade stained glass artwork by Sir Brian Clarke.
 
-Through both practice and academia, as Professor of Design and Construction at the University of Kassel, Thomas championed the integration of creative inquiry and technical precision, shaping a generation of architects and influencing the evolution of contemporary design expression.
+Through both practice and academia, as Professor of Design and Construction at the University of Kassel, Thomas championed the integration of creative inquiry and technical precision. He served in leadership roles across the BDA, the Design Advisory Board of the city of Kassel, and the Architects' and Urban Planners' Chamber in Hesse.
 
-His sensibility placed the studio at the forefront of architectural expression in Germany, bridging craft, discipline, and innovation in a body of work that continues to influence the practice today.
+His body of work and approach to practice continue to inform blng studio today.
+
+He trained at TU Braunschweig and worked in close collaboration with Pritzker Prize laureate Gottfried Böhm and Meinhard von Gerkan of gmp before taking the helm of the family practice.

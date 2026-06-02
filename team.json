@@ -3,6 +3,9 @@
   "directors": [
     {
       "name": "Ariadna López Bieling",
+      "title": "Principal",
+      "credentials": "BArch, MArch",
+      "photo": "team-ariadna",
       "bio": "bio-ariadna.md",
       "section_label": "Teaching & Talks",
       "section_items": [
@@ -11,6 +14,9 @@
     },
     {
       "name": "Leo Bieling",
+      "title": "Principal",
+      "credentials": "MSc, MArch ARB RIBA",
+      "photo": "team-leo",
       "bio": "bio-leo.md",
       "section_label": "Teaching & Lectures",
       "section_items": [
@@ -25,6 +31,9 @@
   "legacy": [
     {
       "name": "Prof. Thomas Bieling",
+      "title": "Board Chairman",
+      "tagline": "Led the practice 1988–2022. Expanded to Hamburg, building across Germany and Central Europe.",
+      "photo": "team-thomas",
       "generation": "2nd Generation",
       "bio": "bio-thomas.md",
       "images": [
@@ -54,7 +63,10 @@
       ]
     },
     {
-      "name": "Josef Bieling",
+      "name": "Josef Bieling †",
+      "title": "Founder",
+      "tagline": "Founded the practice in Kassel, 1955. Pioneered cultural and community architecture across Germany.",
+      "photo": "team-josef",
       "generation": "Founder",
       "bio": "bio-josef.md",
       "images": [

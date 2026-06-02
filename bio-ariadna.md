@@ -1,8 +1,14 @@
-Design begins with concept — the idea that anchors every material decision, spatial sequence, and detail. Aesthetics is never the starting point; it is the outcome. Ariadna brings a deep sensitivity to materiality, atmosphere, and spatial experience, working across architecture, interiors and spatial design.
+Ariadna López Bieling is a Principal at blng studio, co-leading the studio across architecture, interiors, and creative direction. She brings design intelligence — material composition and narrative — to every project, from its first concept to its final detail.
 
-Before co-founding the London studio, she worked internationally at Heatherwick Studio in London and Architecture at Large in New York, contributing to large-scale cultural and commercial projects. She holds an MArch from the Architectural Association and a BArch with Distinction from Pratt Institute, New York.
+She worked internationally at Heatherwick Studio in London and Architecture at Large in New York, contributing to large-scale cultural and commercial projects that bridged architecture, art, and design, before co-founding blng studio in London.
 
-Beyond the studio, she draws from art, fashion, and performance — fields where, as in design, the work only holds when idea, form, and expression are in alignment.
+At blng, Ariadna leads the studio's international ambition — working across sectors and geographies to demonstrate that design is not an aesthetic choice but a tool that adds measurable value.
+
+Born in Mexico and based in London, Ariadna brings a transatlantic perspective to her work, with an active connection to the Mexican creative and professional community.
+
+Beyond the studio, Ariadna engages with fashion and academia as outlets of expanded design thinking — fields that continually sharpen her approach to space, form, and expression.
+
+She holds a BArch from Pratt Institute, New York, and an MArch from the Architectural Association, London.
 
 ---teaching---
 Architectural Association — Design Research Lab, London
