@@ -117,7 +117,7 @@
   .principals { padding: 64px 48px 64px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
   .section-label { font-size: 1.0rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--label); display: block; margin-bottom: 40px; }
   .principals-photo-wrap { margin-bottom: 16px; }
-  .principals-photo-wrap img { width: 100%; max-height: 160px; object-fit: cover; object-position: top; display: block; }
+  .principals-photo-wrap img { width: 40%; display: block; }
   .principals-photo { width: 100%; max-width: 760px; aspect-ratio: 4 / 3; background: linear-gradient(145deg, #c8bfb2 0%, #a89880 60%, #8a7a68 100%); display: flex; align-items: flex-end; padding: 20px 24px; }
   .principals-photo-caption { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--porcelain); }
   .principals-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; row-gap: 40px; }
@@ -863,7 +863,6 @@
     html += parasToHtml(bioParagraphs);
     html += '\n</div>\n';
 
-    html += '<div class="principal-section">\n';
     html += '<div class="slideshow" id="' + escHtml(ssId) + '">\n';
     html += '<div class="slideshow-track">\n';
     if (images.length === 0) {
@@ -887,7 +886,6 @@
     }
     html += '</div>\n';
     html += '<button class="ss-btn ss-next" aria-label="Next"><svg width="48" height="18" viewBox="0 0 48 18" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="9" x2="37" y2="9" stroke="currentColor" stroke-width="2.5"/><polygon points="31,0 48,9 31,18" fill="currentColor"/></svg></button>\n';
-    html += '</div>\n';
     html += '</div>\n';
     html += '</div>\n';
 
