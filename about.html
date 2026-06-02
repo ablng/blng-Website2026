@@ -116,8 +116,10 @@
   /* ─── PRINCIPALS ─── */
   .principals { padding: 64px 48px 64px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
   .section-label { font-size: 1.0rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--label); display: block; margin-bottom: 40px; }
-  .principals-photo-wrap { margin-bottom: 16px; }
-  .principals-photo-wrap img { width: 40%; display: block; }
+  .principals-photo-wrap { flex-shrink: 0; width: 38%; }
+  .principals-photo-wrap img { width: 100%; display: block; }
+  .principal { display: flex; gap: 28px; align-items: flex-start; }
+  .principal-body { flex: 1; min-width: 0; }
   .principals-photo { width: 100%; max-width: 760px; aspect-ratio: 4 / 3; background: linear-gradient(145deg, #c8bfb2 0%, #a89880 60%, #8a7a68 100%); display: flex; align-items: flex-end; padding: 20px 24px; }
   .principals-photo-caption { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--porcelain); }
   .principals-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; row-gap: 40px; }
@@ -201,6 +203,8 @@
     .pillar-text { font-size: 1.5rem; }
     .principals { padding: 64px 24px; }
     .principals-grid { grid-template-columns: 1fr; gap: 48px; }
+    .principal { flex-direction: column; }
+    .principals-photo-wrap { width: 60%; }
     .principal-name { font-size: 1.8rem; }
     .principal-bio p { font-size: 1.5rem; }
     .principal-section p { font-size: 1.4rem; }
@@ -374,30 +378,34 @@
   <div class="principals-grid">
 
     <div class="principal reveal">
-      <h2 class="principal-name">Leo Bieling</h2>
-      <span class="principal-role">Principal &nbsp;·&nbsp; MSc, MArch ARB RIBA</span>
-      <div class="principal-bio">
-        <p>Leo leads design across architecture, environments, and objects. His practice combines structural ambition with material intelligence — precision at every scale, from building systems to surface detail.</p>
-        <p>Trained in computational design at Zaha Hadid Architects, Coop Himmelblau, and Plus Architecture, he brings digital fabrication and hands-on craft to complex built environments.</p>
-        <p>Outside the studio, Leo sails — a discipline that sharpens a hands-on understanding of structure, force, and material in the world as it actually is.</p>
-      </div>
-      <div class="principal-section">
-        <span class="principal-section-label">Teaching &amp; Lectures</span>
-        <p>ETH Zurich &nbsp;·&nbsp; Tsinghua University, Beijing &nbsp;·&nbsp; UCL Bartlett, London</p>
+      <div class="principal-body">
+        <h2 class="principal-name">Leo Bieling</h2>
+        <span class="principal-role">Principal &nbsp;·&nbsp; MSc, MArch ARB RIBA</span>
+        <div class="principal-bio">
+          <p>Leo leads design across architecture, environments, and objects. His practice combines structural ambition with material intelligence — precision at every scale, from building systems to surface detail.</p>
+          <p>Trained in computational design at Zaha Hadid Architects, Coop Himmelblau, and Plus Architecture, he brings digital fabrication and hands-on craft to complex built environments.</p>
+          <p>Outside the studio, Leo sails — a discipline that sharpens a hands-on understanding of structure, force, and material in the world as it actually is.</p>
+        </div>
+        <div class="principal-section">
+          <span class="principal-section-label">Teaching &amp; Lectures</span>
+          <p>ETH Zurich &nbsp;·&nbsp; Tsinghua University, Beijing &nbsp;·&nbsp; UCL Bartlett, London</p>
+        </div>
       </div>
     </div>
 
     <div class="principal reveal">
-      <h2 class="principal-name">Ariadna López Bieling</h2>
-      <span class="principal-role">Principal &nbsp;·&nbsp; BArch, MArch</span>
-      <div class="principal-bio">
-        <p>Ariadna leads creative direction and design strategy across architecture, interiors, and environmental design. Her work is rooted in materiality, tactility, and atmosphere — crafting environments that balance clarity and emotion.</p>
-        <p>Before co-founding the London studio, she worked with Heatherwick Studio and Architecture at Large in New York, contributing to cultural and commercial projects that bridged architecture, art, and design.</p>
-        <p>Beyond the studio, she draws from art, fashion, and performance. As a flamenco dancer, she brings the same precision and emotional honesty to her architecture: precise, human, quietly resonant.</p>
-      </div>
-      <div class="principal-section">
-        <span class="principal-section-label">Teaching &amp; Talks</span>
-        <p class="placeholder-note">Content to follow.</p>
+      <div class="principal-body">
+        <h2 class="principal-name">Ariadna López Bieling</h2>
+        <span class="principal-role">Principal &nbsp;·&nbsp; BArch, MArch</span>
+        <div class="principal-bio">
+          <p>Ariadna leads creative direction and design strategy across architecture, interiors, and environmental design. Her work is rooted in materiality, tactility, and atmosphere — crafting environments that balance clarity and emotion.</p>
+          <p>Before co-founding the London studio, she worked with Heatherwick Studio and Architecture at Large in New York, contributing to cultural and commercial projects that bridged architecture, art, and design.</p>
+          <p>Beyond the studio, she draws from art, fashion, and performance. As a flamenco dancer, she brings the same precision and emotional honesty to her architecture: precise, human, quietly resonant.</p>
+        </div>
+        <div class="principal-section">
+          <span class="principal-section-label">Teaching &amp; Talks</span>
+          <p class="placeholder-note">Content to follow.</p>
+        </div>
       </div>
     </div>
 
@@ -741,6 +749,7 @@
         html += '<img src="' + escHtml(photoUrl) + '" alt="' + escHtml(dir.name) + '" style="width:100%;display:block;">\n';
         html += '</div>\n';
       }
+      html += '<div class="principal-body">\n';
       html += '<h2 class="principal-name">' + escHtml(dir.name) + '</h2>\n';
       if (dir.title || dir.credentials) {
         var roleParts = [];
@@ -770,7 +779,8 @@
         }
         html += '</div>\n';
       }
-      html += '</div>\n';
+      html += '</div>\n'; // principal-body
+      html += '</div>\n'; // principal
     });
     grid.innerHTML = html;
     observeReveal(grid);
@@ -852,6 +862,7 @@
       html += '<img src="' + escHtml(photoUrl) + '" alt="' + escHtml(leg.name) + '" style="width:100%;display:block;">\n';
       html += '</div>\n';
     }
+    html += '<div class="principal-body">\n';
     html += '<h2 class="principal-name">' + escHtml(leg.name) + '</h2>\n';
     if (leg.title) {
       html += '<span class="principal-role">' + escHtml(leg.title) + '</span>\n';
@@ -886,8 +897,8 @@
     }
     html += '</div>\n';
     html += '<button class="ss-btn ss-next" aria-label="Next"><svg width="48" height="18" viewBox="0 0 48 18" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="9" x2="37" y2="9" stroke="currentColor" stroke-width="2.5"/><polygon points="31,0 48,9 31,18" fill="currentColor"/></svg></button>\n';
-    html += '</div>\n';
-    html += '</div>\n';
+    html += '</div>\n'; // slideshow
+    html += '</div>\n'; // principal-body
 
     var el = document.createElement('div');
     el.className = 'principal reveal';
