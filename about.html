@@ -905,7 +905,7 @@
   // ─── MAIN TEAM LOADER ───
   async function loadTeam() {
     try {
-      var r = await fetch('team.json');
+      var r = await fetch('team.json', { cache: 'no-store' });
       if (!r.ok) return;
       var team = await r.json();
 
