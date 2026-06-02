@@ -375,20 +375,6 @@
   <div class="principals-grid">
 
     <div class="principal reveal">
-      <h2 class="principal-name">Ariadna López Bieling</h2>
-      <span class="principal-role">Principal &nbsp;·&nbsp; BArch, MArch</span>
-      <div class="principal-bio">
-        <p>Ariadna leads creative direction and design strategy across architecture, interiors, and environmental design. Her work is rooted in materiality, tactility, and atmosphere — crafting environments that balance clarity and emotion.</p>
-        <p>Before co-founding the London studio, she worked with Heatherwick Studio and Architecture at Large in New York, contributing to cultural and commercial projects that bridged architecture, art, and design.</p>
-        <p>Beyond the studio, she draws from art, fashion, and performance. As a flamenco dancer, she brings the same precision and emotional honesty to her architecture: precise, human, quietly resonant.</p>
-      </div>
-      <div class="principal-section">
-        <span class="principal-section-label">Teaching &amp; Talks</span>
-        <p class="placeholder-note">Content to follow.</p>
-      </div>
-    </div>
-
-    <div class="principal reveal">
       <h2 class="principal-name">Leo Bieling</h2>
       <span class="principal-role">Principal &nbsp;·&nbsp; MSc, MArch ARB RIBA</span>
       <div class="principal-bio">
@@ -399,6 +385,20 @@
       <div class="principal-section">
         <span class="principal-section-label">Teaching &amp; Lectures</span>
         <p>ETH Zurich &nbsp;·&nbsp; Tsinghua University, Beijing &nbsp;·&nbsp; UCL Bartlett, London</p>
+      </div>
+    </div>
+
+    <div class="principal reveal">
+      <h2 class="principal-name">Ariadna López Bieling</h2>
+      <span class="principal-role">Principal &nbsp;·&nbsp; BArch, MArch</span>
+      <div class="principal-bio">
+        <p>Ariadna leads creative direction and design strategy across architecture, interiors, and environmental design. Her work is rooted in materiality, tactility, and atmosphere — crafting environments that balance clarity and emotion.</p>
+        <p>Before co-founding the London studio, she worked with Heatherwick Studio and Architecture at Large in New York, contributing to cultural and commercial projects that bridged architecture, art, and design.</p>
+        <p>Beyond the studio, she draws from art, fashion, and performance. As a flamenco dancer, she brings the same precision and emotional honesty to her architecture: precise, human, quietly resonant.</p>
+      </div>
+      <div class="principal-section">
+        <span class="principal-section-label">Teaching &amp; Talks</span>
+        <p class="placeholder-note">Content to follow.</p>
       </div>
     </div>
 
@@ -924,15 +924,16 @@
         renderDirectors(team.directors, bioTexts);
       }
 
-      // Legacy — rendered into principals grid
+      // Legacy — rendered into principals grid in order
       if (team.legacy && team.legacy.length) {
         var grid = document.querySelector('.principals-grid');
         if (grid) {
-          await Promise.all(team.legacy.map(async function(leg) {
-            var br = await fetch(leg.bio);
-            var bioText = br.ok ? await br.text() : '';
+          for (var li = 0; li < team.legacy.length; li++) {
+            var leg = team.legacy[li];
+            var lbr = await fetch(leg.bio);
+            var bioText = lbr.ok ? await lbr.text() : '';
             renderLegacyAsPrincipal(leg, bioText, grid);
-          }));
+          }
         }
       }
     } catch(e) {
