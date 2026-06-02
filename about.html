@@ -372,10 +372,6 @@
 <!-- ─── PRINCIPALS ─── -->
 <section class="principals">
 
-  <div class="principals-photo-wrap">
-    <img src="https://res.cloudinary.com/dgelbnw1g/image/upload/f_auto,q_auto/team-ariadna-leo-group" alt="Ariadna López Bieling &amp; Leo Bieling" style="width:100%; display:block;">
-  </div>
-
   <div class="principals-grid">
 
     <div class="principal reveal">
@@ -902,7 +898,7 @@
     var ssEl = el.querySelector('.slideshow');
     if (ssEl) initSlideshow(ssEl);
     initBioToggles(el);
-    observeReveal(el);
+    observer.observe(el);
     bindCursorHover(el);
   }
 
