@@ -122,7 +122,7 @@
   .principal-body { flex: 1; min-width: 0; }
   .principals-photo { width: 100%; max-width: 760px; aspect-ratio: 4 / 3; background: linear-gradient(145deg, #c8bfb2 0%, #a89880 60%, #8a7a68 100%); display: flex; align-items: flex-end; padding: 20px 24px; }
   .principals-photo-caption { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--porcelain); }
-  .principals-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; row-gap: 40px; }
+  .principals-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; row-gap: 96px; }
   .principal-name { font-size: 2.8rem; letter-spacing: 0.01em; color: var(--charcoal); font-weight: 700; margin-bottom: 6px; }
   .principal-role { font-size: 1.0rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label); margin-bottom: 32px; display: block; }
   .principal-bio p { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 16px; }
@@ -874,6 +874,7 @@
     html += parasToHtml(bioParagraphs);
     html += '\n</div>\n';
 
+    html += '<div class="principal-section">\n';
     html += '<div class="slideshow" id="' + escHtml(ssId) + '">\n';
     html += '<div class="slideshow-track">\n';
     if (images.length === 0) {
@@ -898,6 +899,7 @@
     html += '</div>\n';
     html += '<button class="ss-btn ss-next" aria-label="Next"><svg width="48" height="18" viewBox="0 0 48 18" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="9" x2="37" y2="9" stroke="currentColor" stroke-width="2.5"/><polygon points="31,0 48,9 31,18" fill="currentColor"/></svg></button>\n';
     html += '</div>\n'; // slideshow
+    html += '</div>\n'; // principal-section
     html += '</div>\n'; // principal-body
 
     var el = document.createElement('div');
