@@ -102,6 +102,7 @@
   /* ─── MORE / FILTER BUTTON ─── */
   .more-btn { display: inline-flex; align-items: center; gap: 12px; font-family: 'DM Sans', sans-serif; font-size: 1.1rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 28px; border-radius: 999px; border: 2px solid rgba(28,28,26,0.35); background: transparent; color: var(--charcoal); transition: border-color 0.2s, color 0.2s; margin-top: 48px; cursor: pointer; }
   .more-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
+  .bio-less-btn { margin-top: 32px; }
   .more-btn .btn-arrow { font-style: normal; }
 
   /* ─── PILLARS ─── */
@@ -496,20 +497,45 @@
       if (paras.length <= 1 && sections.length === 0) return;
       for (var i = 1; i < paras.length; i++) paras[i].style.display = 'none';
       sections.forEach(function(s) { s.style.display = 'none'; });
+
+      // For cards with a slideshow (Thomas / Josef), the Less button lives after the slideshow.
+      // For all other cards, a single toggling button lives in the bio.
+      var lastSection = sections.length ? sections[sections.length - 1] : null;
+      var hasSlideshow = lastSection && !!lastSection.querySelector('.slideshow');
+
       var btn = document.createElement('button');
       btn.className = 'more-btn bio-more-btn';
       btn.setAttribute('aria-expanded', 'false');
       btn.innerHTML = '<span class="btn-label">More</span> <span class="btn-arrow">↓</span>';
+
+      var lessBtn = null;
+      if (hasSlideshow) {
+        lessBtn = document.createElement('button');
+        lessBtn.className = 'more-btn bio-less-btn';
+        lessBtn.style.display = 'none';
+        lessBtn.innerHTML = '<span class="btn-label">Less</span> <span class="btn-arrow">↑</span>';
+        lastSection.appendChild(lessBtn);
+      }
+
       var open = false;
-      btn.addEventListener('click', function() {
-        open = !open;
+      function setOpen(val) {
+        open = val;
         for (var i = 1; i < paras.length; i++) paras[i].style.display = open ? '' : 'none';
         sections.forEach(function(s) { s.style.display = open ? '' : 'none'; });
-        btn.classList.toggle('open', open);
         btn.setAttribute('aria-expanded', open);
-        btn.querySelector('.btn-label').textContent = open ? 'Less' : 'More';
-        btn.querySelector('.btn-arrow').textContent = open ? '↑' : '↓';
-      });
+        if (hasSlideshow) {
+          btn.style.display    = open ? 'none' : '';
+          lessBtn.style.display = open ? ''     : 'none';
+        } else {
+          btn.classList.toggle('open', open);
+          btn.querySelector('.btn-label').textContent = open ? 'Less' : 'More';
+          btn.querySelector('.btn-arrow').textContent = open ? '↑'    : '↓';
+        }
+      }
+
+      btn.addEventListener('click', function() { setOpen(true); });
+      if (lessBtn) lessBtn.addEventListener('click', function() { setOpen(false); });
+
       bio.appendChild(btn);
     });
   }
