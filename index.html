@@ -963,18 +963,19 @@ async function runAnimation(){
   await wait(225);
 
   // ── STEP 4: Expand to "blng studio" ──────────────────────────
-  // VBX_blng=151 with VBW2=1369: on desktop this aligns the b-letter for a clean cross-fade
-  // (VBX_init=430, offset=278.84 → 151). On mobile the text center (SVG x≈842) lands at
-  // 842−151=691 units into the 1369-wide viewport = ~50.5% → within 1.5px of centered.
+  // VBX_blng=151, VBW2=1369. Desktop: aligns b-letters for clean cross-fade (VBX_init=430, offset=278.84→151).
+  // Mobile: svgB starts shifted right by mobileShiftPx so blng letters sit exactly over bieling letters
+  // during the cross-fade (no jump). Then slides left to centered position while studio types in.
   const VBX_blng = 151;
   const VBW2 = 1369;
-  // On mobile VBW2/VBW_init = 1, so logoW2 must equal logoW exactly (no wrap resize, no layout shift).
-  // On desktop scale logoW2 proportionally so letter height stays constant.
   const logoW2 = isMobileAnim ? logoW : Math.min(Math.round(logoW * VBW2 / VBW_init), window.innerWidth - 8);
+  // 278.84 = b_bieling(477) − b_blng(198.16); (VBX_init−VBX_blng) = positional offset between viewBoxes.
+  // mobileShiftPx makes blng b land on the same pixel as bieling b at the start of the cross-fade.
+  const mobileShiftPx = isMobileAnim ? Math.round((278.84 - (VBX_init - VBX_blng)) / VBW2 * logoW2) : 0;
 
   // Prepare svg-blng: aligned viewBox, blng letters shown, studio letters hidden
   svgB.setAttribute('viewBox', `${VBX_blng} 1020 ${VBW2} 355`);
-  svgB.style.cssText = `width:${logoW2}px; height:${logoH}px; display:block; position:absolute; top:0; left:0; opacity:0;`;
+  svgB.style.cssText = `width:${logoW2}px; height:${logoH}px; display:block; position:absolute; top:0; left:${mobileShiftPx}px; opacity:0;`;
 
   const sG = id => svgB.querySelector(`g[id="${id}"]`);
   ['letter-b','letter-l','letter-n','letter-g'].forEach(id => {
@@ -984,26 +985,22 @@ async function runAnimation(){
     const el = sG(id); if(el) el.style.opacity = '0';
   });
 
-  // Desktop: animate wrap width expansion; mobile: wrap stays the same size — skip to avoid layout drift
   if (!isMobileAnim) {
     wrap.style.transition = 'width 0.6s ease';
     wrap.style.width = logoW2 + 'px';
   }
-  svg.style.transition = 'opacity 0.35s ease';
+  svg.style.transition  = 'opacity 0.45s ease';
   svg.style.opacity = '0';
-  if (isMobileAnim) {
-    // Sequential fade on mobile: bieling out first, then blng in — no layout change, no drift
-    await wait(350);
-    svgB.style.transition = 'opacity 0.4s ease';
-    svgB.style.opacity = '1';
-    await wait(400);
-  } else {
-    svgB.style.transition = 'opacity 0.5s ease';
-    svgB.style.opacity = '1';
-    await wait(600);
-  }
+  svgB.style.transition = 'opacity 0.5s ease';
+  svgB.style.opacity = '1';
+  await wait(600);
 
   // ── STEP 5: "studio" types out letter by letter ───────────────
+  // On mobile: simultaneously slide svgB left to its centered position (left:0)
+  if (isMobileAnim) {
+    svgB.style.transition = 'left 0.5s ease';
+    svgB.style.left = '0px';
+  }
   for(const id of ['letter-s','letter-t','letter-u','letter-d','letter-i','letter-o']){
     const el = sG(id);
     if(el){ el.style.transition = 'opacity 0.09s ease'; el.style.opacity = '1'; }
