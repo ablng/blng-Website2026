@@ -983,14 +983,19 @@ async function runAnimation(){
     const el = sG(id); if(el) el.style.opacity = '0';
   });
 
-  // Smooth cross-fade — blng positions align between both SVGs (~255px from left)
-  // so a clean simultaneous fade works without any viewBox repositioning
+  // Cross-fade: b-letters are aligned at svgB left:0.
+  // Simultaneously shift svgB so the full "blng studio" ends up centered.
+  // Text center in blng.svg ≈ 842; shift = (logoW2/2) − pixel position of that center.
+  const textCenterPx = (842 - VBX_blng) / VBW2 * logoW2;
+  const centerShiftPx = Math.round(logoW2 / 2 - textCenterPx);
+
   wrap.style.transition = 'width 0.6s ease';
   wrap.style.width = logoW2 + 'px';
   svg.style.transition  = 'opacity 0.45s ease';
   svg.style.opacity = '0';
-  svgB.style.transition = 'opacity 0.5s ease';
+  svgB.style.transition = 'opacity 0.5s ease, left 0.6s ease';
   svgB.style.opacity = '1';
+  svgB.style.left = `${centerShiftPx}px`;
   await wait(600);
 
   // ── STEP 5: "studio" types out letter by letter ───────────────
