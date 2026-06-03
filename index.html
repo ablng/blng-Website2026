@@ -963,15 +963,16 @@ async function runAnimation(){
   await wait(225);
 
   // ── STEP 4: Expand to "blng studio" ──────────────────────────
-  // ViewBox width 1369 covers full "blng studio" in blng.svg (x: 151→1520).
-  // bieling vb_x stays at 430; blng vb_x = 430 − 278.84 = 151 so b aligns.
-  // Both SVGs use the same vbW → same scale → letter height unchanged.
-  const VBW2 = 1369;
+  // VBX_blng aligns the b-letter across both SVGs: offset 278.84 = b_bieling(477) − b_blng(198.16).
+  // Desktop: VBX_init=430 → VBX_blng=151. Mobile: VBX_init=158 → VBX_blng=−121.
+  // VBW2 always spans from VBX_blng to x=1520 (right edge of blng studio), keeping letter height constant.
+  const VBX_blng = Math.round(VBX_init - 278.84);
+  const VBW2 = 1520 - VBX_blng;
   // Scale logoW2 so letter height stays constant (same px-per-SVG-unit as bieling)
-  const logoW2 = Math.min(Math.round(logoW * VBW2 / VBW_init), window.innerWidth - 32);
+  const logoW2 = Math.min(Math.round(logoW * VBW2 / VBW_init), window.innerWidth - 8);
 
   // Prepare svg-blng: aligned viewBox, blng letters shown, studio letters hidden
-  svgB.setAttribute('viewBox', `151 1020 ${VBW2} 355`);
+  svgB.setAttribute('viewBox', `${VBX_blng} 1020 ${VBW2} 355`);
   svgB.style.cssText = `width:${logoW2}px; height:${logoH}px; display:block; position:absolute; top:0; left:0; opacity:0;`;
 
   const sG = id => svgB.querySelector(`g[id="${id}"]`);
