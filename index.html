@@ -963,11 +963,11 @@ async function runAnimation(){
   await wait(225);
 
   // ── STEP 4: Expand to "blng studio" ──────────────────────────
-  // VBX_blng aligns the b-letter across both SVGs: offset 278.84 = b_bieling(477) − b_blng(198.16).
-  // Desktop: VBX_init=430 → VBX_blng=151. Mobile: VBX_init=158 → VBX_blng=−121.
-  // VBW2 always spans from VBX_blng to x=1520 (right edge of blng studio), keeping letter height constant.
-  const VBX_blng = Math.round(VBX_init - 278.84);
-  const VBW2 = 1520 - VBX_blng;
+  // VBX_blng=151 with VBW2=1369: on desktop this aligns the b-letter for a clean cross-fade
+  // (VBX_init=430, offset=278.84 → 151). On mobile the text center (SVG x≈842) lands at
+  // 842−151=691 units into the 1369-wide viewport = ~50.5% → within 1.5px of centered.
+  const VBX_blng = 151;
+  const VBW2 = 1369;
   // Scale logoW2 so letter height stays constant (same px-per-SVG-unit as bieling)
   const logoW2 = Math.min(Math.round(logoW * VBW2 / VBW_init), window.innerWidth - 8);
 
@@ -983,20 +983,21 @@ async function runAnimation(){
     const el = sG(id); if(el) el.style.opacity = '0';
   });
 
-  // Cross-fade: b-letters are aligned at svgB left:0.
-  // Simultaneously shift svgB so the full "blng studio" ends up centered.
-  // Text center in blng.svg ≈ 842; shift = (logoW2/2) − pixel position of that center.
-  const textCenterPx = (842 - VBX_blng) / VBW2 * logoW2;
-  const centerShiftPx = Math.round(logoW2 / 2 - textCenterPx);
-
   wrap.style.transition = 'width 0.6s ease';
   wrap.style.width = logoW2 + 'px';
-  svg.style.transition  = 'opacity 0.45s ease';
+  svg.style.transition = 'opacity 0.35s ease';
   svg.style.opacity = '0';
-  svgB.style.transition = 'opacity 0.5s ease, left 0.6s ease';
-  svgB.style.opacity = '1';
-  svgB.style.left = `${centerShiftPx}px`;
-  await wait(600);
+  if (isMobileAnim) {
+    // Sequential fade on mobile: bieling out first, then blng in — no position sliding needed
+    await wait(350);
+    svgB.style.transition = 'opacity 0.4s ease';
+    svgB.style.opacity = '1';
+    await wait(400);
+  } else {
+    svgB.style.transition = 'opacity 0.5s ease';
+    svgB.style.opacity = '1';
+    await wait(600);
+  }
 
   // ── STEP 5: "studio" types out letter by letter ───────────────
   for(const id of ['letter-s','letter-t','letter-u','letter-d','letter-i','letter-o']){
