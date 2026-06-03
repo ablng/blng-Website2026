@@ -123,6 +123,9 @@
     .contact-grid { grid-template-columns: 1fr; padding: 0 24px; }
     .contact-col { padding: 48px 0; border-right: none; border-bottom: 2px solid rgba(28,28,26,0.08); }
     .contact-col:nth-child(2) { padding-left: 0; border-bottom: none; }
+    /* Mobile: restore Studio first, New enquiries second */
+    .contact-col:nth-child(1) { order: 2; border-bottom: none; }
+    .contact-col:nth-child(2) { order: 1; border-bottom: 2px solid rgba(28,28,26,0.08); }
     footer { grid-template-columns: 1fr; gap: 20px; padding: 40px 24px; }
     .footer-middle { text-align: left; }
     .footer-right { text-align: left; }
@@ -187,18 +190,18 @@
 <div class="contact-grid">
 
   <div class="contact-col reveal">
-    <p class="contact-col-title">Studio</p>
-    <p>3 Dericote Street<br>Hackney<br>London E8 4PG<br>United Kingdom</p>
-    <p style="margin-top:20px;"><a href="https://maps.google.com/?q=3+Dericote+Street,+Hackney,+London+E8+4PG" target="_blank">Open in Google Maps ↗</a></p>
-  </div>
-
-  <div class="contact-col reveal">
     <p class="contact-col-title">New enquiries</p>
     <p><a href="mailto:info@blng.studio">info@blng.studio</a></p>
     <p><a href="tel:+442045589744">+44 20 4558 9744</a></p>
     <p class="note">For press enquiries:<br><a href="mailto:press@blng.studio">press@blng.studio</a></p>
     <p class="note">For studio opportunities:<br><a href="mailto:people@blng.studio">people@blng.studio</a></p>
     <p class="note" style="margin-top:24px; font-size:0.82rem;">We always welcome meeting thoughtful, curious talent. Due to the volume of applications, we can only respond to shortlisted candidates.</p>
+  </div>
+
+  <div class="contact-col reveal">
+    <p class="contact-col-title">Studio</p>
+    <p>3 Dericote Street<br>Hackney<br>London E8 4PG<br>United Kingdom</p>
+    <p style="margin-top:20px;"><a href="https://maps.google.com/?q=3+Dericote+Street,+Hackney,+London+E8+4PG" target="_blank">Open in Google Maps ↗</a></p>
   </div>
 
 
