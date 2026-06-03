@@ -968,8 +968,9 @@ async function runAnimation(){
   // 842−151=691 units into the 1369-wide viewport = ~50.5% → within 1.5px of centered.
   const VBX_blng = 151;
   const VBW2 = 1369;
-  // Scale logoW2 so letter height stays constant (same px-per-SVG-unit as bieling)
-  const logoW2 = Math.min(Math.round(logoW * VBW2 / VBW_init), window.innerWidth - 8);
+  // On mobile VBW2/VBW_init = 1, so logoW2 must equal logoW exactly (no wrap resize, no layout shift).
+  // On desktop scale logoW2 proportionally so letter height stays constant.
+  const logoW2 = isMobileAnim ? logoW : Math.min(Math.round(logoW * VBW2 / VBW_init), window.innerWidth - 8);
 
   // Prepare svg-blng: aligned viewBox, blng letters shown, studio letters hidden
   svgB.setAttribute('viewBox', `${VBX_blng} 1020 ${VBW2} 355`);
@@ -983,12 +984,15 @@ async function runAnimation(){
     const el = sG(id); if(el) el.style.opacity = '0';
   });
 
-  wrap.style.transition = 'width 0.6s ease';
-  wrap.style.width = logoW2 + 'px';
+  // Desktop: animate wrap width expansion; mobile: wrap stays the same size — skip to avoid layout drift
+  if (!isMobileAnim) {
+    wrap.style.transition = 'width 0.6s ease';
+    wrap.style.width = logoW2 + 'px';
+  }
   svg.style.transition = 'opacity 0.35s ease';
   svg.style.opacity = '0';
   if (isMobileAnim) {
-    // Sequential fade on mobile: bieling out first, then blng in — no position sliding needed
+    // Sequential fade on mobile: bieling out first, then blng in — no layout change, no drift
     await wait(350);
     svgB.style.transition = 'opacity 0.4s ease';
     svgB.style.opacity = '1';
