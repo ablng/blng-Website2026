@@ -112,14 +112,18 @@
     .footer-right { text-align:left; }
 
     /* ─── MOBILE WORK LIST ─── */
-    main.mobile-work { padding-left:0; padding-right:0; }
+    /* padding-top = nav height (logo 92px + padding 20px + border 2px = 114px)
+       so the first item starts exactly at the nav bottom and is immediately sticky */
+    main.mobile-work { padding-left:0; padding-right:0; padding-top:114px; }
     main.mobile-work .filters { display:none; }
     main.mobile-work .list-area { margin-left:0; }
     .mp-list { border-top:2px solid rgba(28,28,26,0.1); }
-    .mp-item { border-bottom:2px solid rgba(28,28,26,0.07); }
+    .mp-item { border-bottom:2px solid rgba(28,28,26,0.07); background:var(--porcelain); }
     .mp-name-row { display:flex; justify-content:space-between; align-items:baseline; padding:20px 24px; text-decoration:none; color:var(--charcoal); opacity:0.32; transition:opacity 0.5s ease; }
     .mp-item.is-active .mp-name-row { opacity:1; }
-    .mp-item.is-active { position:sticky; top:112px; z-index:10; background:var(--porcelain); }
+    /* No z-index: later items (in DOM order) scroll on top of active item, creating
+       a natural card-stack effect. Active item sticks at nav bottom. */
+    .mp-item.is-active { position:sticky; top:114px; background:var(--porcelain); }
     .mp-name-text { font-size:1.7rem; font-weight:300; letter-spacing:0.01em; line-height:1.25; transition:font-size 0.4s ease; }
     .mp-item.is-active .mp-name-text { font-size:2.1rem; }
     .mp-meta { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; margin-left:16px; }
@@ -133,7 +137,9 @@
   @media (max-width: 480px) {
     #nav-logo img { width:220px; }
     nav { padding:8px 14px 8px 16px; }
-    .mp-item.is-active { top:84px; }
+    /* nav at ≤480px: logo 68px + padding 16px + border 2px = 86px */
+    .mp-item.is-active { top:86px; }
+    main.mobile-work { padding-top:86px; }
     .nav-links { gap:12px; }
     .nav-links a { font-size:1.0rem; letter-spacing:0; }
     main { padding:106px 16px 48px; }
@@ -384,6 +390,8 @@
 
     var activeIndex = -1;
 
+    var navH = (document.querySelector('nav') || {}).offsetHeight || 114;
+
     projects.forEach(function(p, i) {
       var heroUrl = 'https://res.cloudinary.com/' + CLOUD +
                     '/image/upload/f_auto,q_auto,w_900/' + p.folder + '-01';
@@ -402,7 +410,7 @@
         '</a>' +
         '<div class="mp-hero">' +
           '<a href="project.html?project=' + encodeURIComponent(p.slug) + '">' +
-            '<img src="' + escHtml(heroUrl) + '" alt="' + escHtml(p.title + (p.location ? ', ' + p.location : '') + ' — blng studio') + '" loading="lazy">' +
+            '<img src="' + escHtml(heroUrl) + '" alt="' + escHtml(p.title + (p.location ? ', ' + p.location : '') + ' — blng studio') + '" ' + (i === 0 ? 'loading="eager"' : 'loading="lazy"') + '>' +
           '</a>' +
         '</div>';
 
@@ -422,14 +430,12 @@
     // Activate first project immediately
     setActive(0);
 
-    // Scroll-based activation: find the last item whose top has crossed 35% from top
-    // This fires for exactly one item at a time regardless of scroll speed
+    // Activate when an item's top reaches the nav bottom — matches the sticky position
+    // exactly, so items snap to nav the moment they activate (no gap).
     function updateActive() {
-      var threshold = window.innerHeight * 0.35;
       var best = 0;
       items.forEach(function(item, i) {
-        var top = item.getBoundingClientRect().top;
-        if (top <= threshold) best = i;
+        if (item.getBoundingClientRect().top <= navH) best = i;
       });
       setActive(best);
     }
