@@ -425,20 +425,40 @@
       });
     }
 
-    // Activate first project immediately
-    setActive(0);
+    // ── Scroll-delta navigation ──────────────────────────────────
+    // After TRIGGER_PX of intentional scroll in either direction,
+    // snap to the next/prev project. One scroll gesture = one project.
+    var lastScrollRef = 0;
+    var projectLocked = false;
+    var TRIGGER_PX = 60;
 
-    // Activate when an item's top reaches the nav bottom — matches the sticky position
-    // exactly, so items snap to nav the moment they activate (no gap).
-    function updateActive() {
-      var best = 0;
-      items.forEach(function(item, i) {
-        if (item.getBoundingClientRect().top <= navH) best = i;
-      });
-      setActive(best);
+    function gotoProject(idx) {
+      idx = Math.max(0, Math.min(idx, items.length - 1));
+      if (idx === activeIndex || projectLocked) return;
+      projectLocked = true;
+      setActive(idx);
+      var target = Math.max(0, items[idx].offsetTop - navH);
+      window.scrollTo({ top: target });
+      lastScrollRef = target;
+      setTimeout(function() { projectLocked = false; }, 400);
     }
-    window.addEventListener('scroll', updateActive, { passive: true });
-    updateActive();
+
+    window.addEventListener('scroll', function() {
+      if (projectLocked) return;
+      var d = window.scrollY - lastScrollRef;
+      if (Math.abs(d) < TRIGGER_PX) return;
+      if (d > 0) {
+        var nxt = Math.min(activeIndex + 1, items.length - 1);
+        if (nxt !== activeIndex) { gotoProject(nxt); }
+        else { lastScrollRef = window.scrollY; } // at end of list
+      } else {
+        var prv = Math.max(activeIndex - 1, 0);
+        if (prv !== activeIndex) { gotoProject(prv); }
+        else { lastScrollRef = window.scrollY; } // at start of list
+      }
+    }, { passive: true });
+
+    setActive(0);
   }
 
   fetch('projects.json')
