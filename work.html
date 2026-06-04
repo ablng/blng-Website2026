@@ -436,11 +436,29 @@
       idx = Math.max(0, Math.min(idx, items.length - 1));
       if (idx === activeIndex || projectLocked) return;
       projectLocked = true;
+
+      // When going forward, the outgoing item's hero will collapse (removing its
+      // height from the document). Subtract that now so the target scroll position
+      // accounts for the layout shift before it happens.
+      var heroEl = items[activeIndex].querySelector('.mp-hero');
+      var heroH = (idx > activeIndex && heroEl) ? heroEl.offsetHeight : 0;
+
       setActive(idx);
-      var target = Math.max(0, items[idx].offsetTop - navH);
-      window.scrollTo({ top: target });
+      var target = Math.max(0, items[idx].offsetTop - heroH - navH);
+
+      // Instant snap (overrides css scroll-behavior:smooth) then freeze scroll so
+      // touch inertia cannot overshoot the target and hide the next list items.
+      var htmlEl = document.documentElement;
+      htmlEl.style.scrollBehavior = 'auto';
+      window.scrollTo(0, target);
       lastScrollRef = target;
-      setTimeout(function() { projectLocked = false; }, 600);
+      htmlEl.style.overflow = 'hidden';
+
+      setTimeout(function() {
+        htmlEl.style.overflow = '';
+        htmlEl.style.scrollBehavior = '';
+        projectLocked = false;
+      }, 650);
     }
 
     window.addEventListener('scroll', function() {
