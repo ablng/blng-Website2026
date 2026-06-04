@@ -121,9 +121,7 @@
     .mp-item { border-bottom:2px solid rgba(28,28,26,0.07); background:var(--porcelain); }
     .mp-name-row { display:flex; justify-content:space-between; align-items:baseline; padding:20px 24px; text-decoration:none; color:var(--charcoal); opacity:0.32; transition:opacity 0.5s ease; }
     .mp-item.is-active .mp-name-row { opacity:1; }
-    /* No z-index: later items (in DOM order) scroll on top of active item, creating
-       a natural card-stack effect. Active item sticks at nav bottom. */
-    .mp-item.is-active { position:sticky; top:114px; background:var(--porcelain); }
+    .mp-item.is-active { position:sticky; top:114px; z-index:10; background:var(--porcelain); }
     .mp-name-text { font-size:1.7rem; font-weight:300; letter-spacing:0.01em; line-height:1.25; transition:font-size 0.4s ease; }
     .mp-item.is-active .mp-name-text { font-size:2.1rem; }
     .mp-meta { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; margin-left:16px; }
