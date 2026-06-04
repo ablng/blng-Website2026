@@ -440,21 +440,25 @@
       var target = Math.max(0, items[idx].offsetTop - navH);
       window.scrollTo({ top: target });
       lastScrollRef = target;
-      setTimeout(function() { projectLocked = false; }, 400);
+      setTimeout(function() { projectLocked = false; }, 600);
     }
 
     window.addEventListener('scroll', function() {
-      if (projectLocked) return;
+      if (projectLocked) {
+        // Track scroll while locked so momentum doesn't fire a second trigger
+        lastScrollRef = window.scrollY;
+        return;
+      }
       var d = window.scrollY - lastScrollRef;
       if (Math.abs(d) < TRIGGER_PX) return;
       if (d > 0) {
         var nxt = Math.min(activeIndex + 1, items.length - 1);
         if (nxt !== activeIndex) { gotoProject(nxt); }
-        else { lastScrollRef = window.scrollY; } // at end of list
+        else { lastScrollRef = window.scrollY; }
       } else {
         var prv = Math.max(activeIndex - 1, 0);
         if (prv !== activeIndex) { gotoProject(prv); }
-        else { lastScrollRef = window.scrollY; } // at start of list
+        else { lastScrollRef = window.scrollY; }
       }
     }, { passive: true });
 
