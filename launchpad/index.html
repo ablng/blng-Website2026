@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Free Guide — Launchpad Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --yellow: #F9C33B;
+  --black: #1a1a1a;
+  --terracotta: #C0522A;
+  --off: #F0EDE6;
+  --white: #ffffff;
+}
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--yellow);
+  color: var(--black);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+.page {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px 56px 24px;
+}
+
+.topbar {
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  margin-bottom: 36px;
+}
+.topbar-brand {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.45);
+}
+
+.headline {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(58px, 15vw, 86px);
+  line-height: 0.88;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.subtext {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.72;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 32px;
+}
+
+.guide-cover {
+  background: var(--off);
+  border-radius: 3px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px 20px 24px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.2), 0 3px 8px rgba(0,0,0,0.1);
+  transform: rotate(-1deg);
+}
+.guide-cover-label {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.32);
+  margin-bottom: 16px;
+}
+.guide-cover-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(36px, 9vw, 48px);
+  line-height: 0.88;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+.guide-cover-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--terracotta);
+  margin-bottom: 20px;
+}
+.guide-cover-rule {
+  height: 1px;
+  background: rgba(0,0,0,0.09);
+  margin-bottom: 12px;
+}
+.guide-cover-studio {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.28);
+}
+
+.cta-btn {
+  display: block;
+  width: 100%;
+  background: var(--black);
+  color: var(--yellow);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  padding: 18px 24px;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.cta-btn:hover { transform: translateY(-2px); }
+
+.cta-note {
+  text-align: center;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-top: 12px;
+}
+
+.fade { opacity: 0; transform: translateY(12px); animation: up 0.7s cubic-bezier(.2,.7,.3,1) forwards; }
+@keyframes up { to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <span class="topbar-brand">Launchpad Studio</span>
+  </div>
+
+  <h1 class="headline fade" style="animation-delay:.05s">THE 3<br>REASONS<br>YOU'RE NOT<br>GETTING<br>HIRED.</h1>
+
+  <p class="subtext fade" style="animation-delay:.15s">Most are following an old playbook. And it's not getting results. This guide tells you why — and how to fix it.</p>
+
+  <div class="guide-cover fade" style="animation-delay:.22s">
+    <div class="guide-cover-label">Free guide · Launchpad Studio</div>
+    <div class="guide-cover-title">THE 3<br>REASONS<br>YOU'RE NOT<br>GETTING<br>HIRED.</div>
+    <div class="guide-cover-sub">And how to fix it.</div>
+    <div class="guide-cover-rule"></div>
+    <div class="guide-cover-studio">Launchpad Studio</div>
+  </div>
+
+  <a href="form.html" class="cta-btn fade" style="animation-delay:.3s">Get the Free Guide →</a>
+  <p class="cta-note fade" style="animation-delay:.36s">Free · No spam · Unsubscribe any time</p>
+</div>
+</body>
+</html>

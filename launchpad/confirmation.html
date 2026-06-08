@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Guide Sent — Book Your Free Intro Call</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --yellow: #F9C33B;
+  --black: #1a1a1a;
+  --terracotta: #C0522A;
+  --off: #F0EDE6;
+  --white: #ffffff;
+}
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--off);
+  color: var(--black);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+.page {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding-bottom: 48px;
+}
+
+/* TOP BAR */
+.topbar {
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.topbar-brand {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+}
+
+/* CONFIRMATION — white strip */
+.confirmation-banner {
+  background: var(--white);
+  padding: 24px 24px 20px 24px;
+  border-bottom: 2px solid var(--yellow);
+}
+.confirmation-label {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 6px;
+}
+.confirmation-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--black);
+  line-height: 1.3;
+}
+.confirmation-note {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  color: rgba(0,0,0,0.38);
+  margin-top: 5px;
+}
+
+/* UPSELL — yellow, white text */
+.upsell {
+  background: var(--yellow);
+  padding: 28px 24px 24px 24px;
+}
+.upsell-label {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 10px;
+}
+.upsell-headline {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(40px, 11vw, 56px);
+  line-height: 0.88;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.upsell-checklist { margin-bottom: 0; }
+.check-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 9px 0;
+  border-top: 1px solid rgba(255,255,255,0.25);
+}
+.check-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.25); }
+.check-mark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--white);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.check-text {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.9);
+}
+
+/* UPSELL CLOSING */
+.upsell-closing {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  margin-top: 16px;
+  line-height: 1.15;
+}
+
+/* BOOKING — off white */
+.booking-section {
+  padding: 28px 24px 24px 24px;
+  background: var(--off);
+}
+.booking-label {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-bottom: 8px;
+}
+.booking-headline {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 38px;
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: var(--black);
+  margin-bottom: 6px;
+}
+.booking-note {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: rgba(0,0,0,0.45);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+
+footer {
+  padding: 20px 24px;
+  text-align: center;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.28);
+}
+
+.fade { opacity: 0; transform: translateY(12px); animation: up 0.65s cubic-bezier(.2,.7,.3,1) forwards; }
+@keyframes up { to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <span class="topbar-brand">Launchpad Studio</span>
+  </div>
+
+  <div class="confirmation-banner fade">
+    <div class="confirmation-label">✓ Guide sent</div>
+    <div class="confirmation-text">The 3 reasons you're not getting hired<br>has been sent to your email.</div>
+    <div class="confirmation-note">Check your junk folder if you don't see it.</div>
+  </div>
+
+  <div class="upsell fade" style="animation-delay:.08s">
+    <div class="upsell-label">Do not miss out on this</div>
+    <div class="upsell-headline">CLAIM YOUR<br>FREE INTRO<br>CALL.</div>
+    <div class="upsell-checklist">
+      <div class="check-item">
+        <span class="check-mark">✓</span>
+        <span class="check-text">Get clear on who you are — apply with focus, not desperation.</span>
+      </div>
+      <div class="check-item">
+        <span class="check-mark">✓</span>
+        <span class="check-text">Make your portfolio and CV work as arguments, not archives.</span>
+      </div>
+      <div class="check-item">
+        <span class="check-mark">✓</span>
+        <span class="check-text">Get in the room — without waiting to be found.</span>
+      </div>
+    </div>
+    <div class="upsell-closing">Free — because you<br>downloaded this guide.</div>
+  </div>
+
+  <div class="booking-section fade" style="animation-delay:.16s">
+    <div class="booking-label">Book your free session</div>
+    <div class="booking-headline">Select a day<br>to get started.</div>
+    <p class="booking-note">Pick a time — you'll get a confirmation by email straight away.</p>
+    <!-- Calendly inline widget begin -->
+    <div class="calendly-inline-widget" data-url="https://calendly.com/ariadna-blng/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=f0ede6&primary_color=f9c33b" style="min-width:320px;height:700px;"></div>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    <!-- Calendly inline widget end -->
+  </div>
+
+  <footer>Launchpad Studio · Your data is kept private and never shared.</footer>
+
+</div>
+</body>
+</html>
