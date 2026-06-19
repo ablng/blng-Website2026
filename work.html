@@ -111,24 +111,17 @@
     .footer-middle { text-align:left; }
     .footer-right { text-align:left; }
 
-    /* ─── MOBILE WORK LIST ─── */
-    /* padding-top = nav height (logo 92px + padding 20px + border 2px = 114px)
-       so the first item starts exactly at the nav bottom and is immediately sticky */
+    /* ─── MOBILE WORK FEED (Instagram-style) ─── */
     main.mobile-work { padding-left:0; padding-right:0; padding-top:114px; }
     main.mobile-work .filters { display:none; }
     main.mobile-work .list-area { margin-left:0; }
     .mp-list { border-top:2px solid rgba(28,28,26,0.1); }
-    .mp-item { border-bottom:2px solid rgba(28,28,26,0.07); background:var(--porcelain); }
-    .mp-name-row { display:flex; justify-content:space-between; align-items:baseline; padding:20px 24px; text-decoration:none; color:var(--charcoal); opacity:0.32; transition:opacity 0.5s ease; }
-    .mp-item.is-active .mp-name-row { opacity:1; }
-    .mp-item.is-active { position:sticky; top:114px; z-index:10; background:var(--porcelain); }
-    .mp-name-text { font-size:1.7rem; font-weight:300; letter-spacing:0.01em; line-height:1.25; transition:font-size 0.4s ease; }
-    .mp-item.is-active .mp-name-text { font-size:2.1rem; }
+    .mp-item { border-bottom:2px solid rgba(28,28,26,0.07); background:var(--porcelain); padding-bottom:4px; }
+    .mp-name-row { display:flex; justify-content:space-between; align-items:baseline; padding:20px 24px 14px; text-decoration:none; color:var(--charcoal); }
+    .mp-name-text { font-size:1.7rem; font-weight:300; letter-spacing:0.01em; line-height:1.25; }
     .mp-meta { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; margin-left:16px; }
     .mp-year { font-size:1.0rem; letter-spacing:0.1em; color:var(--green); }
     .mp-type { font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); opacity:0.7; }
-    .mp-hero { overflow:hidden; max-height:0; opacity:0; margin-left:0; margin-right:0; transition:max-height 0.65s cubic-bezier(0.4,0,0.2,1), opacity 0.45s ease; }
-    .mp-item.is-active .mp-hero { max-height:100vw; opacity:1; }
     .mp-hero a { display:block; }
     .mp-hero img { width:100%; display:block; }
   }
@@ -136,7 +129,6 @@
     #nav-logo img { width:220px; }
     nav { padding:8px 14px 8px 16px; }
     /* nav at ≤480px: logo 68px + padding 16px + border 2px = 86px */
-    .mp-item.is-active { top:86px; }
     main.mobile-work { padding-top:86px; }
     .nav-links { gap:12px; }
     .nav-links a { font-size:1.0rem; letter-spacing:0; }
@@ -377,7 +369,7 @@
       .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  // ── MOBILE: SCROLLING FOCUS LIST ────────────────────────────
+  // ── MOBILE: INSTAGRAM-STYLE FEED ─────────────────────────────
   function renderMobile(projects) {
     var mainEl = document.querySelector('main');
     mainEl.classList.add('mobile-work');
@@ -386,10 +378,6 @@
     list.className = 'mp-list';
     list.innerHTML = '';
 
-    var activeIndex = -1;
-
-    var navH = (document.querySelector('nav') || {}).offsetHeight || 114;
-
     projects.forEach(function(p, i) {
       var heroUrl = 'https://res.cloudinary.com/' + CLOUD +
                     '/image/upload/f_auto,q_auto,w_900/' + p.folder + '-01';
@@ -397,7 +385,6 @@
 
       var item = document.createElement('div');
       item.className = 'mp-item';
-      item.dataset.index = i;
       item.innerHTML =
         '<a class="mp-name-row" href="project.html?project=' + encodeURIComponent(p.slug) + '">' +
           '<span class="mp-name-text">' + escHtml(p.title) + '</span>' +
@@ -414,73 +401,6 @@
 
       list.appendChild(item);
     });
-
-    var items = list.querySelectorAll('.mp-item');
-
-    function setActive(index) {
-      if (index === activeIndex) return;
-      activeIndex = index;
-      items.forEach(function(el, i) {
-        el.classList.toggle('is-active', i === index);
-      });
-    }
-
-    // ── Scroll-delta navigation ──────────────────────────────────
-    // After TRIGGER_PX of intentional scroll in either direction,
-    // snap to the next/prev project. One scroll gesture = one project.
-    var lastScrollRef = 0;
-    var projectLocked = false;
-    var TRIGGER_PX = 60;
-
-    function gotoProject(idx) {
-      idx = Math.max(0, Math.min(idx, items.length - 1));
-      if (idx === activeIndex || projectLocked) return;
-      projectLocked = true;
-
-      // When going forward, the outgoing item's hero will collapse (removing its
-      // height from the document). Subtract that now so the target scroll position
-      // accounts for the layout shift before it happens.
-      var heroEl = items[activeIndex].querySelector('.mp-hero');
-      var heroH = (idx > activeIndex && heroEl) ? heroEl.offsetHeight : 0;
-
-      setActive(idx);
-      var target = Math.max(0, items[idx].offsetTop - heroH - navH);
-
-      // Instant snap (overrides css scroll-behavior:smooth) then freeze scroll so
-      // touch inertia cannot overshoot the target and hide the next list items.
-      var htmlEl = document.documentElement;
-      htmlEl.style.scrollBehavior = 'auto';
-      window.scrollTo(0, target);
-      lastScrollRef = target;
-      htmlEl.style.overflow = 'hidden';
-
-      setTimeout(function() {
-        htmlEl.style.overflow = '';
-        htmlEl.style.scrollBehavior = '';
-        projectLocked = false;
-      }, 650);
-    }
-
-    window.addEventListener('scroll', function() {
-      if (projectLocked) {
-        // Track scroll while locked so momentum doesn't fire a second trigger
-        lastScrollRef = window.scrollY;
-        return;
-      }
-      var d = window.scrollY - lastScrollRef;
-      if (Math.abs(d) < TRIGGER_PX) return;
-      if (d > 0) {
-        var nxt = Math.min(activeIndex + 1, items.length - 1);
-        if (nxt !== activeIndex) { gotoProject(nxt); }
-        else { lastScrollRef = window.scrollY; }
-      } else {
-        var prv = Math.max(activeIndex - 1, 0);
-        if (prv !== activeIndex) { gotoProject(prv); }
-        else { lastScrollRef = window.scrollY; }
-      }
-    }, { passive: true });
-
-    setActive(0);
   }
 
   fetch('projects.json')
