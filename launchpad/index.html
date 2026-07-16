@@ -38,49 +38,11 @@ body {
   line-height: 0.88;
   text-transform: uppercase;
   letter-spacing: -0.02em;
-  color: var(--white);
-  margin-bottom: 16px;
+  color: var(--black);
+  margin-bottom: 8px;
   margin-top: 36px;
 }
 
-.subtext {
-  font-family: 'Barlow', sans-serif;
-  font-weight: 300;
-  font-size: 15px;
-  line-height: 1.72;
-  color: rgba(0,0,0,0.6);
-  margin-bottom: 32px;
-}
-
-.guide-cover {
-  background: var(--off);
-  border-radius: 3px;
-  margin-bottom: 32px;
-  display: flex;
-  flex-direction: column;
-  padding: 24px 24px 20px 24px;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.2), 0 3px 8px rgba(0,0,0,0.1);
-  transform: rotate(-1deg);
-}
-.guide-cover-label {
-  font-family: 'Barlow', sans-serif;
-  font-weight: 400;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.32);
-  margin-bottom: 16px;
-}
-.guide-cover-title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: clamp(36px, 9vw, 48px);
-  line-height: 0.88;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  color: var(--black);
-  margin-bottom: 8px;
-}
 .guide-cover-sub {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
@@ -90,39 +52,47 @@ body {
   color: var(--terracotta);
   margin-bottom: 20px;
 }
-.guide-cover-rule {
-  height: 1px;
-  background: rgba(0,0,0,0.09);
-  margin-bottom: 12px;
-}
-.guide-cover-studio {
+
+.subtext {
   font-family: 'Barlow', sans-serif;
-  font-weight: 400;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.28);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.72;
+  color: rgba(0,0,0,0.6);
+  margin-bottom: 24px;
 }
 
-.cta-btn {
-  display: block;
-  width: 100%;
-  background: var(--black);
-  color: var(--yellow);
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: 20px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  text-align: center;
-  padding: 18px 24px;
-  border-radius: 100px;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.15s ease;
+.form-card {
+  background: var(--off);
+  border-radius: 3px;
+  margin-bottom: 16px;
+  padding: 24px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.2), 0 3px 8px rgba(0,0,0,0.1);
 }
-.cta-btn:hover { transform: translateY(-2px); }
+
+.form-card-note {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.72;
+  color: rgba(0,0,0,0.6);
+  margin-bottom: 12px;
+}
+.form-card-note strong {
+  font-weight: 600;
+  color: var(--terracotta);
+}
+
+.secure-note {
+  text-align: center;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-top: 14px;
+}
 
 .cta-note {
   text-align: center;
@@ -132,8 +102,10 @@ body {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(0,0,0,0.5);
-  margin-top: 12px;
 }
+
+/* Hide ActiveCampaign last name field */
+._form_1 ._field-wrapper:has(input[name="lastname"]) { display: none; }
 
 .fade { opacity: 0; transform: translateY(12px); animation: up 0.7s cubic-bezier(.2,.7,.3,1) forwards; }
 @keyframes up { to { opacity: 1; transform: none; } }
@@ -142,20 +114,30 @@ body {
 <body>
 <div class="page">
 
-  <h1 class="headline fade" style="animation-delay:.05s">THE 3<br>REASONS<br>YOU'RE NOT<br>GETTING HIRED.</h1>
+  <h1 class="headline fade" style="animation-delay:.05s">THE 3 REASONS YOU'RE NOT GETTING HIRED.</h1>
+  <div class="guide-cover-sub fade" style="animation-delay:.1s">And how to fix it.</div>
 
   <p class="subtext fade" style="animation-delay:.15s">Most are following an old playbook. And it's not getting results. This guide tells you why — and how to fix it.</p>
 
-  <div class="guide-cover fade" style="animation-delay:.22s">
-    <div class="guide-cover-label">Free guide · Launchpad Studio</div>
-    <div class="guide-cover-title">THE 3<br>REASONS<br>YOU'RE NOT<br>GETTING<br>HIRED.</div>
-    <div class="guide-cover-sub">And how to fix it.</div>
-    <div class="guide-cover-rule"></div>
-    <div class="guide-cover-studio">Launchpad Studio</div>
+  <div class="form-card fade" style="animation-delay:.22s">
+    <p class="form-card-note"><strong>Use your real email</strong> — otherwise you won't receive the guide.</p>
+    <div class="_form_1"></div><script src="https://blng.activehosted.com/f/embed.php?id=1" charset="utf-8"></script>
+    <div class="secure-note">Your information is 100% secure</div>
   </div>
 
-  <a href="form.html" class="cta-btn fade" style="animation-delay:.3s">Get the Free Guide →</a>
-  <p class="cta-note fade" style="animation-delay:.36s">Free · No spam · Unsubscribe any time</p>
+  <p class="cta-note fade" style="animation-delay:.30s">Free · No spam · Unsubscribe any time</p>
+
 </div>
+<script>
+(function(){
+  function hideLastName(){
+    var el=document.querySelector('._form_1 input[name="lastname"]');
+    if(el){var w=el.closest('._field-wrapper');if(w)w.style.display='none';}
+  }
+  var obs=new MutationObserver(function(){ hideLastName(); });
+  obs.observe(document.body,{childList:true,subtree:true});
+  setTimeout(function(){ obs.disconnect(); },5000);
+})();
+</script>
 </body>
 </html>
