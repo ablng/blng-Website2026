@@ -104,8 +104,8 @@ body {
   color: rgba(0,0,0,0.5);
 }
 
-/* Hide ActiveCampaign last name field */
-._form_1 ._field-wrapper:has(input[name="lastname"]) { display: none; }
+/* Hide ActiveCampaign last name field (label lives in ._form_element, not ._field-wrapper) */
+._form_1 ._form_element:has(input[name="lastname"]) { display: none; }
 
 .fade { opacity: 0; transform: translateY(12px); animation: up 0.7s cubic-bezier(.2,.7,.3,1) forwards; }
 @keyframes up { to { opacity: 1; transform: none; } }
@@ -132,7 +132,7 @@ body {
 (function(){
   function hideLastName(){
     var el=document.querySelector('._form_1 input[name="lastname"]');
-    if(el){var w=el.closest('._field-wrapper');if(w)w.style.display='none';}
+    if(el){var w=el.closest('._form_element');if(w)w.style.display='none';}
   }
   var obs=new MutationObserver(function(){ hideLastName(); });
   obs.observe(document.body,{childList:true,subtree:true});
