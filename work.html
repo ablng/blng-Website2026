@@ -129,8 +129,26 @@
     .mp-meta { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; margin-left:16px; }
     .mp-year { font-size:1.0rem; letter-spacing:0.1em; color:var(--green); }
     .mp-type { font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); opacity:0.7; }
-    .mp-hero a { display:block; }
-    .mp-hero img { width:100%; display:block; }
+    .mp-hero { position:relative; aspect-ratio:3/2; overflow:hidden; }
+    .mp-hero-track {
+      display:flex; height:100%; overflow-x:auto; scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch; scrollbar-width:none;
+    }
+    .mp-hero-track::-webkit-scrollbar { display:none; }
+    .mp-hero-slide { flex:0 0 100%; height:100%; scroll-snap-align:start; display:block; }
+    .mp-hero-slide img { width:100%; height:100%; object-fit:cover; display:block; }
+    /* Scrim so the dots stay legible over light-background images too */
+    .mp-hero-scrim {
+      position:absolute; left:0; right:0; bottom:0; height:52px; z-index:1;
+      background:linear-gradient(to top, rgba(0,0,0,0.32), transparent);
+      pointer-events:none;
+    }
+    .mp-hero-dots {
+      position:absolute; left:0; right:0; bottom:14px; z-index:2;
+      display:flex; justify-content:center; gap:6px; pointer-events:none;
+    }
+    .mp-hero-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.55); transition:background 0.2s, transform 0.2s; }
+    .mp-hero-dot.active { background:#fff; transform:scale(1.3); }
   }
   @media (max-width: 480px) {
     #nav-logo img { width:220px; }
@@ -374,6 +392,10 @@
   }
 
   // ── MOBILE: INSTAGRAM-STYLE FEED ─────────────────────────────
+  var MAX_HERO_SLIDES = 6;
+
+  function pad2(n) { return n < 10 ? '0' + n : String(n); }
+
   function renderMobile(projects) {
     var mainEl = document.querySelector('main');
     mainEl.classList.add('mobile-work');
@@ -383,9 +405,21 @@
     list.innerHTML = '';
 
     projects.forEach(function(p, i) {
-      var heroUrl = 'https://res.cloudinary.com/' + CLOUD +
-                    '/image/upload/f_auto,q_auto,w_900/' + p.folder + '-01';
       var typeLabel = (p.type && p.type[0]) ? p.type[0] : '';
+      var altText = escHtml(p.title + (p.location ? ', ' + p.location : '') + ' — blng studio');
+
+      var slidesHtml = '';
+      var dotsHtml = '';
+      for (var n = 1; n <= MAX_HERO_SLIDES; n++) {
+        var url = 'https://res.cloudinary.com/' + CLOUD +
+                   '/image/upload/f_auto,q_auto,w_900/' + p.folder + '-' + pad2(n);
+        var eager = (i === 0 && n === 1);
+        slidesHtml +=
+          '<a class="mp-hero-slide" href="project.html?project=' + encodeURIComponent(p.slug) + '" data-n="' + n + '">' +
+            '<img src="' + escHtml(url) + '" alt="' + altText + '" ' + (eager ? 'loading="eager"' : 'loading="lazy"') + '>' +
+          '</a>';
+        dotsHtml += '<span class="mp-hero-dot' + (n === 1 ? ' active' : '') + '" data-n="' + n + '"></span>';
+      }
 
       var item = document.createElement('div');
       item.className = 'mp-item';
@@ -402,13 +436,52 @@
           '</span>' +
         '</a>' +
         '<div class="mp-hero">' +
-          '<a href="project.html?project=' + encodeURIComponent(p.slug) + '">' +
-            '<img src="' + escHtml(heroUrl) + '" alt="' + escHtml(p.title + (p.location ? ', ' + p.location : '') + ' — blng studio') + '" ' + (i === 0 ? 'loading="eager"' : 'loading="lazy"') + '>' +
-          '</a>' +
+          '<div class="mp-hero-track">' + slidesHtml + '</div>' +
+          '<div class="mp-hero-scrim"></div>' +
+          '<div class="mp-hero-dots">' + dotsHtml + '</div>' +
         '</div>';
 
       list.appendChild(item);
+      initHeroCarousel(item);
     });
+  }
+
+  // Speculatively renders up to MAX_HERO_SLIDES per project (slide 1 is
+  // always real; the rest may not exist). Failed images are dropped along
+  // with their dot, and the active dot tracks the swipe position.
+  function initHeroCarousel(item) {
+    var track = item.querySelector('.mp-hero-track');
+    var dotsEl = item.querySelector('.mp-hero-dots');
+    var scrimEl = item.querySelector('.mp-hero-scrim');
+    if (!track || !dotsEl) return;
+
+    function refreshDots() {
+      var remaining = track.querySelectorAll('.mp-hero-slide').length;
+      var show = remaining > 1;
+      dotsEl.style.display = show ? 'flex' : 'none';
+      if (scrimEl) scrimEl.style.display = show ? 'block' : 'none';
+    }
+    refreshDots();
+
+    track.querySelectorAll('.mp-hero-slide img').forEach(function(img, idx) {
+      if (idx === 0) return; // slide 1 is always real
+      img.addEventListener('error', function() {
+        var slide = img.closest('.mp-hero-slide');
+        var dot = dotsEl.querySelector('.mp-hero-dot[data-n="' + slide.dataset.n + '"]');
+        slide.remove();
+        if (dot) dot.remove();
+        refreshDots();
+      });
+    });
+
+    track.addEventListener('scroll', function() {
+      window.requestAnimationFrame(function() {
+        var index = Math.round(track.scrollLeft / track.clientWidth);
+        dotsEl.querySelectorAll('.mp-hero-dot').forEach(function(dot, i) {
+          dot.classList.toggle('active', i === index);
+        });
+      });
+    }, { passive: true });
   }
 
   fetch('projects.json')
