@@ -65,10 +65,9 @@
   *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   html, body { width:100%; overflow-x:hidden; background:var(--porcelain); font-family:'DM Sans',sans-serif; }
   body { cursor:none; }
-  @media (max-width: 768px) { #cursor, #cursor-ring { display: none; } }
+  @media (max-width: 768px) { #cursor { display: none; } }
 
   #cursor { position:fixed; width:10px; height:10px; background:var(--terracotta); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform 0.15s ease; }
-  #cursor-ring { position:fixed; width:38px; height:38px; border:1px solid var(--charcoal); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); opacity:0.4; }
 
   nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:36px 48px; display:flex; justify-content:flex-end; align-items:center; pointer-events:none; opacity:0; transition:opacity 0.8s ease; }
   nav.visible { pointer-events:all; opacity:1; }
@@ -139,7 +138,6 @@
 <body>
 
 <div id="cursor"></div>
-<div id="cursor-ring"></div>
 
 <nav id="nav">
   
@@ -867,16 +865,13 @@ const DRIFT_SPEED_MAX = 150;   // px/s upward
 
 // CURSOR (pointer devices only)
 const isTouch = window.matchMedia('(hover: none)').matches;
-let cursor, ring;
+let cursor;
 if (!isTouch) {
   cursor = document.getElementById('cursor');
-  ring   = document.getElementById('cursor-ring');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
-  (function lr(){ rx+=(mx-rx)*.10; ry+=(my-ry)*.10; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(lr); })();
+  document.addEventListener('mousemove',e=>{ cursor.style.left=e.clientX+'px'; cursor.style.top=e.clientY+'px'; });
   document.querySelectorAll('a').forEach(a=>{
-    a.addEventListener('mouseenter',()=>{ cursor.style.transform='translate(-50%,-50%) scale(2.2)'; ring.style.opacity='.75'; ring.style.transform='translate(-50%,-50%) scale(1.3)'; });
-    a.addEventListener('mouseleave',()=>{ cursor.style.transform='translate(-50%,-50%) scale(1)'; ring.style.opacity='.4'; ring.style.transform='translate(-50%,-50%) scale(1)'; });
+    a.addEventListener('mouseenter',()=>{ cursor.style.transform='translate(-50%,-50%) scale(2.2)'; });
+    a.addEventListener('mouseleave',()=>{ cursor.style.transform='translate(-50%,-50%) scale(1)'; });
   });
 }
 

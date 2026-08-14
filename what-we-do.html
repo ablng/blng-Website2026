@@ -59,7 +59,6 @@
 
   /* ─── CURSOR ─── */
   #cursor      { position: fixed; width: 10px; height: 10px; background: var(--terracotta); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s ease; opacity: 0; }
-  #cursor-ring { position: fixed; width: 38px; height: 38px; border: 1px solid var(--charcoal); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); opacity: 0; transition: opacity 0.2s; }
 
   /* ─── NAV ─── */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 12px 48px 12px 80px; display: flex; justify-content: space-between; align-items: center; background: var(--page-bg); border-bottom: 2px solid rgba(28,28,26,0.07); }
@@ -75,6 +74,7 @@
   .opening { padding: 200px 48px 80px 80px; border-bottom: 2px solid rgba(28,28,26,0.08); }
   .opening-tagline { font-size: clamp(2.6rem, 5vw, 4.8rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.01em; color: var(--charcoal); margin-bottom: 48px; }
   .opening-oneliner { font-size: 1.9rem; line-height: 1.85; color: var(--charcoal); max-width: 1300px; }
+  .opening-oneliner .br-desktop { display: inline; }
 
   /* ─── MORE BUTTON — copied verbatim from about.html ─── */
   .more-btn { display: inline-flex; align-items: center; gap: 12px; font-family: 'DM Sans', sans-serif; font-size: 1.1rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 28px; border-radius: 999px; border: 2px solid rgba(28,28,26,0.35); background: transparent; color: var(--charcoal); transition: border-color 0.2s, color 0.2s; margin-top: 48px; cursor: pointer; }
@@ -131,6 +131,7 @@
     .opening { padding: 120px 24px 60px; }
     .opening-tagline { font-size: clamp(2.2rem, 6vw, 3.2rem); margin-bottom: 32px; }
     .opening-oneliner { font-size: 1.6rem; }
+    .opening-oneliner .br-desktop { display: none; }
     .more-btn { font-size: 0.9rem; padding: 9px 20px; margin-top: 32px; }
     .service-entry { grid-template-columns: 1fr; gap: 20px 0; padding: 48px 24px; align-items: start; }
     .service-left { position: static; }
@@ -188,7 +189,6 @@
 <body>
 
 <div id="cursor"></div>
-<div id="cursor-ring"></div>
 
 <!-- ─── NAV ─── -->
 <nav>
@@ -205,8 +205,7 @@
 <!-- ─── OPENING ─── -->
 <section class="opening">
   <h1 class="opening-tagline">Design thinking applied from the first question to the final detail.</h1>
-  <p class="opening-oneliner">We work as design lead, as specialist consultants within a larger team, or as standalone advisors at specific project stages. Engagements can begin at any point — from site appraisal and initial brief through to construction.</p>
-  <p class="opening-oneliner">For international projects, we collaborate with our network of local architects and delivery partners to navigate regulatory and planning contexts on the ground. Our role adapts to what each project needs.</p>
+  <p class="opening-oneliner">We work across architecture, interiors, and spatial identity.<br class="br-desktop"> As a principal-led practice, we work as design lead, as specialist consultants<br class="br-desktop"> within a larger team, or as standalone advisors at specific project stages.<br class="br-desktop"> For international projects, we collaborate with our network of local architects<br class="br-desktop"> and delivery partners to navigate regulatory and planning contexts on the ground.<br class="br-desktop"> Our role adapts to what each project needs.</p>
 </section>
 
 <!-- ─── SERVICES ─── -->
@@ -250,30 +249,18 @@
 
   // ─── CURSOR (pointer devices only) ───
   var isTouch = window.matchMedia('(hover: none)').matches;
-  var cursor, ring;
+  var cursor;
   if (!isTouch) {
     cursor = document.getElementById('cursor');
-    ring   = document.getElementById('cursor-ring');
-    var mx = 0, my = 0, rx = 0, ry = 0;
 
     document.addEventListener('mousemove', function(e) {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left    = mx + 'px';
-      cursor.style.top     = my + 'px';
+      cursor.style.left    = e.clientX + 'px';
+      cursor.style.top     = e.clientY + 'px';
       cursor.style.opacity = '1';
-      ring.style.opacity   = '0.4';
     });
     document.addEventListener('mouseleave', function() {
       cursor.style.opacity = '0';
-      ring.style.opacity   = '0';
     });
-    (function lerp() {
-      rx += (mx - rx) * 0.10;
-      ry += (my - ry) * 0.10;
-      ring.style.left = rx + 'px';
-      ring.style.top  = ry + 'px';
-      requestAnimationFrame(lerp);
-    })();
   }
 
   function bindCursorHover(root) {
@@ -281,13 +268,9 @@
     (root || document).querySelectorAll('a, button').forEach(function(el) {
       el.addEventListener('mouseenter', function() {
         cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
-        ring.style.transform   = 'translate(-50%,-50%) scale(1.3)';
-        ring.style.opacity     = '0.75';
       });
       el.addEventListener('mouseleave', function() {
         cursor.style.transform = 'translate(-50%,-50%) scale(1)';
-        ring.style.transform   = 'translate(-50%,-50%) scale(1)';
-        ring.style.opacity     = '0.4';
       });
     });
   }
