@@ -392,9 +392,22 @@
   }
 
   // ── MOBILE: INSTAGRAM-STYLE FEED ─────────────────────────────
-  var MAX_HERO_SLIDES = 6;
+  // Cloudinary numbering isn't always sequential from 1 — photos get
+  // reordered/deleted during editing, so real images can jump straight
+  // from -01 to -07, or skip around entirely (e.g. -01, -10, -11, -12).
+  // We probe a wide range per project (cheap thumbnails) to find every
+  // real photo regardless of gaps, then display up to HERO_DISPLAY_CAP
+  // of them. Probing is deferred per-card via IntersectionObserver so a
+  // 50+ project feed doesn't fire hundreds of requests on page load.
+  var HERO_PROBE_MAX   = 25;
+  var HERO_DISPLAY_CAP = 8;
 
   function pad2(n) { return n < 10 ? '0' + n : String(n); }
+
+  function heroUrl(folder, n, width) {
+    return 'https://res.cloudinary.com/' + CLOUD +
+           '/image/upload/f_auto,q_auto,w_' + width + '/' + folder + '-' + pad2(n);
+  }
 
   function renderMobile(projects) {
     var mainEl = document.querySelector('main');
@@ -407,19 +420,7 @@
     projects.forEach(function(p, i) {
       var typeLabel = (p.type && p.type[0]) ? p.type[0] : '';
       var altText = escHtml(p.title + (p.location ? ', ' + p.location : '') + ' — blng studio');
-
-      var slidesHtml = '';
-      var dotsHtml = '';
-      for (var n = 1; n <= MAX_HERO_SLIDES; n++) {
-        var url = 'https://res.cloudinary.com/' + CLOUD +
-                   '/image/upload/f_auto,q_auto,w_900/' + p.folder + '-' + pad2(n);
-        var eager = (i === 0 && n === 1);
-        slidesHtml +=
-          '<a class="mp-hero-slide" href="project.html?project=' + encodeURIComponent(p.slug) + '" data-n="' + n + '">' +
-            '<img src="' + escHtml(url) + '" alt="' + altText + '" ' + (eager ? 'loading="eager"' : 'loading="lazy"') + '>' +
-          '</a>';
-        dotsHtml += '<span class="mp-hero-dot' + (n === 1 ? ' active' : '') + '" data-n="' + n + '"></span>';
-      }
+      var slide1Url = heroUrl(p.folder, 1, 900);
 
       var item = document.createElement('div');
       item.className = 'mp-item';
@@ -435,53 +436,103 @@
             (typeLabel ? '<span class="mp-type">' + escHtml(typeLabel) + '</span>' : '') +
           '</span>' +
         '</a>' +
-        '<div class="mp-hero">' +
-          '<div class="mp-hero-track">' + slidesHtml + '</div>' +
-          '<div class="mp-hero-scrim"></div>' +
-          '<div class="mp-hero-dots">' + dotsHtml + '</div>' +
+        '<div class="mp-hero" data-folder="' + escHtml(p.folder) + '" data-slug="' + escHtml(p.slug) + '" data-alt="' + altText + '">' +
+          '<div class="mp-hero-track">' +
+            '<a class="mp-hero-slide" href="project.html?project=' + encodeURIComponent(p.slug) + '">' +
+              '<img src="' + escHtml(slide1Url) + '" alt="' + altText + '" ' + (i === 0 ? 'loading="eager"' : 'loading="lazy"') + '>' +
+            '</a>' +
+          '</div>' +
+          '<div class="mp-hero-scrim" style="display:none;"></div>' +
+          '<div class="mp-hero-dots" style="display:none;"></div>' +
         '</div>';
 
       list.appendChild(item);
-      initHeroCarousel(item);
     });
+
+    observeHeroCarousels();
   }
 
-  // Speculatively renders up to MAX_HERO_SLIDES per project (slide 1 is
-  // always real; the rest may not exist). Failed images are dropped along
-  // with their dot, and the active dot tracks the swipe position.
-  function initHeroCarousel(item) {
-    var track = item.querySelector('.mp-hero-track');
-    var dotsEl = item.querySelector('.mp-hero-dots');
-    var scrimEl = item.querySelector('.mp-hero-scrim');
-    if (!track || !dotsEl) return;
-
-    function refreshDots() {
-      var remaining = track.querySelectorAll('.mp-hero-slide').length;
-      var show = remaining > 1;
-      dotsEl.style.display = show ? 'flex' : 'none';
-      if (scrimEl) scrimEl.style.display = show ? 'block' : 'none';
+  var heroObserver = null;
+  function observeHeroCarousels() {
+    var heroEls = document.querySelectorAll('.mp-hero');
+    if (!('IntersectionObserver' in window)) {
+      heroEls.forEach(probeHeroCarousel);
+      return;
     }
-    refreshDots();
-
-    track.querySelectorAll('.mp-hero-slide img').forEach(function(img, idx) {
-      if (idx === 0) return; // slide 1 is always real
-      img.addEventListener('error', function() {
-        var slide = img.closest('.mp-hero-slide');
-        var dot = dotsEl.querySelector('.mp-hero-dot[data-n="' + slide.dataset.n + '"]');
-        slide.remove();
-        if (dot) dot.remove();
-        refreshDots();
+    if (heroObserver) heroObserver.disconnect();
+    heroObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          heroObserver.unobserve(entry.target);
+          probeHeroCarousel(entry.target);
+        }
       });
-    });
+    }, { rootMargin: '1000px 0px' });
+    heroEls.forEach(function(el) { heroObserver.observe(el); });
+  }
 
-    track.addEventListener('scroll', function() {
-      window.requestAnimationFrame(function() {
-        var index = Math.round(track.scrollLeft / track.clientWidth);
-        dotsEl.querySelectorAll('.mp-hero-dot').forEach(function(dot, i) {
-          dot.classList.toggle('active', i === index);
+  // Probes -02.. up to HERO_PROBE_MAX in parallel (tiny thumbnails), takes
+  // whichever real photos it finds in order, and builds the slides + dots
+  // for however many were found (capped at HERO_DISPLAY_CAP).
+  function probeHeroCarousel(heroEl) {
+    if (heroEl.dataset.probed) return;
+    heroEl.dataset.probed = '1';
+
+    var folder = heroEl.dataset.folder;
+    var slug   = heroEl.dataset.slug;
+    var alt    = heroEl.dataset.alt;
+    var checks = [];
+
+    for (var n = 2; n <= HERO_PROBE_MAX; n++) {
+      (function(num) {
+        checks.push(new Promise(function(resolve) {
+          var img = new Image();
+          img.onload  = function() { resolve(num); };
+          img.onerror = function() { resolve(null); };
+          img.src = heroUrl(folder, num, 100);
+        }));
+      })(n);
+    }
+
+    Promise.all(checks).then(function(results) {
+      var extra = results.filter(Boolean).sort(function(a, b) { return a - b; })
+                          .slice(0, HERO_DISPLAY_CAP - 1);
+      if (extra.length === 0) return; // only one real photo — leave as a static image
+
+      var track   = heroEl.querySelector('.mp-hero-track');
+      var dotsEl  = heroEl.querySelector('.mp-hero-dots');
+      var scrimEl = heroEl.querySelector('.mp-hero-scrim');
+
+      extra.forEach(function(n) {
+        var a = document.createElement('a');
+        a.className = 'mp-hero-slide';
+        a.href = 'project.html?project=' + encodeURIComponent(slug);
+        var img = document.createElement('img');
+        img.src = heroUrl(folder, n, 900);
+        img.alt = alt;
+        img.loading = 'lazy';
+        a.appendChild(img);
+        track.appendChild(a);
+      });
+
+      var total = 1 + extra.length;
+      var dotsHtml = '';
+      for (var d = 0; d < total; d++) {
+        dotsHtml += '<span class="mp-hero-dot' + (d === 0 ? ' active' : '') + '"></span>';
+      }
+      dotsEl.innerHTML = dotsHtml;
+      dotsEl.style.display = 'flex';
+      scrimEl.style.display = 'block';
+
+      track.addEventListener('scroll', function() {
+        window.requestAnimationFrame(function() {
+          var index = Math.round(track.scrollLeft / track.clientWidth);
+          dotsEl.querySelectorAll('.mp-hero-dot').forEach(function(dot, i) {
+            dot.classList.toggle('active', i === index);
+          });
         });
-      });
-    }, { passive: true });
+      }, { passive: true });
+    });
   }
 
   fetch('projects.json')
