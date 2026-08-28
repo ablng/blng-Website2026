@@ -341,6 +341,7 @@
     projects.forEach(function(p) { bySlug[p.slug] = p; });
     var selected = SELECTED_ORDER.map(function(slug) { return bySlug[slug]; }).filter(Boolean);
     var rest = projects.filter(function(p) { return !p.selected; });
+    rest.sort(function(a, b) { return parseInt(b.year, 10) - parseInt(a.year, 10); });
     return selected.concat(rest);
   }
 
