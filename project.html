@@ -417,6 +417,10 @@
             var moreBtn = document.createElement('button');
             moreBtn.className = 'desc-more-btn';
             moreBtn.innerHTML = 'More <span class="desc-arrow">↓</span>';
+            if (cursor) {
+              moreBtn.addEventListener('mouseenter', function() { cursor.classList.add('cursor-outline'); });
+              moreBtn.addEventListener('mouseleave', function() { cursor.classList.remove('cursor-outline'); });
+            }
             var expanded = false;
             moreBtn.addEventListener('click', function(){
               expanded = !expanded;

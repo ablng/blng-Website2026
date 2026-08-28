@@ -440,16 +440,18 @@
     });
   }
 
+  function attachCursorHover(el) {
+    if (isTouch) return;
+    el.addEventListener('mouseenter', function() {
+      cursor.classList.add('cursor-outline');
+    });
+    el.addEventListener('mouseleave', function() {
+      cursor.classList.remove('cursor-outline');
+    });
+  }
   function bindCursorHover(root) {
     if (isTouch) return;
-    (root || document).querySelectorAll('a, button').forEach(function(el) {
-      el.addEventListener('mouseenter', function() {
-        cursor.classList.add('cursor-outline');
-      });
-      el.addEventListener('mouseleave', function() {
-        cursor.classList.remove('cursor-outline');
-      });
-    });
+    (root || document).querySelectorAll('a, button').forEach(attachCursorHover);
   }
   bindCursorHover();
 
@@ -490,6 +492,7 @@
       btn.className = 'more-btn bio-more-btn';
       btn.setAttribute('aria-expanded', 'false');
       btn.innerHTML = '<span class="btn-label">More</span> <span class="btn-arrow">↓</span>';
+      attachCursorHover(btn);
 
       var lessBtn = null;
       if (hasSlideshow) {
@@ -497,6 +500,7 @@
         lessBtn.className = 'more-btn bio-less-btn';
         lessBtn.style.display = 'none';
         lessBtn.innerHTML = '<span class="btn-label">Less</span> <span class="btn-arrow">↑</span>';
+        attachCursorHover(lessBtn);
         lastSection.appendChild(lessBtn);
       }
 
@@ -561,6 +565,7 @@
       btn.className = 'more-btn profile-more-btn';
       btn.setAttribute('aria-expanded', 'false');
       btn.innerHTML = '<span class="btn-label">More</span> <span class="btn-arrow">↓</span>';
+      attachCursorHover(btn);
       var open = false;
       btn.addEventListener('click', function() {
         open = !open;
