@@ -1429,5 +1429,39 @@
     "slug": "konigsplatz-office-facade",
     "featured": false,
     "hasPage": false
+  },
+  {
+    "title": "Wetzlar District Office Building",
+    "year": "2013",
+    "projectNumber": "196",
+    "type": ["Office"],
+    "programme": "",
+    "description": "",
+    "client": "",
+    "location": "Wetzlar, Germany",
+    "status": "Completed",
+    "area": "",
+    "scope": "Architecture",
+    "collaborators": "",
+    "slug": "wetzlar-district-office-building",
+    "featured": false,
+    "hasPage": false
+  },
+  {
+    "title": "Leopoldstraße Residential",
+    "year": "2013",
+    "projectNumber": "0005",
+    "type": ["Residential"],
+    "programme": "",
+    "description": "",
+    "client": "",
+    "location": "Munich, Germany",
+    "status": "Completed",
+    "area": "",
+    "scope": "Architecture",
+    "collaborators": "",
+    "slug": "leopoldstrasse-residential",
+    "featured": false,
+    "hasPage": false
   }
 ]

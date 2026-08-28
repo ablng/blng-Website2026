@@ -385,7 +385,7 @@
     var allBtn = document.createElement('button');
     allBtn.className = 'filter-btn active';
     allBtn.dataset.filter = 'all';
-    allBtn.textContent = 'All';
+    allBtn.textContent = 'All (' + projects.length + ')';
     bar.appendChild(allBtn);
 
     types.forEach(function(t) {
