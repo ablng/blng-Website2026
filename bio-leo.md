@@ -17,7 +17,9 @@ Architectural Association — Design Research Lab, London
 UCL Bartlett, London
 ETH, Zurich
 Tsinghua University, Beijing
+CEDIM - The School of Design, Monterrey
 
 ---lectures---
 CAADRIA 2018, Beijing
 Design Modelling Symposium, Berlin
+CEDIM - The School of Design, Monterrey

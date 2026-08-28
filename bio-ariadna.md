@@ -12,3 +12,10 @@ She holds a BArch from Pratt Institute, New York, and an MArch from the Architec
 
 ---teaching---
 Architectural Association — Design Research Lab, London
+CEDIM - The School of Design, Monterrey
+
+---lectures---
+CEDIM - The School of Design, Monterrey
+
+---affiliations---
+Mexican Chamber of Commerce in London — Arts & Culture Committee
