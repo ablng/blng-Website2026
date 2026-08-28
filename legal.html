@@ -50,7 +50,8 @@
   body { background: var(--page-bg); color: var(--charcoal); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
 
   /* ─── CURSOR ─── */
-  #cursor      { position: fixed; width: 20px; height: 20px; background: var(--terracotta); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s ease; opacity: 0; }
+  #cursor      { position: fixed; width: 20px; height: 20px; background: var(--terracotta); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease; opacity: 0; }
+  #cursor.cursor-outline { background-color: transparent; border: 2px solid var(--terracotta); }
 
   /* ─── NAV ─── */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 12px 48px 12px 80px; display: flex; justify-content: space-between; align-items: center; background: var(--page-bg); border-bottom: 2px solid rgba(28,28,26,0.07); }
@@ -251,10 +252,10 @@
 
     document.querySelectorAll('a, button').forEach(function(el) {
       el.addEventListener('mouseenter', function() {
-        cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
+        cursor.classList.add('cursor-outline');
       });
       el.addEventListener('mouseleave', function() {
-        cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+        cursor.classList.remove('cursor-outline');
       });
     });
   }

@@ -58,7 +58,8 @@
   body { background: var(--page-bg); color: var(--charcoal); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
 
   /* ─── CURSOR ─── */
-  #cursor      { position: fixed; width: 20px; height: 20px; background: var(--terracotta); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s ease; opacity: 0; }
+  #cursor      { position: fixed; width: 20px; height: 20px; background: var(--terracotta); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease; opacity: 0; }
+  #cursor.cursor-outline { background-color: transparent; border: 2px solid var(--terracotta); }
 
   /* ─── NAV ─── */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 12px 48px 12px 80px; display: flex; justify-content: space-between; align-items: center; background: var(--page-bg); border-bottom: 2px solid rgba(28,28,26,0.07); }
@@ -90,6 +91,7 @@
   .service-entry:last-child { border-bottom: none; }
   .service-left { position: sticky; top: 80px; align-self: center; }
   .service-name { font-size: clamp(2.6rem, 5vw, 4.8rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; color: var(--charcoal); }
+  .service-subtitle { display: block; font-size: 1.4rem; font-weight: 300; line-height: 1.4; letter-spacing: 0.01em; color: rgba(28,28,26,0.5); margin-top: 14px; }
   .service-right p { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 16px; }
   .service-right p:last-of-type { margin-bottom: 0; }
   .service-more { display: none; }
@@ -104,7 +106,7 @@
   .covers-list { list-style: none; }
   .covers-list li { position: relative; font-size: 1.6rem; line-height: 1.7; color: var(--charcoal); margin-bottom: 18px; padding-left: 28px; }
   .covers-list li:last-child { margin-bottom: 0; }
-  .covers-list li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 12px; height: 2px; background: var(--terracotta); }
+  .covers-list li::before { content: ''; position: absolute; left: 2px; top: 0.6em; width: 8px; height: 8px; border-radius: 50%; background: var(--terracotta); }
   .covers-list li strong { font-weight: 700; }
 
   /* ─── CLIENTS ─── */
@@ -145,6 +147,7 @@
     .service-entry { grid-template-columns: 1fr; gap: 20px 0; padding: 48px 24px; align-items: start; }
     .service-left { position: static; }
     .service-name { font-size: clamp(2.2rem, 6vw, 3.2rem); }
+    .service-subtitle { font-size: 1.2rem; margin-top: 10px; }
     .service-right p { font-size: 1.5rem; }
     .suited-text { font-size: 1.4rem; }
     .covers-list li { font-size: 1.4rem; padding-left: 22px; }
@@ -277,10 +280,10 @@
     if (isTouch) return;
     (root || document).querySelectorAll('a, button').forEach(function(el) {
       el.addEventListener('mouseenter', function() {
-        cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
+        cursor.classList.add('cursor-outline');
       });
       el.addEventListener('mouseleave', function() {
-        cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+        cursor.classList.remove('cursor-outline');
       });
     });
   }
@@ -327,12 +330,18 @@
   }
 
   // ─── SERVICE MD PARSER ───
-  // Strips the leading "# Title" line (name is already rendered from services.json),
-  // splits off an optional ---suited--- marker (everything after is the suited-to line),
-  // then splits the remaining body on a "### What this covers" heading: everything
+  // Reads the leading "# Title (Subtitle)" line — the name is already rendered from
+  // services.json, but the parenthesized subtitle is extracted for display underneath it.
+  // Then splits off an optional ---suited--- marker (everything after is the suited-to
+  // line), then splits the remaining body on a "### What this covers" heading: everything
   // before it is intro paragraphs, everything after is parsed as a "- **Label:** text" list.
   function parseServiceMd(text) {
-    var body = text.replace(/^#[^\n]*\r?\n+/, '');
+    var subtitle = '';
+    var body = text.replace(/^#[ \t]*([^\n]*)\r?\n+/, function(match, titleLine) {
+      var m = titleLine.match(/\(([^)]*)\)\s*$/);
+      if (m) subtitle = m[1].trim();
+      return '';
+    });
 
     var suitedParts = body.split(/\r?\n---suited---\r?\n/);
     var mainText   = suitedParts[0] || '';
@@ -354,7 +363,7 @@
       });
     }
 
-    return { paras: paras, covers: covers, suited: suitedText };
+    return { subtitle: subtitle, paras: paras, covers: covers, suited: suitedText };
   }
 
   // ─── RENDER: SERVICES ───
@@ -372,9 +381,12 @@
 
       html += '<div class="service-entry reveal">\n';
 
-      // Left column: name (sticky on desktop)
+      // Left column: name + subtitle (sticky on desktop)
       html += '  <div class="service-left">\n';
       html += '    <h2 class="service-name">' + escHtml(svc.name) + '</h2>\n';
+      if (parsed.subtitle) {
+        html += '    <span class="service-subtitle">' + escHtml(parsed.subtitle) + '</span>\n';
+      }
       html += '  </div>\n';
 
       // Right column: body copy + toggle

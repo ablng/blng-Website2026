@@ -67,7 +67,8 @@
   body { cursor:none; }
   @media (max-width: 768px) { #cursor { display: none; } }
 
-  #cursor { position:fixed; width:20px; height:20px; background:var(--terracotta); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform 0.15s ease; }
+  #cursor { position:fixed; width:20px; height:20px; background:var(--terracotta); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease; }
+  #cursor.cursor-outline { background-color: transparent; border: 2px solid var(--terracotta); }
 
   nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:36px 48px; display:flex; justify-content:flex-end; align-items:center; pointer-events:none; opacity:0; transition:opacity 0.8s ease; }
   nav.visible { pointer-events:all; opacity:1; }
@@ -870,8 +871,8 @@ if (!isTouch) {
   cursor = document.getElementById('cursor');
   document.addEventListener('mousemove',e=>{ cursor.style.left=e.clientX+'px'; cursor.style.top=e.clientY+'px'; });
   document.querySelectorAll('a').forEach(a=>{
-    a.addEventListener('mouseenter',()=>{ cursor.style.transform='translate(-50%,-50%) scale(2.2)'; });
-    a.addEventListener('mouseleave',()=>{ cursor.style.transform='translate(-50%,-50%) scale(1)'; });
+    a.addEventListener('mouseenter',()=>{ cursor.classList.add('cursor-outline'); });
+    a.addEventListener('mouseleave',()=>{ cursor.classList.remove('cursor-outline'); });
   });
 }
 
