@@ -1,5 +1,25 @@
 [
   {
+    "title": "Mextropoli Pavilion",
+    "year": "2026",
+    "projectNumber": "0203",
+    "type": [
+      "Cultural"
+    ],
+    "programme": "Public Installation, Pavilion",
+    "description": "An intervention that lives between crisis and celebration.\nMexico City has been sinking since 1900. Nine metres total. That is the height of this proposal.\nBuilt on the dried bed of Lake Texcoco, the city continues to descend up to fifty centimetres a year — driven by the extraction of the very water it depends on to survive.\nThe Alameda Central. One of the oldest parks on the continent. Full of European fountains imported during the Porfiriato.\nOurs is finally the one that belongs to Mexico City. A space for gathering, play, and collective relief.\nMexican pink and corrugated metal sheets reflect the life above — and give visual form to the sinking void below.",
+    "client": "Arquine",
+    "location": "Mexico City, Mexico",
+    "status": "Competition",
+    "area": "",
+    "scope": "Architecture",
+    "collaborators": "Maite Garcia-Lascurain, taller MGL",
+    "slug": "mextropoli-pavilion",
+    "folder": "work-mextropoli-pavilion",
+    "featured": true,
+    "selected": true
+  },
+  {
     "title": "Holsten Residential District",
     "year": "2026",
     "projectNumber": "144",
