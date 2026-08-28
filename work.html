@@ -74,14 +74,13 @@
 
   .list-area { margin-left:50%; }
   .project-list { border-top:2px solid rgba(28,28,26,0.1); }
-  .project-row { display:grid; grid-template-columns:120px 1fr 56px; align-items:center; padding:28px 0; border-bottom:2px solid rgba(28,28,26,0.07); text-decoration:none; color:var(--charcoal); position:relative; }
+  .project-row { display:grid; grid-template-columns:120px 1fr 90px; align-items:center; padding:28px 0; border-bottom:2px solid rgba(28,28,26,0.07); text-decoration:none; color:var(--charcoal); position:relative; }
   .project-row::after { content:''; position:absolute; bottom:-2px; left:0; right:0; height:2px; background:var(--terracotta); transform:scaleX(0); transform-origin:right; transition:transform 0.4s ease; }
   .project-row:hover::after { transform:scaleX(1); }
   .project-row.hidden { display:none; }
   .row-type  { font-size:1.1rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); }
   .row-title { font-size:2.0rem; letter-spacing:0.01em; padding:0 32px; transition:color 0.2s; }
   .row-year  { font-size:1.1rem; letter-spacing:0.1em; color:var(--green); text-align:right; }
-  .row-year.is-selected { text-align:left; }
   .project-row:hover .row-title { color:var(--terracotta); }
 
   footer { border-top:2px solid rgba(28,28,26,0.1); padding:56px 60px; display:grid; grid-template-columns:1fr 1fr 1fr; align-items:end; flex-shrink:0; margin-top:auto; }
@@ -329,10 +328,10 @@
   // the "selected" flag on each project instead.
   var SELECTED_ORDER = [
     'holsten-residential-district',
+    'mextropoli-pavilion',
     'sophienschule-campus',
     'seminary-chapel',
-    'wikus-headquarters-conference-centre',
-    'mextropoli-pavilion'
+    'wikus-headquarters-conference-centre'
   ];
   function orderProjects(projects) {
     var bySlug = {};
@@ -356,7 +355,7 @@
       row.innerHTML =
         '<span class="row-type">'  + escHtml(typeLabel)  + '</span>' +
         '<span class="row-title">' + escHtml(p.title)    + '</span>' +
-        '<span class="row-year' + (p.selected ? ' is-selected' : '') + '">' + escHtml(p.selected ? 'Selected' : p.year) + '</span>';
+        '<span class="row-year">'  + escHtml(p.selected ? 'Selected' : p.year) + '</span>';
 
       // Apply current filter
       if (activeFilter !== 'all' && typesLower.indexOf(activeFilter) === -1) {
