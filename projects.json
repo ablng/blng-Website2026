@@ -17,7 +17,8 @@
     "collaborators": "",
     "slug": "holsten-residential-district",
     "folder": "work-holsten-residential-district",
-    "featured": true
+    "featured": true,
+    "selected": true
   },
   {
     "title": "District Administration Extension — Hybrid Timber",
@@ -55,7 +56,8 @@
     "collaborators": "WES - Landscape Architecture",
     "slug": "sophienschule-campus",
     "folder": "work-sophienschule-campus",
-    "featured": true
+    "featured": true,
+    "selected": true
   },
   {
     "title": "Cathedral Museum & Monastery Renewal",
@@ -295,7 +297,8 @@
     "collaborators": "",
     "slug": "seminary-chapel",
     "folder": "work-seminary-chapel",
-    "featured": true
+    "featured": true,
+    "selected": true
   },
   {
     "title": "WIKUS Headquarters & Conference Centre",
@@ -314,7 +317,8 @@
     "collaborators": "IB Hausladen",
     "slug": "wikus-headquarters-conference-centre",
     "folder": "work-wikus-headquarters-conference-centre",
-    "featured": true
+    "featured": true,
+    "selected": true
   },
   {
     "title": "Papiermühlengasse Urban Block",
