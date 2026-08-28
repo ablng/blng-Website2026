@@ -22,4 +22,4 @@ CEDIM - The School of Design, Monterrey
 ---lectures---
 CAADRIA 2018, Beijing
 Design Modelling Symposium, Berlin
-CEDIM - The School of Design, Monterrey
+CEDIM World-Class Educators, Monterrey

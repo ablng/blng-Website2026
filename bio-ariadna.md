@@ -15,7 +15,7 @@ Architectural Association — Design Research Lab, London
 CEDIM - The School of Design, Monterrey
 
 ---lectures---
-CEDIM - The School of Design, Monterrey
+CEDIM World-Class Educators, Monterrey
 
 ---affiliations---
 Mexican Chamber of Commerce in London — Arts & Culture Committee
