@@ -82,6 +82,9 @@
   .row-title { font-size:2.0rem; letter-spacing:0.01em; padding:0 32px; transition:color 0.2s; }
   .row-year  { font-size:1.1rem; letter-spacing:0.1em; color:var(--green); text-align:right; }
   .project-row:hover .row-title { color:var(--terracotta); }
+  /* Rows without a detail page yet — plain listing, no hover affordance */
+  .project-row.is-static:hover::after { transform:scaleX(0); }
+  .project-row.is-static:hover .row-title { color:var(--charcoal); }
 
   footer { border-top:2px solid rgba(28,28,26,0.1); padding:56px 60px; display:grid; grid-template-columns:1fr 1fr 1fr; align-items:end; flex-shrink:0; margin-top:auto; }
   .footer-address { font-size:1.2rem; line-height:1.9; color:var(--charcoal); letter-spacing:0.04em; }
@@ -347,11 +350,14 @@
     allProjects.forEach(function(p) {
       var typeLabel = p.type[0] || '';
       var typesLower = p.type.map(function(t){ return t.toLowerCase(); });
-      var row = document.createElement('a');
-      row.className = 'project-row';
-      row.href = 'project.html?project=' + encodeURIComponent(p.slug);
+      var hasPage = p.hasPage !== false;
+      // Projects without a detail page (no images/full write-up yet) render as
+      // a plain, non-clickable row — same layout, no link, no hover preview.
+      var row = document.createElement(hasPage ? 'a' : 'div');
+      row.className = 'project-row' + (hasPage ? '' : ' is-static');
+      if (hasPage) row.href = 'project.html?project=' + encodeURIComponent(p.slug);
       row.dataset.types  = p.type.join(',').toLowerCase();
-      row.dataset.folder = p.folder;
+      if (hasPage) row.dataset.folder = p.folder;
       row.innerHTML =
         '<span class="row-type">'  + escHtml(typeLabel)  + '</span>' +
         '<span class="row-title">' + escHtml(p.title)    + '</span>' +
@@ -363,7 +369,7 @@
       }
 
       list.appendChild(row);
-      attachHover(row);
+      if (hasPage) attachHover(row);
     });
   }
 
@@ -439,23 +445,38 @@
 
     projects.forEach(function(p, i) {
       var typeLabel = (p.type && p.type[0]) ? p.type[0] : '';
-      var altText = escHtml(p.title + (p.location ? ', ' + p.location : '') + ' — blng studio');
-      var slide1Url = heroUrl(p.folder, 1, 900);
+      var hasPage = p.hasPage !== false;
 
       var item = document.createElement('div');
-      item.className = 'mp-item';
+      item.className = 'mp-item' + (hasPage ? '' : ' is-static');
       item.dataset.types = p.type.join(',').toLowerCase();
       if (activeFilter !== 'all' && item.dataset.types.split(',').indexOf(activeFilter) === -1) {
         item.classList.add('hidden');
       }
-      item.innerHTML =
-        '<a class="mp-name-row" href="project.html?project=' + encodeURIComponent(p.slug) + '">' +
+
+      var nameRowTag = hasPage ? 'a' : 'div';
+      var nameRowHref = hasPage ? ' href="project.html?project=' + encodeURIComponent(p.slug) + '"' : '';
+      var nameRowHtml =
+        '<' + nameRowTag + ' class="mp-name-row"' + nameRowHref + '>' +
           '<span class="mp-name-text">' + escHtml(p.title) + '</span>' +
           '<span class="mp-meta">' +
             '<span class="mp-year">' + escHtml(p.selected ? 'Selected' : p.year) + '</span>' +
             (typeLabel ? '<span class="mp-type">' + escHtml(typeLabel) + '</span>' : '') +
           '</span>' +
-        '</a>' +
+        '</' + nameRowTag + '>';
+
+      // Projects without a detail page (no images/full write-up yet) show
+      // only the name row — no hero image carousel to probe for.
+      if (!hasPage) {
+        item.innerHTML = nameRowHtml;
+        list.appendChild(item);
+        return;
+      }
+
+      var altText = escHtml(p.title + (p.location ? ', ' + p.location : '') + ' — blng studio');
+      var slide1Url = heroUrl(p.folder, 1, 900);
+      item.innerHTML =
+        nameRowHtml +
         '<div class="mp-hero" data-folder="' + escHtml(p.folder) + '" data-slug="' + escHtml(p.slug) + '" data-alt="' + altText + '">' +
           '<div class="mp-hero-track">' +
             '<a class="mp-hero-slide" href="project.html?project=' + encodeURIComponent(p.slug) + '">' +
