@@ -6,7 +6,7 @@
 <title>What We Do — blng studio | Architecture &amp; Design Services, London</title>
 
 <!-- SEO -->
-<meta name="description" content="Ten areas of practice spanning architecture, interior design, research and strategy. blng studio applies design thinking from the first question to the final detail.">
+<meta name="description" content="Four areas of practice spanning design vision, architecture and interiors, spatial identity, and design advisory. blng studio applies design thinking from the first question to the final detail.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://blng.studio/what-we-do.html">
 
@@ -14,7 +14,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://blng.studio/what-we-do.html">
 <meta property="og:title" content="What We Do — blng studio | Architecture &amp; Design Services, London">
-<meta property="og:description" content="Ten areas of practice spanning architecture, interior design, research and strategy. blng studio applies design thinking from the first question to the final detail.">
+<meta property="og:description" content="Four areas of practice spanning design vision, architecture and interiors, spatial identity, and design advisory. blng studio applies design thinking from the first question to the final detail.">
 <meta property="og:image" content="https://blng.studio/brand_assets/blng-studio.png">
 <meta property="og:site_name" content="blng studio">
 <meta property="og:locale" content="en_GB">
@@ -22,7 +22,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="What We Do — blng studio | Architecture &amp; Design Services, London">
-<meta name="twitter:description" content="Ten areas of practice spanning architecture, interior design, research and strategy. blng studio applies design thinking from the first question to the final detail.">
+<meta name="twitter:description" content="Four areas of practice spanning design vision, architecture and interiors, spatial identity, and design advisory. blng studio applies design thinking from the first question to the final detail.">
 <meta name="twitter:image" content="https://blng.studio/brand_assets/blng-studio.png">
 
 <!-- Structured Data -->
@@ -33,7 +33,7 @@
   "@id": "https://blng.studio/what-we-do.html",
   "url": "https://blng.studio/what-we-do.html",
   "name": "What We Do — blng studio",
-  "description": "Ten areas of practice spanning architecture, interior design, research and strategy.",
+  "description": "Four areas of practice spanning design vision, architecture and interiors, spatial identity, and design advisory.",
   "isPartOf": { "@id": "https://blng.studio/#organization" },
   "provider": {
     "@type": "Organization",
@@ -98,6 +98,15 @@
   .suited-label { font-size: 1.0rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--label); display: block; margin-bottom: 14px; }
   .suited-text { font-size: 1.6rem; line-height: 1.85; color: var(--charcoal); }
 
+  /* ─── COVERS LIST ─── */
+  .covers-section { margin-top: 40px; padding-top: 28px; border-top: 2px solid rgba(28,28,26,0.08); }
+  .covers-label { font-size: 1.0rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--label); display: block; margin-bottom: 20px; }
+  .covers-list { list-style: none; }
+  .covers-list li { position: relative; font-size: 1.6rem; line-height: 1.7; color: var(--charcoal); margin-bottom: 18px; padding-left: 28px; }
+  .covers-list li:last-child { margin-bottom: 0; }
+  .covers-list li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 12px; height: 2px; background: var(--terracotta); }
+  .covers-list li strong { font-weight: 700; }
+
   /* ─── CLIENTS ─── */
   .clients { padding: 96px 48px 96px 80px; border-top: 2px solid rgba(28,28,26,0.08); }
   .clients-intro { font-size: 1.75rem; line-height: 1.88; color: var(--charcoal); margin-bottom: 56px; white-space: nowrap; }
@@ -138,6 +147,7 @@
     .service-name { font-size: clamp(2.2rem, 6vw, 3.2rem); }
     .service-right p { font-size: 1.5rem; }
     .suited-text { font-size: 1.4rem; }
+    .covers-list li { font-size: 1.4rem; padding-left: 22px; }
     .clients { padding: 64px 24px; }
     .clients-intro { font-size: 1.5rem; margin-bottom: 40px; }
     .clients-list { columns: 2; column-gap: 24px; }
@@ -317,16 +327,34 @@
   }
 
   // ─── SERVICE MD PARSER ───
-  // Splits on ---suited--- marker; everything before is body paragraphs,
-  // everything after is the suited-to line.
+  // Strips the leading "# Title" line (name is already rendered from services.json),
+  // splits off an optional ---suited--- marker (everything after is the suited-to line),
+  // then splits the remaining body on a "### What this covers" heading: everything
+  // before it is intro paragraphs, everything after is parsed as a "- **Label:** text" list.
   function parseServiceMd(text) {
-    var parts = text.split(/\r?\n---suited---\r?\n/);
-    var bodyText  = parts[0] || '';
-    var suitedText = parts[1] ? parts[1].trim() : '';
-    var paras = bodyText.trim().split(/\n\n+/).map(function(p) {
+    var body = text.replace(/^#[^\n]*\r?\n+/, '');
+
+    var suitedParts = body.split(/\r?\n---suited---\r?\n/);
+    var mainText   = suitedParts[0] || '';
+    var suitedText = suitedParts[1] ? suitedParts[1].trim() : '';
+
+    var coversParts = mainText.split(/\r?\n###\s*What this covers\s*\r?\n+/i);
+    var introText  = coversParts[0] || '';
+    var coversText = coversParts[1] ? coversParts[1].trim() : '';
+
+    var paras = introText.trim().split(/\n\n+/).map(function(p) {
       return p.trim();
     }).filter(function(p) { return p.length > 0; });
-    return { paras: paras, suited: suitedText };
+
+    var covers = [];
+    if (coversText) {
+      coversText.split(/\r?\n/).forEach(function(line) {
+        var m = line.trim().match(/^-\s*\*\*(.+?):\*\*\s*(.*)$/);
+        if (m) covers.push({ label: m[1], text: m[2] });
+      });
+    }
+
+    return { paras: paras, covers: covers, suited: suitedText };
   }
 
   // ─── RENDER: SERVICES ───
@@ -338,8 +366,9 @@
     services.forEach(function(svc, i) {
       var parsed  = parseServiceMd(bioTexts[i] || '');
       var paras   = parsed.paras;
+      var covers  = parsed.covers;
       var suited  = parsed.suited;
-      var hasMore = paras.length > 1 || suited.length > 0;
+      var hasMore = paras.length > 1 || covers.length > 0 || suited.length > 0;
 
       html += '<div class="service-entry reveal">\n';
 
@@ -357,10 +386,20 @@
       html += '    </div>\n';
 
       if (hasMore) {
-        // Hidden section: remaining paragraphs + suited-to
+        // Hidden section: remaining paragraphs + what-this-covers + suited-to
         html += '    <div class="service-more" id="svc-more-' + i + '">\n';
         for (var j = 1; j < paras.length; j++) {
           html += '      <p>' + renderLine(paras[j]) + '</p>\n';
+        }
+        if (covers.length > 0) {
+          html += '      <div class="covers-section">\n';
+          html += '        <span class="covers-label">What This Covers</span>\n';
+          html += '        <ul class="covers-list">\n';
+          covers.forEach(function(item) {
+            html += '          <li><strong>' + escHtml(item.label) + ':</strong> ' + renderLine(item.text) + '</li>\n';
+          });
+          html += '        </ul>\n';
+          html += '      </div>\n';
         }
         if (suited) {
           html += '      <div class="suited-section">\n';

@@ -1,12 +1,6 @@
 [
-  { "index": "01", "slug": "01-architecture",         "name": "Architecture",                      "bio": "services/01-architecture.md" },
-  { "index": "02", "slug": "02-spatial-identity",     "name": "Spatial Identity",                  "bio": "services/02-spatial-identity.md" },
-  { "index": "03", "slug": "03-environments",         "name": "Environments",                      "bio": "services/03-environments.md" },
-  { "index": "04", "slug": "04-spatial-design",       "name": "Spatial Design & Installations",    "bio": "services/04-spatial-design.md" },
-  { "index": "05", "slug": "05-objects",              "name": "Objects",                           "bio": "services/05-objects.md" },
-  { "index": "06", "slug": "06-design-consultancy",   "name": "Design Consultancy",                "bio": "services/06-design-consultancy.md" },
-  { "index": "07", "slug": "07-land-feasibility",     "name": "Land & Development Feasibility",    "bio": "services/07-land-feasibility.md" },
-  { "index": "08", "slug": "08-computational-design", "name": "Computational Design Consultancy",  "bio": "services/08-computational-design.md" },
-  { "index": "09", "slug": "09-ai-augmented",         "name": "AI-Augmented Processes",            "bio": "services/09-ai-augmented.md" },
-  { "index": "10", "slug": "10-research",             "name": "Research & Academic Collaboration", "bio": "services/10-research.md" }
+  { "index": "01", "slug": "01-design-vision-and-direction",       "name": "Design Vision & Direction",         "bio": "services/01-design-vision-and-direction.md" },
+  { "index": "02", "slug": "02-architecture-and-interiors",        "name": "Architecture & Interiors",          "bio": "services/02-architecture-and-interiors.md" },
+  { "index": "03", "slug": "03-spatial-identity-and-installations","name": "Spatial Identity & Installations",  "bio": "services/03-spatial-identity-and-installations.md" },
+  { "index": "04", "slug": "04-design-guardian",                   "name": "Design Guardian",                   "bio": "services/04-design-guardian.md" }
 ]
