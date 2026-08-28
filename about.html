@@ -516,7 +516,7 @@
         }
       }
 
-      btn.addEventListener('click', function() { setOpen(true); });
+      btn.addEventListener('click', function() { setOpen(hasSlideshow ? true : !open); });
       if (lessBtn) lessBtn.addEventListener('click', function() { setOpen(false); });
 
       bio.appendChild(btn);
