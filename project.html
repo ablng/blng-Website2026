@@ -354,11 +354,12 @@
           imgEl.style.aspectRatio = leftImg.w + ' / ' + leftImg.h;
           imgEl.style.objectFit = 'cover';
         }
-        // Third image (a line-drawing diagram) pads to match the fourth
-        // image's height instead of cropping, so none of the drawing is lost.
-        if(i === 2 && imgs[3]){
-          var rightImg = imgs[3];
-          imgEl.style.aspectRatio = rightImg.w + ' / ' + rightImg.h;
+        // Fourth image pads to match the third image's (a line-drawing
+        // diagram) height instead of cropping it, so none of the drawing
+        // is lost — the diagram stays at its own natural size.
+        if(i === 3 && imgs[2]){
+          var leftImg2 = imgs[2];
+          imgEl.style.aspectRatio = leftImg2.w + ' / ' + leftImg2.h;
           imgEl.style.objectFit = 'contain';
           imgEl.style.background = 'var(--porcelain)';
         }
