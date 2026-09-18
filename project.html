@@ -339,13 +339,21 @@
 
       var masonry = document.createElement('div');
       masonry.className = 'g-masonry';
-      imgs.forEach(function(imgData){
+      imgs.forEach(function(imgData, i){
         var item = document.createElement('div');
         item.className = 'g-item reveal';
         var imgEl = document.createElement('img');
         imgEl.src = imgData.url;
         imgEl.className = 'g-img';
         imgEl.alt = '';
+        // In each 2-up row, crop the right-hand image to the left-hand
+        // image's aspect ratio so both sit at the same height instead of
+        // each keeping its own natural (and usually mismatched) ratio.
+        if(i % 2 === 1){
+          var leftImg = imgs[i - 1];
+          imgEl.style.aspectRatio = leftImg.w + ' / ' + leftImg.h;
+          imgEl.style.objectFit = 'cover';
+        }
         item.appendChild(imgEl);
         masonry.appendChild(item);
       });
