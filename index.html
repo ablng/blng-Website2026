@@ -81,8 +81,6 @@
   #drift-layer.visible { opacity:1; }
   .drift-wrapper { position:absolute; overflow:hidden; box-shadow:0 12px 60px rgba(28,28,26,0.13); cursor:none; }
   .drift-wrapper .placeholder, .drift-wrapper img { width:100%; height:100%; object-fit:cover; display:block; filter:contrast(1.02) saturate(0.82); }
-  .drift-label { position:absolute; bottom:0; left:0; right:0; z-index:3; padding:14px 18px; background:linear-gradient(to top,rgba(28,28,26,0.72),transparent); font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--porcelain); opacity:0; transition:opacity 0.3s; }
-  .drift-wrapper:hover .drift-label { opacity:1; }
 
   /* LOGO */
   #logo-stage { position:fixed; inset:0; z-index:10; display:flex; align-items:center; justify-content:center; pointer-events:none; }
@@ -1066,7 +1064,7 @@ async function loadFeaturedPool() {
 
 // ── COLUMNS (2 side-by-side on desktop, 1 full-width on mobile) ─
 let COLS, COL_SPEEDS, colPoolIdx;
-const MAX_CARDS_PER_COL = 4;
+const MAX_CARDS_PER_COL = 6;
 
 function configureCols(){
   COLS = window.innerWidth <= 768
@@ -1112,8 +1110,6 @@ function spawnCard(colIdx, startY){
   } else {
     const ph = document.createElement('div'); ph.className='placeholder'; ph.style.background=proj.colour; card.appendChild(ph);
   }
-  const lbl = document.createElement('div'); lbl.className='drift-label'; lbl.textContent=proj.name; card.appendChild(lbl);
-
   card._speed = COL_SPEEDS[colIdx];
   card._y     = startY;
   card._col   = colIdx;
@@ -1144,20 +1140,19 @@ const CARD_GAP = 80; // px between stacked cards in same column
 
 function buildDrift(){
   const vh = window.innerHeight;
-  const vw = window.innerWidth;
-  // Estimate a portrait card height to pre-position the second card
-  const colW = Math.floor(vw * COLS[0].wFrac);
-  const p = POOL[0];
-  const estH = Math.round(p.h * Math.min(p.w, colW) / p.w);
   // Stagger each column's starting scroll position so columns don't move in lockstep
   const starts = COLS.length === 1 ? [0.05] : [0.05, 0.45];
 
   COLS.forEach((_, colIdx) => {
-    const startY = Math.floor(vh * starts[colIdx]);
-    // Card 1: on screen
-    spawnCard(colIdx, startY);
-    // Card 2: queued just below the first card — no gap when it scrolls up
-    spawnCard(colIdx, startY + estH + CARD_GAP);
+    let y = Math.floor(vh * starts[colIdx]);
+    // Keep spawning cards, back to back with a fixed gap, until the column
+    // is filled past the bottom of the viewport — a continuous, evenly
+    // spaced stream rather than just enough for the first paint.
+    while (y < vh + CARD_GAP) {
+      const card = spawnCard(colIdx, y);
+      if (!card) break; // hit the per-column card cap
+      y += card._h + CARD_GAP;
+    }
   });
 }
 
@@ -1228,9 +1223,16 @@ window.addEventListener('DOMContentLoaded', runAnimation);
 
 // Rebuild drift cards on resize so they fit the new viewport
 let resizeTimer;
+let lastResizeWidth = window.innerWidth;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
+    // Mobile browsers toggle their address bar while scrolling, firing resize
+    // events that only change height. Rebuilding on those resets the whole
+    // stream back to its initial top-anchored cards mid-drift — ignore them
+    // and only rebuild when the width actually changes (real resize/rotation).
+    if (window.innerWidth === lastResizeWidth) return;
+    lastResizeWidth = window.innerWidth;
     const layer = document.getElementById('drift-layer');
     if (!layer || !layer.classList.contains('visible')) return;
     driftCards.forEach(w => w.remove());
