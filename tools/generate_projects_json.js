@@ -35,6 +35,20 @@ const FOLDER_OVERRIDES = {
   'europacity-neighbourhood': 'work-europacity-blocks',
 };
 
+// Manual slug overrides, keyed by title, for projects whose live slug/Cloudinary
+// folder is more specific than toSlug(title) alone would produce (usually a
+// location suffix disambiguating a short title). Without this, regenerating
+// would silently rename the project and orphan its already-uploaded images.
+const SLUG_OVERRIDES = {
+  'Bell Tower': 'bell-tower-grossauheim',
+  'Church Administration Building': 'church-administration-building-kassel',
+  'Leopoldstraße Residential': 'leopoldstrasse-residential',
+  'Psychiatric Clinic': 'psychiatric-clinic-haina',
+  'Überseekontor': 'uberseekontor-bremen',
+  'Upper Königstraße Commercial': 'upper-konigstrasse-commercial',
+  'Vicariate General Offices': 'vicariate-general-offices-paderborn',
+};
+
 // ── CSV PARSER ─────────────────────────────────────────────────────────────────
 // Handles quoted fields (including multi-line quoted values).
 function parseCSV(text) {
@@ -68,12 +82,19 @@ function parseCSV(text) {
 
 // ── MAIN ──────────────────────────────────────────────────────────────────────
 
-// Preserve existing featured values so running the generator doesn't reset them
+// Preserve existing featured/selected/hasPage values so running the generator
+// doesn't reset them — these are set by hand and have no CSV column.
 const existingFeatured = {};
+const existingSelected = {};
+const existingHasPage = {};
 if (fs.existsSync(JSON_PATH)) {
   try {
     JSON.parse(fs.readFileSync(JSON_PATH, 'utf8'))
-      .forEach(p => { existingFeatured[p.slug] = p.featured; });
+      .forEach(p => {
+        existingFeatured[p.slug] = p.featured;
+        if (p.selected) existingSelected[p.slug] = true;
+        if (p.hasPage === false) existingHasPage[p.slug] = false;
+      });
   } catch {}
 }
 
@@ -105,9 +126,9 @@ for (let i = 1; i < rows.length; i++) {
     .map(t => t.trim())
     .filter(Boolean);
 
-  const slug = toSlug(title);
+  const slug = SLUG_OVERRIDES[title] || toSlug(title);
 
-  projects.push({
+  const entry = {
     title,
     year:          (row[col['Year']]           || '').trim(),
     projectNumber: (row[col['Project Number']] || '').trim(),
@@ -123,7 +144,10 @@ for (let i = 1; i < rows.length; i++) {
     slug,
     folder:   FOLDER_OVERRIDES[slug] || `work-${slug}`,
     featured: existingFeatured[slug] ?? false,
-  });
+  };
+  if (existingSelected[slug]) entry.selected = true;
+  if (existingHasPage[slug] === false) entry.hasPage = false;
+  projects.push(entry);
 }
 
 // Sort: most recent first, then by project number as tiebreak
