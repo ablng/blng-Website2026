@@ -346,11 +346,11 @@
         imgEl.src = imgData.url;
         imgEl.className = 'g-img';
         imgEl.alt = '';
-        // In each 2-up row, crop the right-hand image to the left-hand
-        // image's aspect ratio so both sit at the same height instead of
-        // each keeping its own natural (and usually mismatched) ratio.
-        if(i % 2 === 1){
-          var leftImg = imgs[i - 1];
+        // Crop the second image (top-right) to the first image's (top-left)
+        // aspect ratio so the opening row sits at matching heights. Only
+        // this one pair — later rows keep their own natural ratios.
+        if(i === 1){
+          var leftImg = imgs[0];
           imgEl.style.aspectRatio = leftImg.w + ' / ' + leftImg.h;
           imgEl.style.objectFit = 'cover';
         }
