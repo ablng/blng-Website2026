@@ -354,6 +354,14 @@
           imgEl.style.aspectRatio = leftImg.w + ' / ' + leftImg.h;
           imgEl.style.objectFit = 'cover';
         }
+        // Third image (a line-drawing diagram) pads to match the fourth
+        // image's height instead of cropping, so none of the drawing is lost.
+        if(i === 2 && imgs[3]){
+          var rightImg = imgs[3];
+          imgEl.style.aspectRatio = rightImg.w + ' / ' + rightImg.h;
+          imgEl.style.objectFit = 'contain';
+          imgEl.style.background = 'var(--porcelain)';
+        }
         item.appendChild(imgEl);
         masonry.appendChild(item);
       });
