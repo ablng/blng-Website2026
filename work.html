@@ -82,9 +82,13 @@
   .row-title { font-size:2.0rem; letter-spacing:0.01em; padding:0 32px; transition:color 0.2s; }
   .row-year  { font-size:1.1rem; letter-spacing:0.1em; color:var(--green); text-align:right; }
   .project-row:hover .row-title { color:var(--terracotta); }
-  /* Rows without a detail page yet — plain listing, no hover affordance */
+  /* Rows without a detail page yet — plain listing, no hover affordance, greyed out.
+     .has-preview (a real image exists to preview on hover) keeps normal text color. */
   .project-row.is-static:hover::after { transform:scaleX(0); }
   .project-row.is-static:hover .row-title { color:var(--charcoal); }
+  .project-row.is-static:not(.has-preview) .row-type,
+  .project-row.is-static:not(.has-preview) .row-title,
+  .project-row.is-static:not(.has-preview) .row-year { color:rgba(28,28,26,0.4); }
 
   footer { border-top:2px solid rgba(28,28,26,0.1); padding:56px 60px; display:grid; grid-template-columns:1fr 1fr 1fr; align-items:end; flex-shrink:0; margin-top:auto; }
   .footer-address { font-size:1.2rem; line-height:1.9; color:var(--charcoal); letter-spacing:0.04em; }
@@ -133,6 +137,10 @@
     .mp-meta { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; margin-left:16px; }
     .mp-year { font-size:1.0rem; letter-spacing:0.1em; color:var(--green); }
     .mp-type { font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); opacity:0.7; }
+    /* Items without a detail page yet — greyed out */
+    .mp-item.is-static:not(.has-preview) .mp-name-text,
+    .mp-item.is-static:not(.has-preview) .mp-year,
+    .mp-item.is-static:not(.has-preview) .mp-type { color:rgba(28,28,26,0.4); }
     .mp-hero { position:relative; aspect-ratio:3/2; overflow:hidden; }
     .mp-hero-track {
       display:flex; height:100%; overflow-x:auto; scroll-snap-type:x mandatory;
@@ -279,7 +287,7 @@
   var panelImg = null;
   var hideTimer = null;
 
-  function attachHover(row) {
+  function attachHover(row, isClickable) {
     row.addEventListener('mouseenter', function() {
       clearTimeout(hideTimer);
       var folder = row.dataset.folder;
@@ -318,7 +326,7 @@
     row.addEventListener('mouseleave', function() {
       hideTimer = setTimeout(function() { panel.style.opacity = '0'; }, 120);
     });
-    setCursorScale(row);
+    if (isClickable) setCursorScale(row);
   }
 
   // ── LOAD & RENDER PROJECTS ───────────────────────────────────
@@ -336,12 +344,38 @@
     'seminary-chapel',
     'wikus-headquarters-conference-centre'
   ];
+  // Manual tiebreak order for projects sharing the same year — the default
+  // tiebreak (project number, compared as a string) isn't meaningful, so
+  // override it per year only where a specific order has been requested.
+  var YEAR_TIEBREAK_ORDER = {
+    '2026': [
+      'eyvan-house'
+    ],
+    '2022': [
+      'sartorius-quartier',
+      'primary-school-community-hub',
+      'bergedorf-district',
+      'office-kindergarten-pavilion',
+      'facade-revitalization',
+      'geometries-of-physics-structural-networks-workshop',
+      'losse-riverside-residential-quarter'
+    ]
+  };
   function orderProjects(projects) {
     var bySlug = {};
     projects.forEach(function(p) { bySlug[p.slug] = p; });
     var selected = SELECTED_ORDER.map(function(slug) { return bySlug[slug]; }).filter(Boolean);
     var rest = projects.filter(function(p) { return !p.selected; });
-    rest.sort(function(a, b) { return parseInt(b.year, 10) - parseInt(a.year, 10); });
+    rest.sort(function(a, b) {
+      var yDiff = parseInt(b.year, 10) - parseInt(a.year, 10);
+      if (yDiff !== 0) return yDiff;
+      var order = YEAR_TIEBREAK_ORDER[a.year];
+      if (order) {
+        var ai = order.indexOf(a.slug), bi = order.indexOf(b.slug);
+        if (ai !== -1 || bi !== -1) return (ai === -1 ? order.length : ai) - (bi === -1 ? order.length : bi);
+      }
+      return 0;
+    });
     return selected.concat(rest);
   }
 
@@ -352,13 +386,16 @@
       var typeLabel = p.type[0] || '';
       var typesLower = p.type.map(function(t){ return t.toLowerCase(); });
       var hasPage = p.hasPage !== false;
+      // previewOnly: has a real image to preview on hover but no detail page —
+      // stays non-clickable, unlike a normal hasPage project.
+      var hasPreview = hasPage || p.previewOnly === true;
       // Projects without a detail page (no images/full write-up yet) render as
-      // a plain, non-clickable row — same layout, no link, no hover preview.
+      // a plain, non-clickable row — same layout, no link.
       var row = document.createElement(hasPage ? 'a' : 'div');
-      row.className = 'project-row' + (hasPage ? '' : ' is-static');
+      row.className = 'project-row' + (hasPage ? '' : ' is-static') + (hasPreview ? ' has-preview' : '');
       if (hasPage) row.href = 'project.html?project=' + encodeURIComponent(p.slug);
       row.dataset.types  = p.type.join(',').toLowerCase();
-      if (hasPage) row.dataset.folder = p.folder;
+      if (hasPreview) row.dataset.folder = p.folder;
       row.innerHTML =
         '<span class="row-type">'  + escHtml(typeLabel)  + '</span>' +
         '<span class="row-title">' + escHtml(p.title)    + '</span>' +
@@ -370,7 +407,7 @@
       }
 
       list.appendChild(row);
-      if (hasPage) attachHover(row);
+      if (hasPreview) attachHover(row, hasPage);
     });
   }
 
@@ -447,9 +484,12 @@
     projects.forEach(function(p, i) {
       var typeLabel = (p.type && p.type[0]) ? p.type[0] : '';
       var hasPage = p.hasPage !== false;
+      // previewOnly: has a real image to preview but no detail page — stays
+      // non-clickable, unlike a normal hasPage project.
+      var hasPreview = hasPage || p.previewOnly === true;
 
       var item = document.createElement('div');
-      item.className = 'mp-item' + (hasPage ? '' : ' is-static');
+      item.className = 'mp-item' + (hasPage ? '' : ' is-static') + (hasPreview ? ' has-preview' : '');
       item.dataset.types = p.type.join(',').toLowerCase();
       if (activeFilter !== 'all' && item.dataset.types.split(',').indexOf(activeFilter) === -1) {
         item.classList.add('hidden');
@@ -466,9 +506,9 @@
           '</span>' +
         '</' + nameRowTag + '>';
 
-      // Projects without a detail page (no images/full write-up yet) show
-      // only the name row — no hero image carousel to probe for.
-      if (!hasPage) {
+      // Projects with neither a detail page nor a preview image show only
+      // the name row — no hero image carousel to probe for.
+      if (!hasPreview) {
         item.innerHTML = nameRowHtml;
         list.appendChild(item);
         return;
@@ -476,13 +516,17 @@
 
       var altText = escHtml(p.title + (p.location ? ', ' + p.location : '') + ' — blng studio');
       var slide1Url = heroUrl(p.folder, 1, 900);
+      // previewOnly items get the image but not the click-through — plain
+      // div instead of a link to project.html.
+      var slideTag  = hasPage ? 'a' : 'div';
+      var slideHref = hasPage ? ' href="project.html?project=' + encodeURIComponent(p.slug) + '"' : '';
       item.innerHTML =
         nameRowHtml +
-        '<div class="mp-hero" data-folder="' + escHtml(p.folder) + '" data-slug="' + escHtml(p.slug) + '" data-alt="' + altText + '">' +
+        '<div class="mp-hero" data-folder="' + escHtml(p.folder) + '" data-slug="' + escHtml(p.slug) + '" data-alt="' + altText + '" data-clickable="' + (hasPage ? '1' : '0') + '">' +
           '<div class="mp-hero-track">' +
-            '<a class="mp-hero-slide" href="project.html?project=' + encodeURIComponent(p.slug) + '">' +
+            '<' + slideTag + ' class="mp-hero-slide"' + slideHref + '>' +
               '<img src="' + escHtml(slide1Url) + '" alt="' + altText + '" ' + (i === 0 ? 'loading="eager"' : 'loading="lazy"') + '>' +
-            '</a>' +
+            '</' + slideTag + '>' +
           '</div>' +
           '<div class="mp-hero-scrim" style="display:none;"></div>' +
           '<div class="mp-hero-dots" style="display:none;"></div>' +
@@ -520,9 +564,10 @@
     if (heroEl.dataset.probed) return;
     heroEl.dataset.probed = '1';
 
-    var folder = heroEl.dataset.folder;
-    var slug   = heroEl.dataset.slug;
-    var alt    = heroEl.dataset.alt;
+    var folder    = heroEl.dataset.folder;
+    var slug      = heroEl.dataset.slug;
+    var alt       = heroEl.dataset.alt;
+    var clickable = heroEl.dataset.clickable !== '0';
     var checks = [];
 
     for (var n = 2; n <= HERO_PROBE_MAX; n++) {
@@ -546,9 +591,9 @@
       var scrimEl = heroEl.querySelector('.mp-hero-scrim');
 
       extra.forEach(function(n) {
-        var a = document.createElement('a');
+        var a = document.createElement(clickable ? 'a' : 'div');
         a.className = 'mp-hero-slide';
-        a.href = 'project.html?project=' + encodeURIComponent(slug);
+        if (clickable) a.href = 'project.html?project=' + encodeURIComponent(slug);
         var img = document.createElement('img');
         img.src = heroUrl(folder, n, 900);
         img.alt = alt;

@@ -20,6 +20,27 @@
     "selected": true
   },
   {
+    "title": "Eyvan House",
+    "year": "2026",
+    "projectNumber": "0216",
+    "type": [
+      "Hospitality",
+      "Commercial",
+      "Office"
+    ],
+    "programme": "Private Members’ Club, Boutique Hotel, Curated Workspace, F&B",
+    "description": "Eyvan House is a private members’ club bringing together boutique hospitality, curated workspaces and F&B within a sequence of connected volumes, courtyards and outdoor terraces. Its name refers to the eyvan, a vaulted hall traditionally open to a courtyard, reinterpreted here through the repeated arches that define the building. The programme supports social life, business and wellbeing while maintaining privacy across member, guest and public areas.\nThe design draws on geometric patterns found in local architecture and craft. Repeated vaults rise across the façade and roofline, creating a distinctive silhouette and a varied rhythm of shaded openings. Their perforated surfaces interpret this cultural context through contemporary structure, proportion and fabrication.\nAt the centre, the dome forms the club's main gathering space. Conceived as a covered oasis, it offers respite from the hot climate around a planted courtyard. Local geometric patterns shape its surface, while a circular opening brings daylight into the interior and provides a clear point of orientation.\nTerraces and rooftop gardens bring outdoor space into every level. The repeated arches hold the different parts of the programme together while allowing the hotel, workspaces and F&B spaces to develop their own atmosphere. Light, pattern and planting soften the scale of the building and shape the experience from arrival to rooftop.",
+    "client": "Undisclosed",
+    "location": "Middle East",
+    "status": "Concept",
+    "area": "21,000 m²",
+    "scope": "Architecture, Design Strategy",
+    "collaborators": "",
+    "slug": "eyvan-house",
+    "folder": "work-eyvan-house",
+    "featured": true
+  },
+  {
     "title": "Torre Jardines",
     "year": "2026",
     "projectNumber": "0224",
@@ -154,8 +175,9 @@
     "collaborators": "",
     "slug": "losse-riverside-residential-quarter",
     "folder": "work-losse-riverside-residential-quarter",
-    "featured": false,
-    "hasPage": false
+    "featured": true,
+    "hasPage": false,
+    "previewOnly": true
   },
   {
     "title": "Geometries of Physics: Structural Networks Workshop",

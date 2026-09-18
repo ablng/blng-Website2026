@@ -88,11 +88,12 @@ function parseCSV(text) {
 
 // ── MAIN ──────────────────────────────────────────────────────────────────────
 
-// Preserve existing featured/selected/hasPage values so running the generator
-// doesn't reset them — these are set by hand and have no CSV column.
+// Preserve existing featured/selected/hasPage/previewOnly values so running
+// the generator doesn't reset them — these are set by hand and have no CSV column.
 const existingFeatured = {};
 const existingSelected = {};
 const existingHasPage = {};
+const existingPreviewOnly = {};
 if (fs.existsSync(JSON_PATH)) {
   try {
     JSON.parse(fs.readFileSync(JSON_PATH, 'utf8'))
@@ -100,6 +101,7 @@ if (fs.existsSync(JSON_PATH)) {
         existingFeatured[p.slug] = p.featured;
         if (p.selected) existingSelected[p.slug] = true;
         if (p.hasPage === false) existingHasPage[p.slug] = false;
+        if (p.previewOnly) existingPreviewOnly[p.slug] = true;
       });
   } catch {}
 }
@@ -153,6 +155,7 @@ for (let i = 1; i < rows.length; i++) {
   };
   if (existingSelected[slug]) entry.selected = true;
   if (existingHasPage[slug] === false) entry.hasPage = false;
+  if (existingPreviewOnly[slug]) entry.previewOnly = true;
   projects.push(entry);
 }
 
