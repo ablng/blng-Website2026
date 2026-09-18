@@ -98,8 +98,8 @@
 
   /* ─── GALLERY ─── */
   .project-gallery { padding: 0 48px 0 80px; }
-  .g-masonry { columns: 2; column-gap: 18px; column-fill: auto; }
-  .g-item { break-inside: avoid; margin-bottom: 18px; display: block; }
+  .g-masonry { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+  .g-item { display: block; }
   .g-item img { width: 100%; height: auto; display: block; }
   .g-img { display: block; width: 100%; }
   .g-img.r-cinema  { aspect-ratio: 21 / 9; }
@@ -161,7 +161,7 @@
     .project-overview { padding: 40px 16px 48px; }
     .project-next-wrap { padding: 40px 16px; }
     footer { padding: 32px 16px; }
-    .g-masonry { columns: 1; }
+    .g-masonry { grid-template-columns: 1fr; }
     .spec-row { grid-template-columns: 1fr; }
   }
 
