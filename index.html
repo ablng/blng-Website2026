@@ -930,19 +930,19 @@ async function runAnimation(){
   [lB,lI,lE,lL,lI2,lN,lG].forEach(el => { if(el) el.style.opacity = '0'; });
 
   // ── STEP 1: "bieling" fades in ────────────────────────────────
-  await wait(225);
-  svg.style.transition = 'opacity 0.53s ease';
+  await wait(158);
+  svg.style.transition = 'opacity 0.37s ease';
   svg.style.opacity = '1';
   [lB,lI,lE,lL,lI2,lN,lG].forEach(el => {
-    if(el){ el.style.transition = 'opacity 0.38s ease'; el.style.opacity = '1'; }
+    if(el){ el.style.transition = 'opacity 0.27s ease'; el.style.opacity = '1'; }
   });
-  await wait(1050); // hold so viewer can read
+  await wait(735); // hold so viewer can read
 
   // ── STEP 2: i, e, i fade out — gaps appear ────────────────────
   [lI, lE, lI2].forEach(el => {
-    if(el){ el.style.transition = 'opacity 0.41s ease'; el.style.opacity = '0'; }
+    if(el){ el.style.transition = 'opacity 0.29s ease'; el.style.opacity = '0'; }
   });
-  await wait(560);
+  await wait(392);
 
   // ── STEP 3: b, l, n, g close the gaps ────────────────────────
   // All deltas in SVG user units (bieling.svg coordinate space).
@@ -954,9 +954,9 @@ async function runAnimation(){
     [lL, -190.55],
     [lN, -240.93],
     [lG, -242],
-  ], 560);
+  ], 392);
 
-  await wait(225);
+  await wait(158);
 
   // ── STEP 4: Expand to "blng studio" ──────────────────────────
   // VBX_blng=151, VBW2=1369. Desktop: aligns b-letters for clean cross-fade (VBX_init=430, offset=278.84→151).
@@ -982,35 +982,35 @@ async function runAnimation(){
   });
 
   if (!isMobileAnim) {
-    wrap.style.transition = 'width 0.6s ease';
+    wrap.style.transition = 'width 0.42s ease';
     wrap.style.width = logoW2 + 'px';
   }
-  svg.style.transition  = 'opacity 0.45s ease';
+  svg.style.transition  = 'opacity 0.32s ease';
   svg.style.opacity = '0';
-  svgB.style.transition = 'opacity 0.5s ease';
+  svgB.style.transition = 'opacity 0.35s ease';
   svgB.style.opacity = '1';
-  await wait(600);
+  await wait(420);
 
   // ── STEP 5: "studio" types out letter by letter ───────────────
   // On mobile: simultaneously slide svgB left to its centered position (left:0)
   if (isMobileAnim) {
-    svgB.style.transition = 'left 0.5s ease';
+    svgB.style.transition = 'left 0.35s ease';
     svgB.style.left = '0px';
   }
   for(const id of ['letter-s','letter-t','letter-u','letter-d','letter-i','letter-o']){
     const el = sG(id);
-    if(el){ el.style.transition = 'opacity 0.09s ease'; el.style.opacity = '1'; }
-    await wait(83);
+    if(el){ el.style.transition = 'opacity 0.06s ease'; el.style.opacity = '1'; }
+    await wait(58);
   }
-  await wait(300);
+  await wait(210);
 
   // ── Show UI + start drift ─────────────────────────────────────
   buildDrift();
-  await wait(300);
+  await wait(210);
   document.getElementById('drift-layer').classList.add('visible');
   document.getElementById('nav').classList.add('visible');
   document.getElementById('tagline').classList.add('visible');
-  await wait(300);
+  await wait(210);
   startDrift();
 }
 
@@ -1065,18 +1065,31 @@ async function loadFeaturedPool() {
   } catch(e) { /* keep fallback */ }
 }
 
-// ── TWO WIDE COLUMNS ──────────────────────────────────────────
-const COLS = [
-  { xFrac: 0.03, wFrac: 0.44 },  // left half
-  { xFrac: 0.53, wFrac: 0.44 },  // right half
-];
-const colPoolIdx = [0, 3];
-const MAX_CARDS = 8;
+// ── COLUMNS (2 side-by-side on desktop, 1 full-width on mobile) ─
+let COLS, COL_SPEEDS, colPoolIdx;
+const MAX_CARDS_PER_COL = 4;
+
+function configureCols(){
+  COLS = window.innerWidth <= 768
+    ? [ { xFrac: 0.03, wFrac: 0.94 } ]  // full width
+    : [
+        { xFrac: 0.03, wFrac: 0.44 },  // left half
+        { xFrac: 0.53, wFrac: 0.44 },  // right half
+      ];
+  // Fixed per-column speed (not randomized per card) — every card in a column
+  // moves at the same rate so spacing never changes and cards can't catch up
+  // to or overlap the one ahead of them.
+  COL_SPEEDS = COLS.map((_, i) => COLS.length === 1
+    ? DRIFT_SPEED_MIN + (DRIFT_SPEED_MAX - DRIFT_SPEED_MIN) * 0.5
+    : DRIFT_SPEED_MIN + (DRIFT_SPEED_MAX - DRIFT_SPEED_MIN) * (i === 0 ? 0.35 : 0.65));
+  colPoolIdx = COLS.map((_, i) => i * 3);
+}
+configureCols();
 let driftCards = []; // JS array — no DOM queries in rAF loop
 
 function spawnCard(colIdx, startY){
   const layer = document.getElementById('drift-layer');
-  if(driftCards.length >= MAX_CARDS) return;
+  if(driftCards.length >= COLS.length * MAX_CARDS_PER_COL) return;
   const vw    = window.innerWidth;
   const col   = COLS[colIdx];
   const proj  = POOL[colPoolIdx[colIdx] % POOL.length];
@@ -1086,14 +1099,14 @@ function spawnCard(colIdx, startY){
   const colW  = Math.floor(vw * col.wFrac);
   const cardW = Math.min(proj.w, colW);
   const cardH = Math.round(proj.h * cardW / proj.w);
-  // slight random jitter within the column zone for organic feel
-  const jitter = Math.floor((Math.random() - 0.5) * vw * 0.04);
-  const cardX = Math.max(0, Math.min(Math.floor(vw * col.xFrac) + jitter, vw - cardW - 8));
+  // Aligned to the column's left edge — no horizontal jitter, so cards
+  // stay cleanly fitted inside their column with no cross-column overlap.
+  const cardX = Math.floor(vw * col.xFrac);
 
   const card = document.createElement('div');
   card.className = 'drift-wrapper';
   // top:0 + will-change:transform — GPU compositing, no layout per frame
-  card.style.cssText = `width:${cardW}px;height:${cardH}px;left:${cardX}px;top:0;will-change:transform;transform:translateY(${Math.round(startY)}px);opacity:0;`;
+  card.style.cssText = `width:${cardW}px;height:${cardH}px;left:${cardX}px;top:0;will-change:transform;transform:translateY(${Math.round(startY)}px);opacity:1;`;
 
   if(proj.img){
     const img = document.createElement('img'); img.src=proj.img; img.alt=proj.name; card.appendChild(img);
@@ -1105,15 +1118,13 @@ function spawnCard(colIdx, startY){
     window.location.href = proj.slug ? `project.html?project=${proj.slug}` : 'work.html';
   });
 
-  card._speed = DRIFT_SPEED_MIN + Math.random()*(DRIFT_SPEED_MAX-DRIFT_SPEED_MIN);
+  card._speed = COL_SPEEDS[colIdx];
   card._y     = startY;
   card._col   = colIdx;
   card._h     = cardH; // cache height — avoids offsetHeight reads in rAF loop
   layer.appendChild(card);
   driftCards.push(card);
 
-  // Fade in after brief delay
-  setTimeout(()=>{ card.style.transition='opacity 1.4s ease'; card.style.opacity='1'; }, 60);
   return card;
 }
 
@@ -1139,16 +1150,19 @@ function buildDrift(){
   const vh = window.innerHeight;
   const vw = window.innerWidth;
   // Estimate a portrait card height to pre-position the second card
-  const colW = Math.floor(vw * 0.44);
+  const colW = Math.floor(vw * COLS[0].wFrac);
   const p = POOL[0];
   const estH = Math.round(p.h * Math.min(p.w, colW) / p.w);
+  // Stagger each column's starting scroll position so columns don't move in lockstep
+  const starts = COLS.length === 1 ? [0.05] : [0.05, 0.45];
 
-  // Card 1: on screen
-  spawnCard(0, Math.floor(vh * 0.05));
-  spawnCard(1, Math.floor(vh * 0.45));
-  // Card 2: queued just below the first card — no gap when it scrolls up
-  spawnCard(0, Math.floor(vh * 0.05) + estH + CARD_GAP);
-  spawnCard(1, Math.floor(vh * 0.45) + estH + CARD_GAP);
+  COLS.forEach((_, colIdx) => {
+    const startY = Math.floor(vh * starts[colIdx]);
+    // Card 1: on screen
+    spawnCard(colIdx, startY);
+    // Card 2: queued just below the first card — no gap when it scrolls up
+    spawnCard(colIdx, startY + estH + CARD_GAP);
+  });
 }
 
 // ── SCROLL VELOCITY → DRIFT DIRECTION ────────────────────────
@@ -1157,7 +1171,7 @@ function buildDrift(){
 let scrollBoost = 0;
 if (window.innerWidth > 768) {
   window.addEventListener('wheel', (e) => {
-    scrollBoost = Math.max(-400, Math.min(scrollBoost + e.deltaY * 4, 500));
+    scrollBoost = Math.max(-500, Math.min(scrollBoost + e.deltaY * 5, 625));
   }, { passive: true });
 } else {
   // Mobile: velocity-based boost — cards match natural finger speed
@@ -1172,7 +1186,7 @@ if (window.innerWidth > 768) {
     const now = performance.now();
     const elapsed = Math.max(now - lastTouchTime, 4); // min 4ms to avoid div/0
     const dy = lastTouchY - e.touches[0].clientY; // positive = swipe up
-    scrollBoost = Math.max(-2000, Math.min((dy / elapsed) * 1000, 2000));
+    scrollBoost = Math.max(-2500, Math.min((dy / elapsed) * 1250, 2500));
     lastTouchY = e.touches[0].clientY;
     lastTouchTime = now;
   }, { passive: false });
@@ -1222,6 +1236,7 @@ window.addEventListener('resize', () => {
     if (!layer || !layer.classList.contains('visible')) return;
     driftCards.forEach(w => w.remove());
     driftCards = [];
+    configureCols();
     buildDrift();
   }, 200);
 });
