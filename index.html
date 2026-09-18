@@ -1064,7 +1064,7 @@ async function loadFeaturedPool() {
 
 // ── COLUMNS (2 side-by-side on desktop, 1 full-width on mobile) ─
 let COLS, COL_SPEEDS, colPoolIdx;
-const MAX_CARDS_PER_COL = 6;
+const MAX_CARDS_PER_COL = 8;
 
 function configureCols(){
   COLS = window.innerWidth <= 768
@@ -1084,9 +1084,12 @@ function configureCols(){
 configureCols();
 let driftCards = []; // JS array — no DOM queries in rAF loop
 
-function spawnCard(colIdx, startY){
+// startY is the card's top edge by default; pass anchorBottom=true to treat
+// startY as the desired BOTTOM edge instead (used when queuing a card above
+// an existing one, where the exact gap matters more than the top position).
+function spawnCard(colIdx, startY, anchorBottom){
   const layer = document.getElementById('drift-layer');
-  if(driftCards.length >= COLS.length * MAX_CARDS_PER_COL) return;
+  if(driftCards.length >= COLS.length * MAX_CARDS_PER_COL) return null;
   const vw    = window.innerWidth;
   const col   = COLS[colIdx];
   const proj  = POOL[colPoolIdx[colIdx] % POOL.length];
@@ -1099,11 +1102,12 @@ function spawnCard(colIdx, startY){
   // Aligned to the column's left edge — no horizontal jitter, so cards
   // stay cleanly fitted inside their column with no cross-column overlap.
   const cardX = Math.floor(vw * col.xFrac);
+  const y = anchorBottom ? startY - cardH : startY;
 
   const card = document.createElement('div');
   card.className = 'drift-wrapper';
   // top:0 + will-change:transform — GPU compositing, no layout per frame
-  card.style.cssText = `width:${cardW}px;height:${cardH}px;left:${cardX}px;top:0;will-change:transform;transform:translateY(${Math.round(startY)}px);opacity:1;`;
+  card.style.cssText = `width:${cardW}px;height:${cardH}px;left:${cardX}px;top:0;will-change:transform;transform:translateY(${Math.round(y)}px);opacity:1;`;
 
   if(proj.img){
     const img = document.createElement('img'); img.src=proj.img; img.alt=proj.name; card.appendChild(img);
@@ -1111,7 +1115,7 @@ function spawnCard(colIdx, startY){
     const ph = document.createElement('div'); ph.className='placeholder'; ph.style.background=proj.colour; card.appendChild(ph);
   }
   card._speed = COL_SPEEDS[colIdx];
-  card._y     = startY;
+  card._y     = y;
   card._col   = colIdx;
   card._h     = cardH; // cache height — avoids offsetHeight reads in rAF loop
   layer.appendChild(card);
@@ -1138,21 +1142,35 @@ function colHighestTop(colIdx){
 
 const CARD_GAP = 80; // px between stacked cards in same column
 
+// Keep a column stocked downward to (and past) the bottom edge, chaining
+// each new card directly off the current lowest one. Called every frame
+// so the next card is always already queued well before the one ahead of
+// it fully exits — no empty gap while a replacement travels up into view.
+function fillColumnDown(colIdx, vh, emptyStartY){
+  while (true) {
+    const has = driftCards.some(w => w._col === colIdx);
+    const bottom = has ? colLowestBottom(colIdx) : (emptyStartY === undefined ? vh : emptyStartY);
+    if (bottom >= vh + CARD_GAP) return;
+    if (!spawnCard(colIdx, has ? bottom + CARD_GAP : bottom)) return;
+  }
+}
+
+// Mirror of fillColumnDown for the reverse-scroll (downward drift) direction.
+function fillColumnUp(colIdx){
+  while (true) {
+    const has = driftCards.some(w => w._col === colIdx);
+    const top = has ? colHighestTop(colIdx) : 0;
+    if (top <= -CARD_GAP) return;
+    if (!spawnCard(colIdx, has ? top - CARD_GAP : top, true)) return;
+  }
+}
+
 function buildDrift(){
   const vh = window.innerHeight;
   // Stagger each column's starting scroll position so columns don't move in lockstep
   const starts = COLS.length === 1 ? [0.05] : [0.05, 0.45];
-
   COLS.forEach((_, colIdx) => {
-    let y = Math.floor(vh * starts[colIdx]);
-    // Keep spawning cards, back to back with a fixed gap, until the column
-    // is filled past the bottom of the viewport — a continuous, evenly
-    // spaced stream rather than just enough for the first paint.
-    while (y < vh + CARD_GAP) {
-      const card = spawnCard(colIdx, y);
-      if (!card) break; // hit the per-column card cap
-      y += card._h + CARD_GAP;
-    }
+    fillColumnDown(colIdx, vh, Math.floor(vh * starts[colIdx]));
   });
 }
 
@@ -1195,26 +1213,19 @@ function startDrift(){
     for(let i = driftCards.length - 1; i >= 0; i--){
       const w = driftCards[i];
       w._y -= (w._speed + scrollBoost) * dt;
-      if(w._y + w._h < 0){
-        const col = w._col;
+      if(w._y + w._h < 0 || w._y > vh){
         w.remove();
         driftCards.splice(i, 1);
-        // Clamp to at least the bottom edge — for short (landscape) cards the
-        // tracked gap can still land inside the viewport, causing a visible pop-in.
-        const tail = Math.max(colLowestBottom(col), vh);
-        spawnCard(col, tail + CARD_GAP);
-      } else if(w._y > vh){
-        const col = w._col;
-        const cardH = w._h;
-        w.remove();
-        driftCards.splice(i, 1);
-        // Clamp to at most the top edge — same pop-in guard, mirrored for the reverse-scroll case.
-        const top = Math.min(colHighestTop(col), 0);
-        spawnCard(col, top - cardH - CARD_GAP);
       } else {
         w.style.transform = `translateY(${Math.round(w._y)}px)`;
       }
     }
+    // Top up every column in both directions so the next card is always
+    // already queued — keeps the stream continuous regardless of drift speed.
+    COLS.forEach((_, colIdx) => {
+      fillColumnDown(colIdx, vh);
+      fillColumnUp(colIdx);
+    });
     requestAnimationFrame(tick);
   })(performance.now());
 }
