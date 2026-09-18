@@ -40,6 +40,26 @@
     "selected": true
   },
   {
+    "title": "Sakbé Boutique Resort & Spa",
+    "year": "2026",
+    "projectNumber": "0225",
+    "type": [
+      "Hospitality"
+    ],
+    "programme": "Boutique Resort, Spa, Hospitality",
+    "description": "Sakbé Boutique Resort & Spa is a beachfront retreat in Riviera Maya. Its name comes from sac be', the “white roads” that connected Maya settlements across the Yucatán Peninsula. This idea of a path through the landscape shapes the resort as a sequence of shaded walkways, courtyards and gardens leading towards the sea.\nThe design draws on the spatial ethos of pre-Hispanic Mexican architecture. Monumental forms are balanced by a restrained palette of mineral surfaces and warm timber. Deep thresholds shelter rooms from the tropical sun and frame the transition between interiors, gardens and the coast. The result is minimal in expression but tactile and recognisable.\nThe spa takes cues from the region's cenotes and the temazcal, a traditional Mesoamerican steam bath used for cleansing and ritual. Its vaulted rooms gather around water, with a circular opening bringing daylight to the pool below. The enclosed setting recalls the atmosphere of a subterranean chamber.\nThroughout the resort, light and shadow act as a fourth, invisible material. Sunlight filters through pergolas, deep openings and colonnades, changing the character of the spaces over the course of the day. This careful control of light gives the architecture its serenity and makes each space feel quietly immersive.",
+    "client": "Undisclosed",
+    "location": "Riviera Maya, Mexico",
+    "status": "Concept",
+    "area": "≈7,500 m²",
+    "scope": "Architecture, Design Strategy",
+    "collaborators": "",
+    "slug": "sakbe-boutique-resort-spa",
+    "folder": "work-sakbe-boutique-resort-spa",
+    "featured": true,
+    "selected": true
+  },
+  {
     "title": "Holsten Residential District",
     "year": "2026",
     "projectNumber": "144",
@@ -95,8 +115,7 @@
     "collaborators": "WES - Landscape Architecture",
     "slug": "sophienschule-campus",
     "folder": "work-sophienschule-campus",
-    "featured": true,
-    "selected": true
+    "featured": true
   },
   {
     "title": "Cathedral Museum & Monastery Renewal",
@@ -474,7 +493,7 @@
     "collaborators": "Architectural Association",
     "slug": "fabric-to-form-lycra-casting-research",
     "folder": "work-fabric-to-form-lycra-casting-research",
-    "featured": true
+    "featured": false
   },
   {
     "title": "Robotic Clay Printing: Form & Code",

@@ -25,6 +25,12 @@ function toSlug(title) {
     .replace(/ä/g, 'a').replace(/Ä/g, 'a')
     .replace(/ç/g, 'c').replace(/Ç/g, 'c')
     .replace(/ß/g, '-')             // ß → hyphen (Wix naming convention)
+    .replace(/[áàâ]/g, 'a').replace(/[ÁÀÂ]/g, 'a')
+    .replace(/[éèê]/g, 'e').replace(/[ÉÈÊ]/g, 'e')
+    .replace(/[íìî]/g, 'i').replace(/[ÍÌÎ]/g, 'i')
+    .replace(/[óòô]/g, 'o').replace(/[ÓÒÔ]/g, 'o')
+    .replace(/[úùû]/g, 'u').replace(/[ÚÙÛ]/g, 'u')
+    .replace(/ñ/g, 'n').replace(/Ñ/g, 'n')
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')   // any non-alnum run → single hyphen
     .replace(/^-|-$/g, '');         // trim edge hyphens
