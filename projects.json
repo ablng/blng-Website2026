@@ -139,6 +139,26 @@
     "featured": true
   },
   {
+    "title": "Room of Stillness",
+    "year": "2025",
+    "projectNumber": "111",
+    "type": [
+      "Education",
+      "Sacred"
+    ],
+    "programme": "Contemplative Room, School Interior",
+    "description": "At the centre of Sophienschule Campus in Hamburg, the Room of Stillness creates a place for pause within the energy of the school day.\nConceived as a retreat for students and teachers, the room supports quiet reflection, reconnection and moments of collective calm.\nInspired by natural grotto formations, a sculpted three-dimensional timber ceiling flows into enveloping walls, shaping an immersive interior through warm material, soft geometry and filtered light. The result is a meditative space that feels both protective and open—an intimate counterpoint to the wider life of the school.",
+    "client": "Erzbistum Hamburg",
+    "location": "Hamburg, Germany",
+    "status": "Under Construction",
+    "area": "38 m²",
+    "scope": "Architecture",
+    "collaborators": "",
+    "slug": "room-of-stillness",
+    "folder": "work-room-of-stillness",
+    "featured": true
+  },
+  {
     "title": "Cathedral Museum & Monastery Renewal",
     "year": "2024",
     "projectNumber": "90",
