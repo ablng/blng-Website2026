@@ -363,6 +363,11 @@
           imgEl.style.objectFit = 'contain';
           imgEl.style.background = 'var(--porcelain)';
         }
+        // The closing image, if landscape, spans both columns full-width
+        // instead of sitting cropped in a single column.
+        if(i === imgs.length - 1 && imgData.w > imgData.h){
+          item.style.gridColumn = '1 / -1';
+        }
         item.appendChild(imgEl);
         masonry.appendChild(item);
       });
