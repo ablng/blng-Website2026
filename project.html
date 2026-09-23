@@ -363,6 +363,14 @@
           imgEl.style.objectFit = 'contain';
           imgEl.style.background = 'var(--porcelain)';
         }
+        // A portrait image immediately followed by two landscape images
+        // spans both rows, so the two horizontals stack beside it at
+        // matching height instead of leaving dead space under the
+        // shorter of the pair.
+        if(imgData.h > imgData.w && imgs[i+1] && imgs[i+2] &&
+           imgs[i+1].w > imgs[i+1].h && imgs[i+2].w > imgs[i+2].h){
+          item.style.gridRow = 'span 2';
+        }
         // The closing image, if landscape, spans both columns full-width
         // instead of sitting cropped in a single column.
         if(i === imgs.length - 1 && imgData.w > imgData.h){
