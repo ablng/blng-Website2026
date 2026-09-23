@@ -20,6 +20,25 @@
     "selected": true
   },
   {
+    "title": "Pavilion Network",
+    "year": "2026",
+    "projectNumber": "0207",
+    "type": [
+      "Cultural & Arts"
+    ],
+    "programme": "Educational",
+    "description": "What if the World Expo were truly accessible worldwide?\nPavilion Network is a distributed and open network of pavilions, 3D printed on site by a mobile robotic factory using locally harvested biomaterials. Each pavilion is made of its place, by its people.\nEvery pavilion contains a central community space, a broadcasting room that shares local knowledge outwards, and a receiving room that connects with the others.\nThe World Expo becomes democratised and decentralised, continuing to grow for as long as curious communities choose to build.",
+    "client": "Undisclosed",
+    "location": "Worldwide",
+    "status": "Concept / Competition",
+    "area": "",
+    "scope": "",
+    "collaborators": "",
+    "slug": "pavilion-network",
+    "folder": "work-pavilion-network",
+    "featured": true
+  },
+  {
     "title": "Eyvan House",
     "year": "2026",
     "projectNumber": "0216",
