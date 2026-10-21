@@ -35,7 +35,9 @@
   "creator": {
     "@type": "Organization",
     "@id": "https://blng.studio/#organization",
-    "name": "blng studio"
+    "name": "blng studio",
+    "legalName": "Bieling Ltd",
+    "alternateName": "Bieling"
   }
 }
 </script>
@@ -195,7 +197,7 @@
 
 <!-- ─── NAV ─── -->
 <nav>
-  <a href="index.html" id="nav-logo" aria-label="blng studio home"><img src="brand_assets/blng-studio-crop.png" alt="blng studio"></a>
+  <a href="index.html" id="nav-logo" aria-label="blng studio home"><img src="brand_assets/blng-studio-crop.png" alt="blng studio (Bieling)"></a>
   <ul class="nav-links">
     <li><a href="work.html">Work</a></li>
     <li><a href="about.html">About</a></li>
@@ -318,7 +320,7 @@
   // ── Gallery builder ──────────────────────────────────────────
   // Probes images 02…MAX in parallel; shows those that load, in order.
   // Layout pattern (per cycle of 8): 2-up, full, 2-up, 3-up
-  function buildGallery(folder, galleryEl){
+  function buildGallery(folder, galleryEl, projectTitle){
     var probes = [];
     for(var n=2; n<=MAX_GALLERY_PROBE; n++){
       (function(num){
@@ -344,7 +346,7 @@
         var imgEl = document.createElement('img');
         imgEl.src = imgData.url;
         imgEl.className = 'g-img';
-        imgEl.alt = '';
+        imgEl.alt = projectTitle + ' — blng studio (Bieling)';
         // Crop the second image (top-right) to the first image's (top-left)
         // aspect ratio so the opening row sits at matching heights. Only
         // this one pair — later rows keep their own natural ratios.
@@ -415,7 +417,7 @@
       var heroImg = new Image();
       heroImg.onload = function(){
         var imgEl = document.createElement('img');
-        imgEl.src = heroUrl; imgEl.alt = p.title;
+        imgEl.src = heroUrl; imgEl.alt = p.title + ' — blng studio (Bieling)';
         imgEl.className = 'g-img';
         heroEl.replaceChild(imgEl, ph);
       };
@@ -472,7 +474,7 @@
         specRow('Collaborators', p.collaborators);
 
       // Gallery
-      buildGallery(p.folder, document.getElementById('project-gallery'));
+      buildGallery(p.folder, document.getElementById('project-gallery'), p.title);
 
       // Next project
       var nextIdx = (idx + 1) % projects.length;
@@ -495,7 +497,7 @@
 <!-- ─── MOBILE MENU OVERLAY ─── -->
 <div id="mobile-menu" class="mobile-menu">
   <div class="mobile-menu-header">
-    <a href="index.html" class="mobile-menu-logo" aria-label="blng studio home"><img src="brand_assets/blng-studio-crop.png" alt="blng studio"></a>
+    <a href="index.html" class="mobile-menu-logo" aria-label="blng studio home"><img src="brand_assets/blng-studio-crop.png" alt="blng studio (Bieling)"></a>
     <button id="menu-close" class="mobile-menu-close" aria-label="Close menu">✕</button>
   </div>
   <ul class="mobile-menu-links">

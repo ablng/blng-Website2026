@@ -32,6 +32,8 @@
   "@type": ["Organization", "LocalBusiness", "ProfessionalService"],
   "@id": "https://blng.studio/#organization",
   "name": "blng studio",
+  "legalName": "Bieling Ltd",
+  "alternateName": "Bieling",
   "url": "https://blng.studio/",
   "logo": "https://blng.studio/brand_assets/blng-studio.png",
   "description": "London-based architecture and design studio led by Ariadna López Bieling and Leo Bieling, guided by the belief that design is a necessary tool for progress.",
@@ -1112,7 +1114,7 @@ function spawnCard(colIdx, startY, anchorBottom){
   card.style.cssText = `width:${cardW}px;height:${cardH}px;left:${cardX}px;top:0;will-change:transform;transform:translateY(${Math.round(y)}px);opacity:1;`;
 
   if(proj.img){
-    const img = document.createElement('img'); img.src=proj.img; img.alt=proj.name; card.appendChild(img);
+    const img = document.createElement('img'); img.src=proj.img; img.alt=proj.name + ' — blng studio (Bieling)'; card.appendChild(img);
   } else {
     const ph = document.createElement('div'); ph.className='placeholder'; ph.style.background=proj.colour; card.appendChild(ph);
   }
@@ -1261,7 +1263,7 @@ window.addEventListener('resize', () => {
 <!-- ─── MOBILE MENU OVERLAY ─── -->
 <div id="mobile-menu" class="mobile-menu">
   <div class="mobile-menu-header">
-    <a href="index.html" class="mobile-menu-logo" aria-label="blng studio home"><img src="brand_assets/blng-studio-crop.png" alt="blng studio"></a>
+    <a href="index.html" class="mobile-menu-logo" aria-label="blng studio home"><img src="brand_assets/blng-studio-crop.png" alt="blng studio (Bieling)"></a>
     <button id="menu-close" class="mobile-menu-close" aria-label="Close menu">✕</button>
   </div>
   <ul class="mobile-menu-links">
