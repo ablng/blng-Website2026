@@ -64,7 +64,7 @@
   *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   html, body { width:100%; overflow-x:hidden; background:var(--porcelain); font-family:'DM Sans',sans-serif; }
   body { cursor:none; }
-  @media (max-width: 768px) { #cursor { display: none; } }
+  @media (max-width: 768px), (hover: none) { #cursor { display: none; } }
 
   #cursor { position:fixed; width:20px; height:20px; background:var(--terracotta); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease; }
   #cursor.cursor-outline { background-color: transparent; border: 2px solid var(--terracotta); }
@@ -1066,7 +1066,10 @@ let COLS, COL_SPEEDS, colPoolIdx;
 const MAX_CARDS_PER_COL = 8;
 
 function configureCols(){
-  COLS = window.innerWidth <= 768
+  // 700px matches the phone/tablet boundary used elsewhere on the site —
+  // tablets and unfolded phones get the 2-column desktop-style layout
+  // instead of being squeezed into the single phone-width column.
+  COLS = window.innerWidth <= 700
     ? [ { xFrac: 0.03, wFrac: 0.94 } ]  // full width
     : [
         { xFrac: 0.03, wFrac: 0.44 },  // left half
@@ -1174,10 +1177,13 @@ function buildDrift(){
 }
 
 // ── SCROLL VELOCITY → DRIFT DIRECTION ────────────────────────
-// Desktop only: scroll down advances (faster upward drift),
-// scroll up reverses (downward drift = going back). Touch unchanged.
+// Mouse/trackpad: scroll down advances (faster upward drift), scroll up
+// reverses. Touch gets finger-velocity-based boost instead. This is about
+// input method, not screen size — a wide touch tablet still needs the
+// touch branch, so it's gated on actual touch capability (isTouch, set
+// above from (hover:none)), not window width.
 let scrollBoost = 0;
-if (window.innerWidth > 768) {
+if (!isTouch) {
   window.addEventListener('wheel', (e) => {
     scrollBoost = Math.max(-500, Math.min(scrollBoost + e.deltaY * 5, 625));
   }, { passive: true });

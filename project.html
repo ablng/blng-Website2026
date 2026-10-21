@@ -131,7 +131,7 @@
   @media (max-width: 1024px) {
     #nav-logo img { width: 401px; }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 700px) {
     .desc-more-btn { font-size: 0.9rem; padding: 8px 16px; }
     #nav-logo img { width: 298px; }
     nav { padding: 10px 20px 10px 24px; }
@@ -177,7 +177,7 @@
   .mobile-menu-links { list-style: none; display: flex; flex-direction: column; gap: 32px; }
   .mobile-menu-links a { font-size: 1.4rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--charcoal); font-family: 'DM Sans', sans-serif; }
   .mobile-menu-links a.active { color: var(--green); font-weight: 700; }
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .nav-links { display: none !important; }
     .menu-btn { display: flex; }
   }
@@ -428,8 +428,8 @@
           para = para.trim();
           if(para){ var el=document.createElement('p'); el.textContent=para; descEl.appendChild(el); }
         });
-        // On mobile, truncate to first sentence with a MORE/LESS toggle
-        if(window.innerWidth <= 768){
+        // On phone only — tablets have enough room for the full description
+        if(window.innerWidth <= 700){
           var allParas = descEl.querySelectorAll('p');
           var firstText = allParas[0] ? allParas[0].textContent : '';
           var sentEnd = firstText.search(/[.!?](\s|$)/);

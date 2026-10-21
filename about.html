@@ -178,12 +178,18 @@
     .roots-intro { gap: 48px; }
     .roots-profiles { gap: 48px; }
   }
-  @media (max-width: 768px) {
-    .opening-oneliner .br-desktop { display: none; }
-    .slideshow-track { aspect-ratio: 3 / 2; }
+  /* Touch devices (any width) get the swipe-friendly slideshow controls —
+     dots only, no click-arrows — matching the touch-based isMobileSlide
+     check in JS. Separate from the ≤700px block since a tablet needs this
+     regardless of its (much wider) screen width. */
+  @media (hover: none) {
     .ss-dots { justify-content: center; overflow: hidden; max-height: 20px; flex-wrap: nowrap; flex: 1; }
     .ss-btn { display: none; }
     .slideshow-controls { justify-content: center; padding: 0 24px; }
+  }
+  @media (max-width: 700px) {
+    .opening-oneliner .br-desktop { display: none; }
+    .slideshow-track { aspect-ratio: 3 / 2; }
     .slideshow { margin-left: -24px; margin-right: -24px; }
     .more-btn { font-size: 0.9rem; padding: 9px 20px; margin-top: 32px; }
     #nav-logo img { width: 298px; }
@@ -249,7 +255,7 @@
   .mobile-menu-links { list-style: none; display: flex; flex-direction: column; gap: 32px; }
   .mobile-menu-links a { font-size: 1.4rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--charcoal); font-family: 'DM Sans', sans-serif; }
   .mobile-menu-links a.active { color: var(--green); font-weight: 700; }
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .nav-links { display: none !important; }
     .menu-btn { display: flex; }
   }
@@ -528,7 +534,7 @@
 
   // ─── MOBILE PROFILE BIO TRUNCATION (Thomas / Josef) ───
   function initProfileToggles() {
-    if (window.innerWidth > 768) return;
+    if (window.innerWidth > 700) return;
     // Find first real sentence end — skips abbreviations like Prof., Dr., St.
     var abbrevRe = /\b(Prof|Dr|Mr|Mrs|Ms|Jr|Sr|St|vs|etc|Inc|Ltd|Corp|No|Vol|Fig|est)\b$/i;
     function firstSentenceEnd(text) {
@@ -601,7 +607,10 @@
     var nextBtn = el.querySelector('.ss-next');
     if (!slides.length) return;
     var current = 0;
-    var isMobileSlide = window.innerWidth <= 768;
+    // Touch devices get swipe-based sliding regardless of width — a tablet
+    // needs the same transform/dots mechanism as a phone, not the desktop
+    // crossfade-plus-arrow-click, which has no touch-swipe equivalent.
+    var isMobileSlide = isTouch || window.innerWidth <= 700;
 
     if (isMobileSlide) {
       // Transform-based sliding on mobile: all slides visible, positioned by translateX
