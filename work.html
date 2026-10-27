@@ -129,7 +129,11 @@
     .mp-list { display:grid; grid-template-columns:1fr 1fr; gap:32px; padding:32px 48px; }
     .mp-item { border-bottom:none; background:var(--porcelain); padding-bottom:4px; }
     .mp-item.hidden { display:none; }
-    .mp-name-row { display:flex; justify-content:space-between; align-items:baseline; padding:20px 0 14px; text-decoration:none; color:var(--charcoal); }
+    /* Fixed height (not just padding) regardless of 1/2/3-line titles, so
+       every tile's image starts at the same vertical position in the grid —
+       otherwise a longer title in one tile pushes its image down further
+       than its row-mate's. */
+    .mp-name-row { display:flex; justify-content:space-between; align-items:baseline; padding:20px 0 14px; min-height:150px; box-sizing:border-box; text-decoration:none; color:var(--charcoal); }
     .mp-name-text { font-size:1.9rem; font-weight:300; letter-spacing:0.01em; line-height:1.25; }
     .mp-meta { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; margin-left:16px; }
     .mp-year { font-size:1.1rem; letter-spacing:0.1em; color:var(--green); }
@@ -181,10 +185,18 @@
     main.mobile-work .filter-btn { font-size:0.9rem; padding:7px 16px; }
     .mp-list { display:block; padding:0; gap:0; }
     .mp-item { border-bottom:2px solid rgba(28,28,26,0.07); padding-bottom:4px; }
-    .mp-name-row { padding:20px 24px 14px; }
+    /* Phone is a single column (no row-mate to misalign with), so skip the
+       tablet's fixed min-height and let rows size to their own content. */
+    .mp-name-row { padding:20px 24px 14px; min-height:0; }
     .mp-name-text { font-size:1.7rem; }
     .mp-year { font-size:1.0rem; }
     .mp-type { font-size:0.85rem; }
+  }
+  /* Tablet only: projects with no images (greyed-out titles) are hidden
+     outright rather than shown as empty-looking grey tiles in the 2-up
+     grid. Phone keeps showing them as plain greyed-out rows. */
+  @media (min-width: 701px) and (max-width: 1024px) {
+    .mp-item.is-static:not(.has-preview) { display:none; }
   }
   @media (max-width: 480px) {
     #nav-logo img { width:220px; }
