@@ -83,6 +83,9 @@
   .nav-links { display: flex; gap: 44px; list-style: none; }
   .nav-links a { font-size: 1.4rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--charcoal); transition: color 0.25s; }
   .nav-links a:hover { color: var(--terracotta); }
+  .sprints-link { display: inline-flex; align-items: center; gap: 6px; }
+  .sprints-link .ext-icon { display: inline-block; width: 0; height: 0; border-style: solid; border-width: 5px 0 5px 7px; border-color: transparent transparent transparent var(--charcoal); transform: rotate(-45deg); }
+  .sprints-link:hover .ext-icon { border-left-color: var(--terracotta); }
   .nav-links a.active { color: var(--green); font-weight: 700; }
 
   /* ─── OPENING ─── */
@@ -278,7 +281,7 @@
   <a href="index.html" id="nav-logo" aria-label="blng studio home"><img src="brand_assets/blng-studio-crop.png" alt="blng studio (Bieling)"></a>
   <ul class="nav-links">
     <li><a href="work.html">Work</a></li>
-    <li><a href="https://sprint.blng.studio/" target="_blank" rel="noopener">Sprints</a></li>
+    <li><a href="https://sprint.blng.studio/" target="_blank" rel="noopener" class="sprints-link">Sprints<span class="ext-icon" aria-hidden="true"></span></a></li>
     <li><a href="what-we-do.html">What We Do</a></li>
     <li><a href="about.html" class="active">About</a></li>
     <li><a href="contact.html">Contact</a></li>
@@ -973,7 +976,7 @@
   </div>
   <ul class="mobile-menu-links">
     <li><a href="work.html">Work</a></li>
-    <li><a href="https://sprint.blng.studio/" target="_blank" rel="noopener">Sprints</a></li>
+    <li><a href="https://sprint.blng.studio/" target="_blank" rel="noopener" class="sprints-link">Sprints<span class="ext-icon" aria-hidden="true"></span></a></li>
     <li><a href="what-we-do.html">What We Do</a></li>
     <li><a href="about.html" class="active">About</a></li>
     <li><a href="contact.html">Contact</a></li>
