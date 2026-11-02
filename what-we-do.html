@@ -121,7 +121,10 @@
   .clients-list li { font-size: 1.6rem; line-height: 2.1; color: var(--charcoal); break-inside: avoid; }
 
   /* ─── FOOTER ─── */
-  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: end; flex-shrink: 0; margin-top: auto; }
+  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 56px 60px; flex-shrink: 0; margin-top: auto; }
+  .footer-newsletter { margin-bottom: 40px; max-width: 420px; }
+  .footer-newsletter-title { font-size: 1.2rem; letter-spacing: 0.04em; color: var(--charcoal); margin-bottom: 14px; }
+  .footer-bottom { display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: end; }
   .footer-address { font-size: 1.25rem; line-height: 1.9; color: var(--charcoal); letter-spacing: 0.04em; }
   .footer-middle  { text-align: center; font-size: 1.25rem; line-height: 2; letter-spacing: 0.04em; color: var(--charcoal); }
   .footer-right   { text-align: right; font-size: 1.25rem; line-height: 1.9; letter-spacing: 0.04em; color: var(--charcoal); }
@@ -160,7 +163,8 @@
     .clients-intro { font-size: 1.5rem; margin-bottom: 40px; }
     .clients-list { columns: 2; column-gap: 24px; }
     .clients-list li { font-size: 1.4rem; line-height: 2.0; }
-    footer { grid-template-columns: 1fr; gap: 20px; padding: 40px 24px; }
+    footer { padding: 40px 24px; }
+    .footer-bottom { grid-template-columns: 1fr; gap: 20px; }
     .footer-middle { text-align: left; }
     .footer-right { text-align: left; }
   }
@@ -242,15 +246,22 @@
 
 <!-- ─── FOOTER ─── -->
 <footer>
-  <div class="footer-address">3 Dericote Street,<br>London E8 4PG,<br>United Kingdom</div>
-  <div class="footer-middle">
-    <a href="mailto:info@blng.studio">info@blng.studio</a><br>
-    <a href="https://www.linkedin.com/company/blng-studio" target="_blank">LinkedIn</a> &nbsp;—&nbsp;
-    <a href="https://www.instagram.com/blng_studio/" target="_blank">Instagram</a>
+  <div class="footer-newsletter">
+    <div class="footer-newsletter-title">Sign up: studio and design updates</div>
+    <script src="https://js-eu1.hsforms.net/forms/embed/145903215.js" defer></script>
+    <div class="hs-form-frame" data-region="eu1" data-form-id="b298049f-d109-41e4-8f54-7db0f6971155" data-portal-id="145903215"></div>
   </div>
-  <div class="footer-right">
-    <a href="legal.html">Legal &amp; Privacy Notice</a><br>
-    &copy; 2026 blng studio
+  <div class="footer-bottom">
+    <div class="footer-address">3 Dericote Street,<br>London E8 4PG,<br>United Kingdom</div>
+    <div class="footer-middle">
+      <a href="mailto:info@blng.studio">info@blng.studio</a><br>
+      <a href="https://www.linkedin.com/company/blng-studio" target="_blank">LinkedIn</a> &nbsp;—&nbsp;
+      <a href="https://www.instagram.com/blng_studio/" target="_blank">Instagram</a>
+    </div>
+    <div class="footer-right">
+      <a href="legal.html">Legal &amp; Privacy Notice</a><br>
+      &copy; 2026 blng studio
+    </div>
   </div>
 </footer>
 
