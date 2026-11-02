@@ -440,6 +440,21 @@
   var modal = document.getElementById('newsletter-modal');
   var trigger = document.getElementById('newsletter-signup-trigger');
   var closeBtn = document.getElementById('newsletter-modal-close');
+  // HubSpot's embed script sets height/overflow on .hs-form-frame via inline
+  // JS with "important" priority, which beats any CSS rule we write (even
+  // !important ones). Fight back at the same level: re-assert our values
+  // every time HubSpot's script changes them.
+  var frameWrap = document.querySelector('.newsletter-modal-box .hs-form-frame');
+  if (frameWrap) {
+    frameWrap.style.setProperty('min-height', '700px', 'important');
+    var enforceOverflow = function() {
+      if (frameWrap.style.getPropertyValue('overflow') !== 'visible') {
+        frameWrap.style.setProperty('overflow', 'visible', 'important');
+      }
+    };
+    enforceOverflow();
+    new MutationObserver(enforceOverflow).observe(frameWrap, { attributes: true, attributeFilter: ['style'] });
+  }
   function openModal(e) {
     e.preventDefault();
     modal.classList.add('open');
