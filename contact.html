@@ -242,6 +242,40 @@
   var trigger = document.getElementById('newsletter-signup-trigger');
   var closeBtn = document.getElementById('newsletter-modal-close');
   var formLoaded = false;
+  // HubSpot sets the embedded form's iframe height via inline JS, which can
+  // reassert itself shorter than the content needs, causing an internal
+  // scrollbar. A one-time CSS rule can't win that fight, so we watch for
+  // HubSpot's own height changes and force a taller value every time.
+  function patchFormHeight() {
+    var wrap = document.querySelector('#newsletter-form .hs-form-frame');
+    if (!wrap) return;
+    var frame = wrap.querySelector('iframe');
+    function setTall(el) {
+      if (el && el.style.height !== '900px') {
+        el.style.setProperty('height', '900px', 'important');
+      }
+    }
+    setTall(wrap);
+    setTall(frame);
+    var obs = new MutationObserver(function() {
+      setTall(wrap);
+      setTall(frame);
+    });
+    obs.observe(wrap, { attributes: true, attributeFilter: ['style'] });
+    if (frame) obs.observe(frame, { attributes: true, attributeFilter: ['style'] });
+  }
+  function watchForForm() {
+    var container = document.getElementById('newsletter-form');
+    if (!container) return;
+    if (container.querySelector('.hs-form-frame')) { patchFormHeight(); return; }
+    var containerObs = new MutationObserver(function() {
+      if (container.querySelector('.hs-form-frame')) {
+        patchFormHeight();
+        containerObs.disconnect();
+      }
+    });
+    containerObs.observe(container, { childList: true, subtree: true });
+  }
   function openModal(e) {
     e.preventDefault();
     if (!formLoaded && window.hbspt) {
@@ -252,6 +286,7 @@
         target: '#newsletter-form'
       });
       formLoaded = true;
+      watchForForm();
     }
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
