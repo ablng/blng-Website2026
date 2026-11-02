@@ -133,7 +133,7 @@
   .newsletter-modal.open { display: flex; }
   .newsletter-modal-box { background: var(--porcelain); max-width: 560px; width: 100%; padding: 40px 40px; position: relative; margin: auto; }
   .newsletter-modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.4rem; color: var(--charcoal); }
-  .newsletter-modal-box .hs-form-frame { min-height: 700px !important; overflow: hidden; }
+  .newsletter-modal-box .hs-form-frame { min-height: 665px !important; overflow: hidden; }
   .newsletter-modal-box .hs-form-frame iframe { width: calc(100% + 24px) !important; height: calc(100% + 24px) !important; }
   /* ─── SCROLL REVEAL ─── */
   .reveal { opacity: 1; transform: translateY(0); transition: opacity 0.65s ease, transform 0.65s ease; }
@@ -282,8 +282,8 @@
   var frameWrap = document.querySelector('.newsletter-modal-box .hs-form-frame');
   if (frameWrap) {
     var enforceMinHeight = function() {
-      if (frameWrap.style.getPropertyValue('min-height') !== '700px') {
-        frameWrap.style.setProperty('min-height', '700px', 'important');
+      if (frameWrap.style.getPropertyValue('min-height') !== '665px') {
+        frameWrap.style.setProperty('min-height', '665px', 'important');
       }
     };
     enforceMinHeight();
