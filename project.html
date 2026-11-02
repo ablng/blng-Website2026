@@ -132,7 +132,8 @@
   .newsletter-modal.open { display: flex; }
   .newsletter-modal-box { background: var(--porcelain); max-width: 560px; width: 100%; padding: 40px 40px; position: relative; margin: auto; }
   .newsletter-modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.4rem; color: var(--charcoal); }
-  .newsletter-modal-box .hs-form-frame { min-height: 700px !important; overflow: visible !important; }
+  .newsletter-modal-box .hs-form-frame { min-height: 700px !important; overflow: hidden; }
+  .newsletter-modal-box .hs-form-frame iframe { width: calc(100% + 24px) !important; height: calc(100% + 24px) !important; }
 
   /* ─── SCROLL REVEAL ─── */
   .reveal { opacity: 1; transform: translateY(0); transition: opacity 0.65s ease, transform 0.65s ease; }
@@ -277,20 +278,20 @@
   var modal = document.getElementById('newsletter-modal');
   var trigger = document.getElementById('newsletter-signup-trigger');
   var closeBtn = document.getElementById('newsletter-modal-close');
-  // HubSpot's embed script sets height/overflow on .hs-form-frame via inline
-  // JS with "important" priority, which beats any CSS rule we write (even
-  // !important ones). Fight back at the same level: re-assert our values
-  // every time HubSpot's script changes them.
+  // HubSpot's embed script sets height on .hs-form-frame via inline JS with
+  // "important" priority, which beats any CSS rule we write. Keep forcing a
+  // safe floor so the box never collapses; overflow:hidden + an oversized
+  // iframe (in CSS) hides the native scrollbar without relying on exact
+  // height matching.
   var frameWrap = document.querySelector('.newsletter-modal-box .hs-form-frame');
   if (frameWrap) {
-    frameWrap.style.setProperty('min-height', '700px', 'important');
-    var enforceOverflow = function() {
-      if (frameWrap.style.getPropertyValue('overflow') !== 'visible') {
-        frameWrap.style.setProperty('overflow', 'visible', 'important');
+    var enforceMinHeight = function() {
+      if (frameWrap.style.getPropertyValue('min-height') !== '700px') {
+        frameWrap.style.setProperty('min-height', '700px', 'important');
       }
     };
-    enforceOverflow();
-    new MutationObserver(enforceOverflow).observe(frameWrap, { attributes: true, attributeFilter: ['style'] });
+    enforceMinHeight();
+    new MutationObserver(enforceMinHeight).observe(frameWrap, { attributes: true, attributeFilter: ['style'] });
   }
   function openModal(e) {
     e.preventDefault();
