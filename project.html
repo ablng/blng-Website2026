@@ -120,15 +120,18 @@
   .project-next-link:hover .project-next-arrow { color: var(--terracotta); opacity: 1; transform: translateX(10px); }
 
   /* ─── FOOTER ─── */
-  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 56px 60px; flex-shrink: 0; margin-top: auto; }
-  .footer-newsletter { margin-bottom: 40px; max-width: 420px; }
-  .footer-newsletter-title { font-size: 1.2rem; letter-spacing: 0.04em; color: var(--charcoal); margin-bottom: 14px; }
-  .footer-bottom { display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: end; }
+  footer { border-top: 2px solid rgba(28,28,26,0.1); padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: end; flex-shrink: 0; margin-top: auto; }
   .footer-address { font-size: 1.2rem; line-height: 1.9; color: var(--charcoal); letter-spacing: 0.04em; }
   .footer-middle  { text-align: center; font-size: 1.2rem; line-height: 2; letter-spacing: 0.04em; color: var(--charcoal); }
   .footer-right   { text-align: right; font-size: 1.2rem; line-height: 1.9; letter-spacing: 0.04em; color: var(--charcoal); }
   footer a { color: var(--charcoal); text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; }
   footer a:hover { color: var(--terracotta); }
+
+  /* ─── NEWSLETTER MODAL ─── */
+  .newsletter-modal { position: fixed; inset: 0; z-index: 600; display: none; align-items: center; justify-content: center; background: rgba(28,28,26,0.6); padding: 24px; }
+  .newsletter-modal.open { display: flex; }
+  .newsletter-modal-box { background: var(--porcelain); max-width: 440px; width: 100%; padding: 48px 40px; position: relative; }
+  .newsletter-modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.4rem; color: var(--charcoal); }
 
   /* ─── SCROLL REVEAL ─── */
   .reveal { opacity: 1; transform: translateY(0); transition: opacity 0.65s ease, transform 0.65s ease; }
@@ -154,8 +157,7 @@
     .spec-row { grid-template-columns: 1fr; gap: 4px; }
     .spec-label { padding-bottom: 2px; }
     .project-next-wrap { padding: 48px 24px; }
-    footer { padding: 40px 24px; }
-    .footer-bottom { grid-template-columns: 1fr; gap: 20px; }
+    footer { grid-template-columns: 1fr; gap: 20px; padding: 40px 24px; }
     .footer-middle { text-align: left; }
     .footer-right { text-align: left; }
   }
@@ -249,24 +251,53 @@
 
 <!-- ─── FOOTER ─── -->
 <footer>
-  <div class="footer-newsletter">
-    <div class="footer-newsletter-title">Sign up: studio and design updates</div>
-    <script src="https://js-eu1.hsforms.net/forms/embed/145903215.js" defer></script>
-    <div class="hs-form-frame" data-region="eu1" data-form-id="b298049f-d109-41e4-8f54-7db0f6971155" data-portal-id="145903215"></div>
+  <div class="footer-address">3 Dericote Street,<br>London E8 4PG,<br>United Kingdom</div>
+  <div class="footer-middle">
+    <a href="#" id="newsletter-signup-trigger">Sign up: studio and design updates</a><br>
+    <a href="mailto:info@blng.studio">info@blng.studio</a><br>
+    <a href="https://www.linkedin.com/company/blng-studio" target="_blank">LinkedIn</a> &nbsp;—&nbsp;
+    <a href="https://www.instagram.com/blng_studio/" target="_blank">Instagram</a>
   </div>
-  <div class="footer-bottom">
-    <div class="footer-address">3 Dericote Street,<br>London E8 4PG,<br>United Kingdom</div>
-    <div class="footer-middle">
-      <a href="mailto:info@blng.studio">info@blng.studio</a><br>
-      <a href="https://www.linkedin.com/company/blng-studio" target="_blank">LinkedIn</a> &nbsp;—&nbsp;
-      <a href="https://www.instagram.com/blng_studio/" target="_blank">Instagram</a>
-    </div>
-    <div class="footer-right">
-      <a href="legal.html">Legal &amp; Privacy Notice</a><br>
-      &copy; 2026 blng studio
-    </div>
+  <div class="footer-right">
+    <a href="legal.html">Legal &amp; Privacy Notice</a><br>
+    &copy; 2026 blng studio
   </div>
 </footer>
+<div id="newsletter-modal" class="newsletter-modal">
+  <div class="newsletter-modal-box">
+    <button id="newsletter-modal-close" class="newsletter-modal-close" aria-label="Close">✕</button>
+    <div id="newsletter-form"></div>
+  </div>
+</div>
+<script src="https://js-eu1.hsforms.net/forms/embed/v2.js"></script>
+<script>
+(function() {
+  'use strict';
+  var modal = document.getElementById('newsletter-modal');
+  var trigger = document.getElementById('newsletter-signup-trigger');
+  var closeBtn = document.getElementById('newsletter-modal-close');
+  var formLoaded = false;
+  function openModal(e) {
+    e.preventDefault();
+    if (!formLoaded && window.hbspt) {
+      hbspt.forms.create({
+        region: 'eu1',
+        portalId: '145903215',
+        formId: 'b298049f-d109-41e4-8f54-7db0f6971155',
+        target: '#newsletter-form'
+      });
+      formLoaded = true;
+    }
+    modal.classList.add('open');
+  }
+  function closeModal() { modal.classList.remove('open'); }
+  if (trigger) trigger.addEventListener('click', openModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+  });
+})();
+</script>
 
 <script>
 (function() {
