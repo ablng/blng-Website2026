@@ -129,12 +129,10 @@
   footer a:hover { color: var(--terracotta); }
 
   /* ─── NEWSLETTER MODAL ─── */
-  .newsletter-modal { position: fixed; inset: 0; z-index: 600; display: none; align-items: center; justify-content: center; background: rgba(28,28,26,0.6); padding: 24px; }
+  .newsletter-modal { position: fixed; inset: 0; z-index: 600; display: none; align-items: center; justify-content: center; background: rgba(28,28,26,0.6); padding: 24px; overflow-y: auto; }
   .newsletter-modal.open { display: flex; }
-  .newsletter-modal-box { background: var(--porcelain); max-width: 440px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 48px 40px; position: relative; }
+  .newsletter-modal-box { background: var(--porcelain); max-width: 440px; width: 100%; padding: 48px 40px; position: relative; margin: auto; }
   .newsletter-modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.4rem; color: var(--charcoal); }
-  #newsletter-form, #newsletter-form * { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif !important; font-weight: 400; box-sizing: border-box; }
-
   /* ─── SCROLL REVEAL ─── */
   .reveal { opacity: 1; transform: translateY(0); transition: opacity 0.65s ease, transform 0.65s ease; }
   .js-loaded .reveal { opacity: 0; transform: translateY(16px); }
