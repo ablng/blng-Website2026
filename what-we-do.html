@@ -133,7 +133,7 @@
   .newsletter-modal.open { display: flex; }
   .newsletter-modal-box { background: var(--porcelain); max-width: 440px; width: 100%; padding: 36px 32px; position: relative; margin: auto; }
   .newsletter-modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.4rem; color: var(--charcoal); }
-  #newsletter-form .hsfc-Renderer, #newsletter-form [class*="hsfc-"] { max-height: none !important; height: auto !important; overflow: visible !important; }
+  #newsletter-form, #newsletter-form .hs-form-frame, #newsletter-form iframe { min-height: 870px !important; }
   /* ─── SCROLL REVEAL ─── */
   .reveal { opacity: 1; transform: translateY(0); transition: opacity 0.65s ease, transform 0.65s ease; }
   .js-loaded .reveal { opacity: 0; transform: translateY(16px); }
